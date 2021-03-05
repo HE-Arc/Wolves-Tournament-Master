@@ -13,15 +13,15 @@ export default {
   }),
 
   mounted() {
-    this.GetUsers()
+    this.GetUsers();
   },
 
   methods: {
-    async GetUsers(){
-      const response = await UserService.GetUsers()
+    async GetUsers() {
+      const response = await UserService.GetUsers();
 
-      console.log(response)
-    },
+      console.log(response);
+    }
   }
-}
+};
 </script>

@@ -11,4 +11,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class TeamViewSet(viewsets.ModelViewSet):
 	queryset = Team.objects.all()
+	# userset = User.objects.select_related().get 
+	# queryset = teamset|userset
+	# user = User.objects.select_related("leader").get(id = )
 	serializer_class = TeamSerializer
