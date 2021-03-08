@@ -1,5 +1,7 @@
 <template>  
   <v-app>
+    <LoginDialog ref="loginDialog" /> 
+
     <vue-snotify>
       
     </vue-snotify>
@@ -31,11 +33,11 @@
       <v-spacer></v-spacer>
 
       <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
         target="_blank"
         text
+        @click="Login"
       >
-        <span class="mr-2">Latest Release</span>
+        <span class="mr-2">Login</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
     </v-app-bar>
@@ -52,15 +54,24 @@
 </template>
 
 <script>
+import LoginDialog from "@/components/dialogs/Login";
+
 export default {
   name: 'App',
 
   components: {
+    LoginDialog
   },
 
   data: () => ({
     //
   }),
+
+   methods: {
+    async Login() {
+      this.$refs.loginDialog.show();
+    },
+   }
 };
 </script>
 

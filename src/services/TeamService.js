@@ -6,7 +6,7 @@ export default {
   GetTeams() {
     return new Promise(resolve => {
       axios
-        .get(this.apiurl + "teams")
+        .get(this.apiurl + "teams/")
         .then(response => {
           if (response.data) {
             resolve(response.data);
@@ -19,11 +19,12 @@ export default {
         });
     });
   },
-  CreateTeam(team) {
+  CreateTeam(csrftoken, team) {
     return new Promise(resolve => {
       axios({
+        headers: {'X-CSRFToken': csrftoken},
         method: "post",
-        url: this.apiurl + "teams",
+        url: this.apiurl + "teams/",
         data: team
       })
         .then(response => {
