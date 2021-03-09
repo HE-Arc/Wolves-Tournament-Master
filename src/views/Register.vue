@@ -1,15 +1,5 @@
 <template>
-  <v-dialog v-model="isVisible" max-width="500px" @keydown.esc="hide">
     <v-card>
-      <v-toolbar dark color="primary">
-        <v-toolbar-title>Login</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-toolbar-items>
-          <v-btn icon dark @click="hide">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar-items>
-      </v-toolbar>
       <v-card-title></v-card-title>
       <v-card-text>
         <v-form ref="form" style="padding:10px;">
@@ -24,6 +14,17 @@
             :error-messages="errors.collect('Username')"
           ></v-text-field>
           <v-text-field
+            v-model="email"
+            label="Email"
+            dense
+            outlined
+            :type="'email'"
+            clearable
+            v-validate="'required'"
+            data-vv-name="Email"
+            :error-messages="errors.collect('Email')"
+          ></v-text-field>
+          <v-text-field
             v-model="pwd"
             label="Password"
             outlined
@@ -33,6 +34,17 @@
             v-validate="'required'"
             data-vv-name="Password"
             :error-messages="errors.collect('Password')"
+          ></v-text-field>
+          <v-text-field
+            v-model="confirmpwd"
+            label="Confrim your password"
+            outlined
+            dense
+            :type="'password'"
+            clearable
+            v-validate="'required'"
+            data-vv-name="Confirm password"
+            :error-messages="errors.collect('Confirm password')"
           ></v-text-field>
           <v-alert
             v-show="error"
@@ -47,8 +59,8 @@
       </v-card-text>
       <v-card-actions v-show="!loading">
         <v-spacer></v-spacer>
-        <v-btn tile color="success" @click="Login">
-          Login
+        <v-btn tile color="success" @click="Register">
+          Register
           <v-icon right> mdi-content-save </v-icon>
         </v-btn>
       </v-card-actions>
@@ -60,7 +72,6 @@
         ></v-progress-circular>
       </v-card-actions>
     </v-card>
-  </v-dialog>
 </template>
 
 <script>
@@ -68,50 +79,41 @@ import UserService from "@/services/UserService";
 
 export default {
   data: () => ({
-    isVisible: false,
     loading: false,
     error: false,
 
     id: null,
     username: "",
-    pwd: ""
+    email: "",
+    pwd: "",
+    confirmpwd: "",
   }),
 
   methods: {
     // To show the dialog
-    show() {
-      this.isVisible = true;
-    },
-    hide() {
-      this.$refs.form.reset();
-      this.isVisible = false;
-    },
-    async Login() {
+    async Register() {
       const result = await this.$validator.validate();
 
-      if (result) {
+      if (result && this.pwd == this.confirmpwd) {
         this.loading = true;
 
         let user = {
           username: this.username,
+          email: this.email,
           password: this.pwd
         };
 
-        const result = await UserService.Login(user);
+        const result = await UserService.CreateUser(user);
 
         if (result) {
-          this.$store.commit('updateToken', result.token)
-          // this.$store.commit("setAuthUser",
-          //   {authUserId: result.user_id, authUserEmail: result.email, isAuthenticated: true}
-          // )
-          //this.$router.push({name: 'Home'})
+          this.$router.push({name: 'Home'})
 
           this.$refs.form.reset();
-          this.$snotify.info(user.username + " logged in successfuly!");
+          this.$snotify.info(user.username + " registered successfuly!");
           this.isVisible = false;
         } else {
           this.$snotify.error(
-            "Unable to login...\nPlease try later..."
+            "Unable to register...\nPlease try later..."
           );
           this.error = true;
         }

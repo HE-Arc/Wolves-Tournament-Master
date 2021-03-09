@@ -70,7 +70,7 @@ export default {
     teams: [],
     loading: false,
     headers: [
-      { text: "ID", value: "url" },
+      { text: "ID", value: "id" },
       { text: "Name", value: "name" },
       { text: "Leader ID", value: "leader" },
       { text: "Actions", value: "actions", sortable: false }
@@ -89,7 +89,8 @@ export default {
     },
     async GetTeams() {
       this.loading = true;
-      let result = await TeamService.GetTeams();
+
+      let result = await TeamService.GetTeams(this.$store.state.token);
 
       if (result) {
         this.teams = result;
@@ -103,7 +104,7 @@ export default {
       this.$refs.deleteTeam.show(team);
     },
     async DeleteTeam(team) {
-      let result = await TeamService.DeleteTeam(team);
+      let result = await TeamService.DeleteTeam(this.$store.state.token, team);
 
       if (result) {
         this.$snotify.success("team '" + team.name + "' deleted successfuly");

@@ -5,8 +5,7 @@ export default {
 
   GetTeams() {
     return new Promise(resolve => {
-      axios
-        .get(this.apiurl + "teams/")
+      axios.get(this.apiurl + "teams/")
         .then(response => {
           if (response.data) {
             resolve(response.data);
@@ -19,14 +18,30 @@ export default {
         });
     });
   },
-  CreateTeam(csrftoken, team) {
+  CreateTeam(team) {
     return new Promise(resolve => {
-      axios({
-        headers: {'X-CSRFToken': csrftoken},
-        method: "post",
-        url: this.apiurl + "teams/",
-        data: team
-      })
+      axios.post(this.apiurl + "teams/", team)
+        .then(response => {
+          if (response.data) {
+            resolve(response.data);
+          } else {
+            resolve("Error");
+          }
+        })
+        .catch(error => {
+          resolve(error);
+        });
+    });
+  },
+  DeleteTeam(token, team) {
+    return new Promise(resolve => {
+      let config = {
+        headers : {
+          'Authorization': 'Token' + token
+        }
+      };
+
+      axios.delete(this.apiurl + "teams/" + team.id, config)
         .then(response => {
           if (response.data) {
             resolve(response.data);

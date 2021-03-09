@@ -111,15 +111,12 @@ export default {
       if (result) {
         this.loading = true;
 
-        const csrftoken = this.$store.state.token;
-
         let team = {
-          csrfmiddlewaretoken: csrftoken,
           name: this.name,
           leader: this.leader
         };
 
-        const result = await TeamService.CreateTeam(csrftoken, team);
+        const result = await TeamService.CreateTeam(team);
 
         if (result) {
           this.$refs.form.reset();

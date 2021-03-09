@@ -11,10 +11,12 @@ export default new Vuex.Store({
   },
   mutations: {
     setAuthUser(state, {
-      authUser,
+      authUserId,
+      authUserEmail,
       isAuthenticated,
     }) {
-      Vue.set(state, 'authUser', authUser)
+      Vue.set(state, 'authUserId', authUserId)
+      Vue.set(state, 'authUserEmail', authUserEmail)
       Vue.set(state, 'isAuthenticated', isAuthenticated)
     },
     updateToken(state, newToken) {

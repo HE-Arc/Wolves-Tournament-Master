@@ -71,6 +71,9 @@ export default {
     async Login() {
       this.$refs.loginDialog.show();
     },
+    Logout() {
+      this.$store.commit('removeToken')
+    }
    }
 };
 </script>
