@@ -24,7 +24,6 @@ export default {
       axios.post(this.apiurl + "users/", user)
         .then(response => {
           if (response.data) {
-            console.log(response.data)
             resolve(response.data);
           } else {
             resolve("Error");

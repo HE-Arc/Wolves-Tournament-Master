@@ -16,9 +16,7 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     # authentication_classes = (TokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
-	
-    def post(self, request):
-        print("Test post team")
+
 
 class TeamViewSet(viewsets.ModelViewSet):
 	queryset = Team.objects.all()
