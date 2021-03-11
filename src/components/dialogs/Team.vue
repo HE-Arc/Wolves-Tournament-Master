@@ -50,7 +50,7 @@
           Save
           <v-icon right> mdi-content-save </v-icon>
         </v-btn>
-        <v-btn v-show="isUpdate" tile color="success">
+        <v-btn v-show="isUpdate" tile color="success" @click="UpdateTeam">
           Save
           <v-icon right> mdi-content-save </v-icon>
         </v-btn>
@@ -133,34 +133,32 @@ export default {
         this.loading = false;
       }
     },
-    // async UpdateFormation() {
-    //   const result = await this.$validator.validate();
+    async UpdateTeam() {
+      const result = await this.$validator.validate();
 
-    //   if (result) {
-    //     this.loading = true;
+      if (result) {
+        this.loading = true;
 
-    //     this.item.name = this.name;
-    //     this.item.validity = this.validity;
-    //     this.item.points = this.points;
-    //     this.item.manageName = this.managerName;
+        this.item.name = this.name;
+        this.item.leader = this.leader;
 
-    //     const response = await FormationService.UpdateFormation(this.item);
+        const result = await TeamService.UpdateTeam(this.$store.state.token, this.item);
 
-    //     if (response.isSuccess) {
-    //       this.$refs.form.reset();
-    //       this.$snotify.success(this.item.name + " updated successfuly!");
-    //       this.isVisible = false;
-    //       this.parent.GetFormations();
-    //     } else {
-    //       this.$snotify.error(
-    //         "Unable to update this formation...\nPlease try later..."
-    //       );
-    //       this.error = true;
-    //     }
+        if (result.id) {
+          this.$refs.form.reset();
+          this.$snotify.success(this.item.name + " updated successfuly!");
+          this.isVisible = false;
+          this.parent.GetTeams();
+        } else {
+          this.$snotify.error(
+            "Unable to update this formation...\nPlease try later..."
+          );
+          this.error = true;
+        }
 
-    //     this.loading = false;
-    //   }
-    // }
+        this.loading = false;
+      }
+    }
   }
 };
 </script>

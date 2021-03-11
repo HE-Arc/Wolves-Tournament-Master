@@ -33,6 +33,27 @@ export default {
         });
     });
   },
+  UpdateTeam(token, team) {
+    return new Promise(resolve => {
+      let config = {
+        headers : {
+          'Authorization': 'Token' + token
+        }
+      };
+
+      axios.put(this.apiurl + "teams/" + team.id + "/", team, config)
+        .then(response => {
+          if (response.data) {
+            resolve(response.data);
+          } else {
+            resolve("Error");
+          }
+        })
+        .catch(error => {
+          resolve(error);
+        });
+    });
+  },
   DeleteTeam(token, team) {
     return new Promise(resolve => {
       let config = {
