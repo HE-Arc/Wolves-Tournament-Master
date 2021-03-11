@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Teams from "../views/Teams.vue";
 import Register from "../views/Register.vue";
+import Tournament from "../views/Tournament.vue";
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,12 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register,
+
+  },
+  {
+    path: "/tournament",
+    name: "Tournament",
+    component: Tournament,
 
   },
   {

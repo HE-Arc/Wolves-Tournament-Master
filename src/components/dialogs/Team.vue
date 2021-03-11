@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="isVisible" max-width="500px" @keydown.esc="hide">
     <v-card>
-      <v-toolbar dark color="primary">
+      <v-toolbar dark color="#01002a">
         <v-toolbar-title>{{ title }}</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>

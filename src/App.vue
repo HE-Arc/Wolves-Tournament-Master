@@ -1,39 +1,64 @@
 <template>  
   <v-app>
     <LoginDialog ref="loginDialog" /> 
+    <vue-snotify></vue-snotify>
 
-    <vue-snotify>
-      
-    </vue-snotify>
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+    >
+       <template v-slot:prepend>
+        <v-list-item two-line>
+          <v-list-item-avatar>
+            <img src="https://randomuser.me/api/portraits/women/81.jpg">
+          </v-list-item-avatar>
+
+          <v-list-item-content>
+            <v-list-item-title>Jane Smith</v-list-item-title>
+            <v-list-item-subtitle>Logged In</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </template>
+
+      <v-divider></v-divider>
+
+      <v-list dense>
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <router-link style="text-decoration:none;color:gray;" :to=item.path>
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </router-link>
+          
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
     <v-app-bar
       app
-      color="primary"
+      color="#01002a"
       dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
+    > 
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <router-link to="/">
+        <img
+          alt="WTM Logo"
+          src="@/assets/wtm.png"
+          width="auto"
+          height="50"
         />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+      </router-link>
 
       <v-spacer></v-spacer>
 
       <v-btn
-        target="_blank"
         text
         @click="Login"
       >
@@ -43,12 +68,7 @@
     </v-app-bar>
 
     <v-main>
-      <div id="nav">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/teams">Teams</router-link> |
-        <router-link to="/about">About</router-link>
-      </div>
-      <router-view />
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
@@ -64,17 +84,23 @@ export default {
   },
 
   data: () => ({
-    //
+    drawer: null,
+    items: [
+      { title: 'Home', icon: 'mdi-home', path:"/" },
+      { title: 'My account', icon: 'mdi-account', path:"/" },
+      { title: 'Teams', icon: 'mdi-account-multiple', path:"/teams" },
+      { title: 'Tournaments', icon: 'mdi-google-controller', path:"/tournament" }
+    ],
   }),
 
-   methods: {
+  methods: {
     async Login() {
       this.$refs.loginDialog.show();
     },
     Logout() {
       this.$store.commit('removeToken')
     }
-   }
+  }
 };
 </script>
 
@@ -85,18 +111,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>

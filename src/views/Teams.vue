@@ -14,7 +14,7 @@
         >
           <v-progress-circular
             indeterminate
-            color="primary"
+            color="#01002a"
           ></v-progress-circular>
         </v-alert>
         <template>
@@ -32,7 +32,8 @@
                 <v-spacer></v-spacer>
                 <v-btn
                   @click.stop="CreateTeam"
-                  color="primary"
+                  outlined
+                  color="#01002a"
                   dark
                   class="mb-2"
                 >
