@@ -2,7 +2,7 @@
   <v-dialog v-model="isVisible" max-width="500px" @keydown.esc="hide">
     <v-card>
       <v-toolbar dark color="primary">
-        <v-toolbar-title>Login</v-toolbar-title>
+        <v-toolbar-title>Sign in</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
           <v-btn icon dark @click="hide">
@@ -46,11 +46,9 @@
         </v-form>
       </v-card-text>
       <v-card-actions v-show="!loading">
+        <router-link @click.native="hide" to="/register">Sign up for free !</router-link> 
         <v-spacer></v-spacer>
-        <v-btn tile color="success" @click="Login">
-          Login
-          <v-icon right> mdi-content-save </v-icon>
-        </v-btn>
+        <v-btn tile color="success" @click="Login">Sign in</v-btn>
       </v-card-actions>
       <v-card-actions v-show="loading">
         <v-spacer></v-spacer>

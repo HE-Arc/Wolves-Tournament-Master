@@ -1,6 +1,7 @@
-<template>
+<template> 
+  <v-col xs="12" offset-sm="3" sm="6" offset-md="4" md="4">
     <v-card>
-      <v-card-title></v-card-title>
+      <v-card-title>Sign up</v-card-title>
       <v-card-text>
         <v-form ref="form" style="padding:10px;">
           <v-text-field
@@ -60,8 +61,8 @@
       <v-card-actions v-show="!loading">
         <v-spacer></v-spacer>
         <v-btn tile color="success" @click="Register">
-          Register
-          <v-icon right> mdi-content-save </v-icon>
+          Sign up
+          <v-icon right> mdi-account-plus </v-icon>
         </v-btn>
       </v-card-actions>
       <v-card-actions v-show="loading">
@@ -72,6 +73,7 @@
         ></v-progress-circular>
       </v-card-actions>
     </v-card>
+  </v-col>
 </template>
 
 <script>
