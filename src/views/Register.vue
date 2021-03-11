@@ -11,8 +11,8 @@
             outlined
             clearable
             v-validate="'required'"
-            data-vv-name="Username"
-            :error-messages="errors.collect('Username')"
+            data-vv-name="username"
+            :error-messages="errors.collect('username')"
           ></v-text-field>
           <v-text-field
             v-model="email"
@@ -22,8 +22,8 @@
             :type="'email'"
             clearable
             v-validate="'required|email'"
-            data-vv-name="Email"
-            :error-messages="errors.collect('Email')"
+            data-vv-name="email"
+            :error-messages="errors.collect('email')"
           ></v-text-field>
           <v-text-field
             :append-icon="showPwd ? 'mdi-eye' : 'mdi-eye-off'"
@@ -34,8 +34,8 @@
             :type="showPwd ? 'text':'password'"
             clearable
             v-validate="'required|min:8'"
-            data-vv-name="Password"
-            :error-messages="errors.collect('Password')"
+            data-vv-name="password"
+            :error-messages="errors.collect('password')"
             hint="At least 8 characters"
             @click:append="showPwd = !showPwd"
           ></v-text-field>
@@ -48,8 +48,8 @@
             :type="showPwd ? 'text':'password'"
             clearable
             v-validate="'required|min:8'"
-            data-vv-name="Confirm password"
-            :error-messages="errors.collect('Confirm password')"
+            data-vv-name="confirm password"
+            :error-messages="errors.collect('confirm password')"
             @click:append="showPwd = !showPwd"
           ></v-text-field>
           <v-alert

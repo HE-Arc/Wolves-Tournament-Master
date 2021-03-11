@@ -20,8 +20,8 @@
             outlined
             clearable
             v-validate="'required'"
-            data-vv-name="Username"
-            :error-messages="errors.collect('Username')"
+            data-vv-name="username"
+            :error-messages="errors.collect('username')"
           ></v-text-field>
           <v-text-field
             :append-icon="showPwd ? 'mdi-eye' : 'mdi-eye-off'"
@@ -31,10 +31,9 @@
             dense
             :type="showPwd ? 'text': 'password'"
             clearable
-            v-validate="'required'"
-            data-vv-name="Password"
-            :error-messages="errors.collect('Password')"
-            hint="At least 8 characters"
+            v-validate="'required|min:8'"
+            data-vv-name="password"
+            :error-messages="errors.collect('password')"
             @click:append="showPwd = !showPwd"
           ></v-text-field>
           <v-alert
