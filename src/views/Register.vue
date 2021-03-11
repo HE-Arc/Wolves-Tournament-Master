@@ -21,7 +21,7 @@
             outlined
             :type="'email'"
             clearable
-            v-validate="'required'"
+            v-validate="'required|email'"
             data-vv-name="Email"
             :error-messages="errors.collect('Email')"
           ></v-text-field>
