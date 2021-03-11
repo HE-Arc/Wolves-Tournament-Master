@@ -30,11 +30,13 @@
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
+
           <router-link style="text-decoration:none;color:gray;" :to=item.path>
             <v-list-item-content>
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item-content>
           </router-link>
+          
         </v-list-item>
       </v-list>
     </v-navigation-drawer>

@@ -26,26 +26,31 @@
             :error-messages="errors.collect('Email')"
           ></v-text-field>
           <v-text-field
+            :append-icon="showPwd ? 'mdi-eye' : 'mdi-eye-off'"
             v-model="pwd"
             label="Password"
             outlined
             dense
-            :type="'password'"
+            :type="showPwd ? 'text':'password'"
             clearable
-            v-validate="'required'"
+            v-validate="'required|min:8'"
             data-vv-name="Password"
             :error-messages="errors.collect('Password')"
+            hint="At least 8 characters"
+            @click:append="showPwd = !showPwd"
           ></v-text-field>
           <v-text-field
+            :append-icon="showPwd ? 'mdi-eye' : 'mdi-eye-off'"
             v-model="confirmpwd"
             label="Confrim your password"
             outlined
             dense
-            :type="'password'"
+            :type="showPwd ? 'text':'password'"
             clearable
-            v-validate="'required'"
+            v-validate="'required|min:8'"
             data-vv-name="Confirm password"
             :error-messages="errors.collect('Confirm password')"
+            @click:append="showPwd = !showPwd"
           ></v-text-field>
           <v-alert
             v-show="error"
@@ -83,6 +88,7 @@ export default {
   data: () => ({
     loading: false,
     error: false,
+    showPwd: false,
 
     id: null,
     username: "",

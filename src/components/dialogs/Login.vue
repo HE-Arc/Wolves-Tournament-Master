@@ -24,15 +24,18 @@
             :error-messages="errors.collect('Username')"
           ></v-text-field>
           <v-text-field
+            :append-icon="showPwd ? 'mdi-eye' : 'mdi-eye-off'"
             v-model="pwd"
             label="Password"
             outlined
             dense
-            :type="'password'"
+            :type="showPwd ? 'text': 'password'"
             clearable
             v-validate="'required'"
             data-vv-name="Password"
             :error-messages="errors.collect('Password')"
+            hint="At least 8 characters"
+            @click:append="showPwd = !showPwd"
           ></v-text-field>
           <v-alert
             v-show="error"
@@ -69,6 +72,7 @@ export default {
     isVisible: false,
     loading: false,
     error: false,
+    showPwd: false,
 
     id: null,
     username: "",
