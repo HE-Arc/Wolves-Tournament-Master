@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default {
-  apiurl: "http://localhost:8000/",
+  apiurl: "http://localhost:8000/api/",
 
   GetTeams() {
     return new Promise(resolve => {
