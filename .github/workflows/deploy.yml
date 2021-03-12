@@ -16,7 +16,7 @@ jobs:
         with:
           bundler-cache: true
       - name: Install SSH key
-        uses: webfactory/ssh-agent@v8.5.1
+        uses: webfactory/ssh-agent@v0.5.1
         with: 
           ssh-private-key: ${{ secrets.SSH_DEPLOY_KEY }}
       - name: Add known host
