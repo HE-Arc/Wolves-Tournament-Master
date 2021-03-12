@@ -1,28 +1,27 @@
-name: Deploy to production
+name: deploy to production
 
 on:
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
             
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v2
-            - name: Setup ruby 3.0.0
-              uses: ruby/setup-ruby@v1
-              with:
-                bundler-cache: true
-            - name: Install SSH key
-              uses: webfactory/ssh-agent@v8.5.1
-              with: 
-                ssh-private-key: ${{ secrets.SSH_DEPLOY_KEY }}
-            - name: Add known host
-              run: |
-                ssh-keyscan -p ${{ secrets.SSH_DEPLOY_KEY }} >> ~/.ssh/known_hosts
-            - name: Deploy
-              run: |
-                bundle exec cap production deploy
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Setup ruby 3.0.0
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Install SSH key
+        uses: webfactory/ssh-agent@v8.5.1
+        with: 
+          ssh-private-key: ${{ secrets.SSH_DEPLOY_KEY }}
+      - name: Add known host
+        run: |
+          ssh-keyscan -p ${{ secrets.SSH_DEPLOY_KEY }} >> ~/.ssh/known_hosts
+      - name: Deploy
+        run: |
+          bundle exec cap production deploy
