@@ -26,7 +26,8 @@ SECRET_KEY = '%!copcjyb7xqifuxej8ey-_%@$&&9$5y0w3b=yau!*nq_cs7-+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['wolves.srvz-webapp.he-arc.ch']
+ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = ['wolves.srvz-webapp.he-arc.ch']
 
 
 # Application definition
