@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models.teammodel import Team
 from .models.matchmodel import Match
+from .models.matchmodel import Tournament
 from rest_framework.authtoken.models import Token
 
 # Serializers define the API representation.
@@ -25,3 +26,8 @@ class MatchSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Match
         fields = ['url', 'id', 'team1', 'team2', 'tournament', 'score1', 'score2', 'nLap', 'posLap']
+
+class TournamentSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Tournament
+        fields = ['url', 'id', 'organizer', 'name', 'gameName', 'matchDuration', 'breakDuration', 'deadLineDate', 'nbTeam']
