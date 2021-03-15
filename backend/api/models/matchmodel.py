@@ -8,7 +8,7 @@ class Match(models.Model):
 	team2 = models.ForeignKey(Team, related_name = "team2", on_delete=models.CASCADE)
 	tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
 	score1 = models.IntegerField()
-	score1 = models.IntegerField()
+	score2 = models.IntegerField()
 	nLap = models.IntegerField()
 	posLap = models.IntegerField()
 
