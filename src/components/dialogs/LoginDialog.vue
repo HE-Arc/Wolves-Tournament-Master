@@ -102,9 +102,10 @@ export default {
 
         if (result) {
           this.$store.commit('updateToken', result.token)
-          // this.$store.commit("setAuthUser",
-          //   {authUserId: result.user_id, authUserEmail: result.email, isAuthenticated: true}
-          // )
+          this.$store.commit("setAuthUser",
+            {authUserId: result.user_id, authUserEmail: result.email, isAuthenticated: true}
+          )
+          console.log(result);
           //this.$router.push({name: 'Home'})
 
           this.$refs.form.reset();

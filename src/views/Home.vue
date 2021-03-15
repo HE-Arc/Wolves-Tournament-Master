@@ -2,9 +2,9 @@
   <div style="padding:30px;" class="home">
     <TournamentDialog ref="tournamentDialog" /> 
     <v-row>
-      <v-col cols="12" sm="6" md="4">
+      <v-col v-show="$store.state.isAuthenticated" cols="12" sm="6" md="4">
         <v-card @click="OpenTournamentDialog" style="padding:10px;">
-          <v-icon>mdi-plus</v-icon>
+          <v-icon large>mdi-plus</v-icon>
         </v-card>
       </v-col>
 
