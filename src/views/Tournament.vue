@@ -1,27 +1,9 @@
 <template>
-    <div style="margin-right:30px;margin-left:30px;" class="row">
-        <div class="wrapper">
-            <div class="item">
-                <div class="item-parent">
-                    <v-card>
-                        <v-expansion-panels>
-                            <v-expansion-panel>
-                                <v-expansion-panel-header>
-                                    FaZe VS Liquid
-                                </v-expansion-panel-header>
-                                <v-expansion-panel-content>
-                                    <p>Match 1 : 16 - 13</p>
-                                    <p>Match 1 : 12 - 16</p>
-                                    <p>Match 1 : 16 - 10</p>
-                                    <v-btn tile outlined>Ajouter un résultat</v-btn>
-                                </v-expansion-panel-content>
-                            </v-expansion-panel>
-                        </v-expansion-panels>
-                    </v-card>
-                </div>
-                <div class="item-childrens">
-                <div class="item-child">
-                    <div class="item">
+    <div style="margin-top:20px;">
+        <h1>ESL One 2018</h1>
+        <div class="row">
+            <div class="wrapper">
+                <div class="item">
                     <div class="item-parent">
                         <v-card>
                             <v-expansion-panels>
@@ -40,196 +22,212 @@
                         </v-card>
                     </div>
                     <div class="item-childrens">
-                        <div class="item-child">
+                    <div class="item-child">
                         <div class="item">
-                            <div class="item-parent">
+                        <div class="item-parent">
                             <v-card>
-                            <v-expansion-panels>
-                                <v-expansion-panel>
-                                    <v-expansion-panel-header>
-                                        FaZe VS Liquid
-                                    </v-expansion-panel-header>
-                                    <v-expansion-panel-content>
-                                        <p>Match 1 : 16 - 13</p>
-                                        <p>Match 1 : 12 - 16</p>
-                                        <p>Match 1 : 16 - 10</p>
-                                        <v-btn tile outlined>Ajouter un résultat</v-btn>
-                                    </v-expansion-panel-content>
-                                </v-expansion-panel>
-                            </v-expansion-panels>
-                        </v-card>
-                            </div>
-                            <div class="item-childrens">
+                                <v-expansion-panels>
+                                    <v-expansion-panel>
+                                        <v-expansion-panel-header>
+                                            FaZe VS Liquid
+                                        </v-expansion-panel-header>
+                                        <v-expansion-panel-content>
+                                            <p>Match 1 : 16 - 13</p>
+                                            <p>Match 1 : 12 - 16</p>
+                                            <p>Match 1 : 16 - 10</p>
+                                            <v-btn tile outlined>Ajouter un résultat</v-btn>
+                                        </v-expansion-panel-content>
+                                    </v-expansion-panel>
+                                </v-expansion-panels>
+                            </v-card>
+                        </div>
+                        <div class="item-childrens">
                             <div class="item-child">
+                            <div class="item">
+                                <div class="item-parent">
                                 <v-card>
-                            <v-expansion-panels>
-                                <v-expansion-panel>
-                                    <v-expansion-panel-header>
-                                        FaZe VS Liquid
-                                    </v-expansion-panel-header>
-                                    <v-expansion-panel-content>
-                                        <p>Match 1 : 16 - 13</p>
-                                        <p>Match 1 : 12 - 16</p>
-                                        <p>Match 1 : 16 - 10</p>
-                                        <v-btn tile outlined>Ajouter un résultat</v-btn>
-                                    </v-expansion-panel-content>
-                                </v-expansion-panel>
-                            </v-expansion-panels>
-                        </v-card>
+                                <v-expansion-panels>
+                                    <v-expansion-panel>
+                                        <v-expansion-panel-header>
+                                            FaZe VS Liquid
+                                        </v-expansion-panel-header>
+                                        <v-expansion-panel-content>
+                                            <p>Match 1 : 16 - 13</p>
+                                            <p>Match 1 : 12 - 16</p>
+                                            <p>Match 1 : 16 - 10</p>
+                                            <v-btn tile outlined>Ajouter un résultat</v-btn>
+                                        </v-expansion-panel-content>
+                                    </v-expansion-panel>
+                                </v-expansion-panels>
+                            </v-card>
+                                </div>
+                                <div class="item-childrens">
+                                <div class="item-child">
+                                    <v-card>
+                                <v-expansion-panels>
+                                    <v-expansion-panel>
+                                        <v-expansion-panel-header>
+                                            FaZe VS Liquid
+                                        </v-expansion-panel-header>
+                                        <v-expansion-panel-content>
+                                            <p>Match 1 : 16 - 13</p>
+                                            <p>Match 1 : 12 - 16</p>
+                                            <p>Match 1 : 16 - 10</p>
+                                            <v-btn tile outlined>Ajouter un résultat</v-btn>
+                                        </v-expansion-panel-content>
+                                    </v-expansion-panel>
+                                </v-expansion-panels>
+                            </v-card>
+                                </div>
+                                <div class="item-child">
+                                    <v-card>
+                                <v-expansion-panels>
+                                    <v-expansion-panel>
+                                        <v-expansion-panel-header>
+                                            FaZe VS Liquid
+                                        </v-expansion-panel-header>
+                                        <v-expansion-panel-content>
+                                            <p>Match 1 : 16 - 13</p>
+                                            <p>Match 1 : 12 - 16</p>
+                                            <p>Match 1 : 16 - 10</p>
+                                            <v-btn tile outlined>Ajouter un résultat</v-btn>
+                                        </v-expansion-panel-content>
+                                    </v-expansion-panel>
+                                </v-expansion-panels>
+                            </v-card>
+                                </div>
+                                </div>
+                            </div>
                             </div>
                             <div class="item-child">
-                                <v-card>
-                            <v-expansion-panels>
-                                <v-expansion-panel>
-                                    <v-expansion-panel-header>
-                                        FaZe VS Liquid
-                                    </v-expansion-panel-header>
-                                    <v-expansion-panel-content>
-                                        <p>Match 1 : 16 - 13</p>
-                                        <p>Match 1 : 12 - 16</p>
-                                        <p>Match 1 : 16 - 10</p>
-                                        <v-btn tile outlined>Ajouter un résultat</v-btn>
-                                    </v-expansion-panel-content>
-                                </v-expansion-panel>
-                            </v-expansion-panels>
-                        </v-card>
+                            <v-card>
+                                <v-expansion-panels>
+                                    <v-expansion-panel>
+                                        <v-expansion-panel-header>
+                                            FaZe VS Liquid
+                                        </v-expansion-panel-header>
+                                        <v-expansion-panel-content>
+                                            <p>Match 1 : 16 - 13</p>
+                                            <p>Match 1 : 12 - 16</p>
+                                            <p>Match 1 : 16 - 10</p>
+                                            <v-btn tile outlined>Ajouter un résultat</v-btn>
+                                        </v-expansion-panel-content>
+                                    </v-expansion-panel>
+                                </v-expansion-panels>
+                            </v-card>
                             </div>
-                            </div>
                         </div>
                         </div>
-                        <div class="item-child">
-                        <v-card>
-                            <v-expansion-panels>
-                                <v-expansion-panel>
-                                    <v-expansion-panel-header>
-                                        FaZe VS Liquid
-                                    </v-expansion-panel-header>
-                                    <v-expansion-panel-content>
-                                        <p>Match 1 : 16 - 13</p>
-                                        <p>Match 1 : 12 - 16</p>
-                                        <p>Match 1 : 16 - 10</p>
-                                        <v-btn tile outlined>Ajouter un résultat</v-btn>
-                                    </v-expansion-panel-content>
-                                </v-expansion-panel>
-                            </v-expansion-panels>
-                        </v-card>
-                        </div>
                     </div>
-                    </div>
-                </div>
-                <div class="item-child">
-                    <div class="item">
-                    <div class="item-parent">
-                        <v-card>
-                            <v-expansion-panels>
-                                <v-expansion-panel>
-                                    <v-expansion-panel-header>
-                                        FaZe VS Liquid
-                                    </v-expansion-panel-header>
-                                    <v-expansion-panel-content>
-                                        <p>Match 1 : 16 - 13</p>
-                                        <p>Match 1 : 12 - 16</p>
-                                        <p>Match 1 : 16 - 10</p>
-                                        <v-btn tile outlined>Ajouter un résultat</v-btn>
-                                    </v-expansion-panel-content>
-                                </v-expansion-panel>
-                            </v-expansion-panels>
-                        </v-card>
-                    </div>
-                    <div class="item-childrens">
-                        <div class="item-child">
+                    <div class="item-child">
                         <div class="item">
-                            <div class="item-parent">
+                        <div class="item-parent">
                             <v-card>
-                            <v-expansion-panels>
-                                <v-expansion-panel>
-                                    <v-expansion-panel-header>
-                                        FaZe VS Liquid
-                                    </v-expansion-panel-header>
-                                    <v-expansion-panel-content>
-                                        <p>Match 1 : 16 - 13</p>
-                                        <p>Match 1 : 12 - 16</p>
-                                        <p>Match 1 : 16 - 10</p>
-                                        <v-btn tile outlined>Ajouter un résultat</v-btn>
-                                    </v-expansion-panel-content>
-                                </v-expansion-panel>
-                            </v-expansion-panels>
-                        </v-card>
-                            </div>
-                            <div class="item-childrens">
+                                <v-expansion-panels>
+                                    <v-expansion-panel>
+                                        <v-expansion-panel-header>
+                                            FaZe VS Liquid
+                                        </v-expansion-panel-header>
+                                        <v-expansion-panel-content>
+                                            <p>Match 1 : 16 - 13</p>
+                                            <p>Match 1 : 12 - 16</p>
+                                            <p>Match 1 : 16 - 10</p>
+                                            <v-btn tile outlined>Ajouter un résultat</v-btn>
+                                        </v-expansion-panel-content>
+                                    </v-expansion-panel>
+                                </v-expansion-panels>
+                            </v-card>
+                        </div>
+                        <div class="item-childrens">
                             <div class="item-child">
+                            <div class="item">
+                                <div class="item-parent">
                                 <v-card>
-                            <v-expansion-panels>
-                                <v-expansion-panel>
-                                    <v-expansion-panel-header>
-                                        FaZe VS Liquid
-                                    </v-expansion-panel-header>
-                                    <v-expansion-panel-content>
-                                        <p>Match 1 : 16 - 13</p>
-                                        <p>Match 1 : 12 - 16</p>
-                                        <p>Match 1 : 16 - 10</p>
-                                        <v-btn tile outlined>Ajouter un résultat</v-btn>
-                                    </v-expansion-panel-content>
-                                </v-expansion-panel>
-                            </v-expansion-panels>
-                        </v-card>
+                                <v-expansion-panels>
+                                    <v-expansion-panel>
+                                        <v-expansion-panel-header>
+                                            FaZe VS Liquid
+                                        </v-expansion-panel-header>
+                                        <v-expansion-panel-content>
+                                            <p>Match 1 : 16 - 13</p>
+                                            <p>Match 1 : 12 - 16</p>
+                                            <p>Match 1 : 16 - 10</p>
+                                            <v-btn tile outlined>Ajouter un résultat</v-btn>
+                                        </v-expansion-panel-content>
+                                    </v-expansion-panel>
+                                </v-expansion-panels>
+                            </v-card>
+                                </div>
+                                <div class="item-childrens">
+                                <div class="item-child">
+                                    <v-card>
+                                <v-expansion-panels>
+                                    <v-expansion-panel>
+                                        <v-expansion-panel-header>
+                                            FaZe VS Liquid
+                                        </v-expansion-panel-header>
+                                        <v-expansion-panel-content>
+                                            <p>Match 1 : 16 - 13</p>
+                                            <p>Match 1 : 12 - 16</p>
+                                            <p>Match 1 : 16 - 10</p>
+                                            <v-btn tile outlined>Ajouter un résultat</v-btn>
+                                        </v-expansion-panel-content>
+                                    </v-expansion-panel>
+                                </v-expansion-panels>
+                            </v-card>
+                                </div>
+                                <div class="item-child">
+                                    <v-card>
+                                <v-expansion-panels>
+                                    <v-expansion-panel>
+                                        <v-expansion-panel-header>
+                                            FaZe VS Liquid
+                                        </v-expansion-panel-header>
+                                        <v-expansion-panel-content>
+                                            <p>Match 1 : 16 - 13</p>
+                                            <p>Match 1 : 12 - 16</p>
+                                            <p>Match 1 : 16 - 10</p>
+                                            <v-btn tile outlined>Ajouter un résultat</v-btn>
+                                        </v-expansion-panel-content>
+                                    </v-expansion-panel>
+                                </v-expansion-panels>
+                            </v-card>
+                                </div>
+                                </div>
+                            </div>
                             </div>
                             <div class="item-child">
-                                <v-card>
-                            <v-expansion-panels>
-                                <v-expansion-panel>
-                                    <v-expansion-panel-header>
-                                        FaZe VS Liquid
-                                    </v-expansion-panel-header>
-                                    <v-expansion-panel-content>
-                                        <p>Match 1 : 16 - 13</p>
-                                        <p>Match 1 : 12 - 16</p>
-                                        <p>Match 1 : 16 - 10</p>
-                                        <v-btn tile outlined>Ajouter un résultat</v-btn>
-                                    </v-expansion-panel-content>
-                                </v-expansion-panel>
-                            </v-expansion-panels>
-                        </v-card>
-                            </div>
+                            <v-card>
+                                <v-expansion-panels>
+                                    <v-expansion-panel>
+                                        <v-expansion-panel-header>
+                                            FaZe VS Liquid
+                                        </v-expansion-panel-header>
+                                        <v-expansion-panel-content>
+                                            <p>Match 1 : 16 - 13</p>
+                                            <p>Match 1 : 12 - 16</p>
+                                            <p>Match 1 : 16 - 10</p>
+                                            <v-btn tile outlined>Ajouter un résultat</v-btn>
+                                        </v-expansion-panel-content>
+                                    </v-expansion-panel>
+                                </v-expansion-panels>
+                            </v-card>
                             </div>
                         </div>
-                        </div>
-                        <div class="item-child">
-                        <v-card>
-                            <v-expansion-panels>
-                                <v-expansion-panel>
-                                    <v-expansion-panel-header>
-                                        FaZe VS Liquid
-                                    </v-expansion-panel-header>
-                                    <v-expansion-panel-content>
-                                        <p>Match 1 : 16 - 13</p>
-                                        <p>Match 1 : 12 - 16</p>
-                                        <p>Match 1 : 16 - 10</p>
-                                        <v-btn tile outlined>Ajouter un résultat</v-btn>
-                                    </v-expansion-panel-content>
-                                </v-expansion-panel>
-                            </v-expansion-panels>
-                        </v-card>
                         </div>
                     </div>
                     </div>
-                </div>
                 </div>
             </div>
-            </div>
-
+        </div>
     </div>
-  
 </template>
 
 <script>
 export default {
   components: {
-
   },
-
   data: () => ({
-      openedPanel: null,
   }),
   mounted: function() {
   },
@@ -245,18 +243,14 @@ $line-color: black;
 
 .wrapper{
   display: flex;
-  height: 600px;
+  height: auto;
+  width: 100%;
   justify-content: center;
 }
 
 .item{
   display: flex;
   flex-direction: row-reverse;
-//   p {
-//     padding:20px;
-//     margin: 0;
-//     background-color: gray;
-//   }
   
   &-parent{
     position: relative;

@@ -36,7 +36,7 @@
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item-content>
           </router-link>
-          
+ 
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import LoginDialog from "@/components/dialogs/Login";
+import LoginDialog from "@/components/dialogs/LoginDialog";
 
 export default {
   name: 'App',
