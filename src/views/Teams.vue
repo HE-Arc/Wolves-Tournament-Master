@@ -58,7 +58,7 @@
 
 <script>
 import TeamService from "@/services/TeamService";
-import TeamDialog from "@/components/dialogs/Team";
+import TeamDialog from "@/components/dialogs/TeamDialog";
 import DeleteModal from "@/components/modals/Delete";
 
 export default {
