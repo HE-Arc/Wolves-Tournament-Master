@@ -1,6 +1,8 @@
 from rest_framework import routers, serializers, viewsets
 from django.contrib.auth.models import User
 from .models.teammodel import Team
+from .models.matchmodel import Match
+from .models.tournamentmodel import Tournament
 from .serializers import *
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
@@ -26,6 +28,19 @@ class TeamViewSet(viewsets.ModelViewSet):
 	serializer_class = TeamSerializer
 	authentication_classes = (TokenAuthentication,)
 	permission_classes = (AllowAny,)
+
+class MatchViewSet(viewsets.ModelViewSet):
+	queryset = Match.objects.all()
+	serializer_class = MatchSerializer
+	authentication_classes = (TokenAuthentication,)
+	permission_classes = (AllowAny,)
+
+class TournamentViewSet(viewsets.ModelViewSet):
+	queryset = Tournament.objects.all()
+	serializer_class = TournamentSerializer
+	authentication_classes = (TokenAuthentication,)
+	permission_classes = (AllowAny,)
+
 
 # class CustomAuthToken(ObtainAuthToken):
 #     def post(self, request, *args, **kwargs):
