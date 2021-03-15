@@ -22,8 +22,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_DEPLOY_KEY }}
       - name: Add known host
         run: |
-          #ssh-keyscan -p ${{ secrets.SSH_DEPLOY_KEY }} >> ~/.ssh/known_hosts
-          ssh-keyscan -p 1451 wolves.srvz-webapp.he-arc.ch >> ~/.ssh/known_hosts
+         run: ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
       - name: Deploy
         run: |
           bundle exec cap production deploy
