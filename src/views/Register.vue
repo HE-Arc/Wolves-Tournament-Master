@@ -98,35 +98,29 @@ export default {
   }),
 
   methods: {
-    // To show the dialog
-    async Register() {
+        async Register() {
       const result = await this.$validator.validate();
 
       if (result && this.pwd == this.confirmpwd) {
         this.loading = true;
 
-        let user = {
-          username: this.username,
-          email: this.email,
-          password: this.pwd
-        };
+        const response = await AuthenticationService.Register(this.username, this.email, this.password);
 
-        const result = await UserService.CreateUser(user);
-
-        if (result) {
+        if (response) {
+          this.$refs.registerForm.reset();
+          this.$snotify.success(this.username + " registered successfuly!");
           this.$router.push({name: 'Home'})
-
-          this.$refs.form.reset();
-          this.$snotify.info(user.username + " registered successfuly!");
-          this.isVisible = false;
         } else {
-          this.$snotify.error(
-            "Unable to register...\nPlease try later..."
-          );
+          this.$snotify.error(this.errorMessage);
           this.error = true;
         }
 
         this.loading = false;
+      }
+      else {
+        this.errorMessage = this.pwd == this.confirmpwd ? this.errorMessage : "Passwords doesn't match !"
+        this.$snotify.error(this.errorMessage);
+        this.error = true;
       }
     }
   }
