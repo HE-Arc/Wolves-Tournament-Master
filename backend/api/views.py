@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from .models.teammodel import Team
 from .models.matchmodel import Match
 from .models.tournamentmodel import Tournament
+from .models.notificationmodel import Notification
 from .serializers import *
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
@@ -38,6 +39,12 @@ class MatchViewSet(viewsets.ModelViewSet):
 class TournamentViewSet(viewsets.ModelViewSet):
 	queryset = Tournament.objects.all()
 	serializer_class = TournamentSerializer
+	authentication_classes = (TokenAuthentication,)
+	permission_classes = (AllowAny,)
+
+class NotificationViewSet(viewsets.ModelViewSet):
+	queryset = Notification.objects.all()
+	serializer_class = NotificationSerializer
 	authentication_classes = (TokenAuthentication,)
 	permission_classes = (AllowAny,)
 
