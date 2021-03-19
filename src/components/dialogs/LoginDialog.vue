@@ -75,6 +75,7 @@
 
 <script>
 import UserService from '@/services/UserService'
+import NotificationService from '@/services/NotificationService'
 
 export default {
   data: () => ({
@@ -126,6 +127,7 @@ export default {
           this.$snotify.info(
             user.username + ' logged in successfuly!'
           )
+          this.GetNotifications()
           this.isVisible = false
         } else {
           this.$snotify.error(
@@ -136,6 +138,25 @@ export default {
 
         this.loading = false
       }
+    },
+    async GetNotifications() {
+      this.loading = true
+
+      let response = await NotificationService.GetNotifications(
+        this.$store.state.token,
+        this.$store.state.authUserId
+      )
+
+      if (response.isSuccess) {
+        let notifNumber = response.result.length
+        console.log('notif number1 = ' + notifNumber)
+        this.$store.commit('updateNotif', notifNumber)
+      } else {
+        this.$snotify.error(
+          'Unable to get notifications ...'
+        )
+      }
+      this.loading = false
     }
   }
 }

@@ -8,7 +8,8 @@ export default new Vuex.Store({
     authUserId: null,
     authUserEmail: null,
     isAuthenticated: false,
-    token: localStorage.getItem('token')
+    token: localStorage.getItem('token'),
+    nbrNotif: 0,
   },
   mutations: {
     setAuthUser(state, {
@@ -29,7 +30,10 @@ export default new Vuex.Store({
       // TODO: For security purposes, take localStorage out of the project.
       localStorage.removeItem('token');
       state.token = null;
-    }
+    },
+    updateNotif(state, newNumber) {
+      state.nbrNotif = newNumber;
+    },
   },
   actions: {},
   modules: {}
