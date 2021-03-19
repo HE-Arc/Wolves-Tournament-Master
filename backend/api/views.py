@@ -48,6 +48,14 @@ class NotificationViewSet(viewsets.ModelViewSet):
 	authentication_classes = (TokenAuthentication,)
 	permission_classes = (AllowAny,)
 
+	def get_queryset(self):
+		queryset = Notification.objects.all()
+		uid = self.request.query_params.get("uid", None)
+		if(uid is not None):
+			queryset = queryset.filter(user=uid)
+		return queryset
+
+
 class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,

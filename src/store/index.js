@@ -5,9 +5,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    authUser: {},
+    authUserId: null,
+    authUserEmail: null,
     isAuthenticated: false,
-    token: localStorage.getItem('token'),
+    token: localStorage.getItem('token')
   },
   mutations: {
     setAuthUser(state, {
