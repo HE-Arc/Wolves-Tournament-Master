@@ -1,8 +1,14 @@
 <template>
-  <v-dialog v-model="isVisible" persistent max-width="500px">
+  <v-dialog
+    v-model="isVisible"
+    persistent
+    max-width="500px"
+  >
     <v-card>
       <v-toolbar dark color="#01002a">
-        <v-toolbar-title>Delete {{ item.name }}</v-toolbar-title>
+        <v-toolbar-title
+          >Delete {{ item.name }}</v-toolbar-title
+        >
         <v-spacer></v-spacer>
         <v-toolbar-items>
           <v-btn v-show="!loading" icon dark @click="hide">
@@ -13,7 +19,9 @@
       <v-card-title></v-card-title>
       <v-card-text>
         You realy want to delete "
-        <span style="font-size:15px;font-weight:bold;">{{ item.name }}</span
+        <span style="font-size:15px;font-weight:bold;">{{
+          item.name
+        }}</span
         >" ?
       </v-card-text>
       <v-card-actions v-show="!loading">
@@ -41,12 +49,12 @@
 <script>
 export default {
   data: () => ({
-    title: "",
-    message: "An error occured... Please try later",
+    title: '',
+    message: 'An error occured... Please try later',
     loading: false,
     isVisible: false,
     item: {
-      name: ""
+      name: ''
     },
     error: false
   }),
@@ -55,14 +63,18 @@ export default {
   },
   methods: {
     show(item) {
-      (this.isVisible = true), (this.item = item);
+      this.isVisible = true
+      this.item = item
     },
     hide() {
-      (this.loading = false), (this.error = false), (this.isVisible = false);
+      this.loading = false
+      this.error = false
+      this.isVisible = false
     },
     yes() {
-      (this.loading = true), this.action(this.item);
+      this.loading = true
+      this.action(this.item)
     }
   }
-};
+}
 </script>

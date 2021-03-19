@@ -1,35 +1,31 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-    authUser: {},
-    isAuthenticated: false,
-    token: localStorage.getItem('token'),
-  },
-  mutations: {
-    setAuthUser(state, {
-      authUserId,
-      authUserEmail,
-      isAuthenticated,
-    }) {
-      Vue.set(state, 'authUserId', authUserId)
-      Vue.set(state, 'authUserEmail', authUserEmail)
-      Vue.set(state, 'isAuthenticated', isAuthenticated)
+    state: {
+        authUser: {},
+        isAuthenticated: false,
+        token: localStorage.getItem('token')
     },
-    updateToken(state, newToken) {
-      // TODO: For security purposes, take localStorage out of the project.
-      localStorage.setItem('token', newToken);
-      state.token = newToken;
+    mutations: {
+        setAuthUser(state, { authUserId, authUserEmail, isAuthenticated }) {
+            Vue.set(state, 'authUserId', authUserId)
+            Vue.set(state, 'authUserEmail', authUserEmail)
+            Vue.set(state, 'isAuthenticated', isAuthenticated)
+        },
+        setToken(state, newToken) {
+            // TODO: For security purposes, take localStorage out of the project.
+            localStorage.setItem('token', newToken)
+            state.token = newToken
+        },
+        removeToken(state) {
+            // TODO: For security purposes, take localStorage out of the project.
+            localStorage.removeItem('token')
+            state.token = null
+        }
     },
-    removeToken(state) {
-      // TODO: For security purposes, take localStorage out of the project.
-      localStorage.removeItem('token');
-      state.token = null;
-    }
-  },
-  actions: {},
-  modules: {}
-});
+    actions: {},
+    modules: {}
+})

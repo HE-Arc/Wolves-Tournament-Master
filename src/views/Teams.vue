@@ -28,7 +28,11 @@
             <template v-slot:top>
               <v-toolbar flat>
                 <v-toolbar-title>TEAMS</v-toolbar-title>
-                <v-divider class="mx-4" inset vertical></v-divider>
+                <v-divider
+                  class="mx-4"
+                  inset
+                  vertical
+                ></v-divider>
                 <v-spacer></v-spacer>
                 <v-btn
                   @click.stop="CreateTeam"
@@ -42,7 +46,11 @@
               </v-toolbar>
             </template>
             <template v-slot:[`item.actions`]="{ item }">
-              <v-icon small class="mr-2" @click="UpdateTeam(item)">
+              <v-icon
+                small
+                class="mr-2"
+                @click="UpdateTeam(item)"
+              >
                 mdi-pencil
               </v-icon>
               <v-icon small @click="OpenDeleteModal(item)">
@@ -57,9 +65,9 @@
 </template>
 
 <script>
-import TeamService from "@/services/TeamService";
-import TeamDialog from "@/components/dialogs/TeamDialog";
-import DeleteModal from "@/components/modals/Delete";
+import TeamService from '@/services/TeamService'
+import TeamDialog from '@/components/dialogs/TeamDialog'
+import DeleteModal from '@/components/modals/Delete'
 
 export default {
   components: {
@@ -71,52 +79,69 @@ export default {
     teams: [],
     loading: false,
     headers: [
-      { text: "ID", value: "id" },
-      { text: "Name", value: "name" },
-      { text: "Leader ID", value: "leader" },
-      { text: "Actions", value: "actions", sortable: false }
+      { text: 'ID', value: 'id' },
+      { text: 'Name', value: 'name' },
+      { text: 'Leader ID', value: 'leader' },
+      { text: 'Actions', value: 'actions', sortable: false }
     ],
     showteamDialog: false
   }),
   mounted: function() {
-    this.GetTeams();
+    this.GetTeams()
   },
   methods: {
     async CreateTeam() {
-      this.$refs.teamDialog.show(this, "Add a new team", null, false);
+      this.$refs.teamDialog.show(
+        this,
+        'Add a new team',
+        null,
+        false
+      )
     },
     async UpdateTeam(team) {
-      this.$refs.teamDialog.show(this, "Update team", team, true);
+      this.$refs.teamDialog.show(
+        this,
+        'Update team',
+        team,
+        true
+      )
     },
     async GetTeams() {
-      this.loading = true;
+      this.loading = true
 
-      let response = await TeamService.GetTeams(this.$store.state.token);
+      let response = await TeamService.GetTeams(
+        this.$store.state.token
+      )
 
       if (response.isSuccess) {
-        this.teams = response.result;
+        this.teams = response.result
       } else {
-        this.$snotify.error("Unable to get teams...");
+        this.$snotify.error('Unable to get teams...')
       }
 
-      this.loading = false;
+      this.loading = false
     },
     async OpenDeleteModal(team) {
-      this.$refs.deleteTeam.show(team);
+      this.$refs.deleteTeam.show(team)
     },
     async DeleteTeam(team) {
-      let response = await TeamService.DeleteTeam(this.$store.state.token, team);
+      let response = await TeamService.DeleteTeam(
+        this.$store.state.token,
+        team
+      )
 
       if (response.isSuccess) {
-        this.$snotify.success("team '" + team.name + "' deleted successfuly");
-        this.$refs.deleteTeam.hide();
-        this.GetTeams();
+        this.$snotify.success(
+          'team ' + team.name + ' deleted successfuly'
+        )
+        this.$refs.deleteTeam.hide()
+        this.GetTeams()
       } else {
-        this.$snotify.error("Unable to delete this team...");
-        this.$refs.deleteTeam.loading = false;
-        this.$refs.deleteTeam.hide();
+        this.$snotify.error('Unable to delete this team...')
+        this.$refs.deleteTeam.loading = false
+        this.$refs.deleteTeam.hide()
       }
     }
   }
-};
+}
 </script>

@@ -1,8 +1,14 @@
 <template>
-  <v-dialog v-model="isVisible" max-width="500px" @keydown.esc="hide">
+  <v-dialog
+    v-model="isVisible"
+    max-width="500px"
+    @keydown.esc="hide"
+  >
     <v-card>
       <v-toolbar dark color="#01002a">
-        <v-toolbar-title>Create a tournament</v-toolbar-title>
+        <v-toolbar-title
+          >Create a tournament</v-toolbar-title
+        >
         <v-spacer></v-spacer>
         <v-toolbar-items>
           <v-btn icon dark @click="hide">
@@ -12,7 +18,7 @@
       </v-toolbar>
       <v-card-title></v-card-title>
       <v-card-text>
-        <v-form ref="form" style="padding:10px;">
+        <v-form ref="form" style="padding: 10px">
           <v-text-field
             v-model="name"
             label="Name"
@@ -77,14 +83,16 @@
                 clearable
                 v-validate="'required'"
                 data-vv-name="limit date"
-                :error-messages="errors.collect('limit date')"
+                :error-messages="
+                  errors.collect('limit date')
+                "
               ></v-combobox>
             </template>
             <v-date-picker
               v-model="limitDate"
               no-title
               scrollable
-              :min="new Date().toISOString().slice(0,10)"
+              :min="new Date().toISOString().slice(0, 10)"
             >
               <v-spacer></v-spacer>
               <v-btn
@@ -111,9 +119,13 @@
             outlined
             clearable
             hint="Must be between 2 and 16"
-            v-validate="'required|numeric|min_value:2|max_value:16'"
+            v-validate="
+              'required|numeric|min_value:2|max_value:16'
+            "
             data-vv-name="number of teams"
-            :error-messages="errors.collect('number of teams')"
+            :error-messages="
+              errors.collect('number of teams')
+            "
           ></v-text-field>
           <v-alert
             v-show="error"
@@ -166,12 +178,13 @@ export default {
   methods: {
     // To show the dialog
     show() {
-      this.isVisible = true;
+      this.isVisible = true
     },
     hide() {
-      this.$refs.form.reset();
-      this.isVisible = false;
-    },
+      this.error = false
+      this.$refs.form.reset()
+      this.isVisible = false
+    }
   }
-};
+}
 </script>

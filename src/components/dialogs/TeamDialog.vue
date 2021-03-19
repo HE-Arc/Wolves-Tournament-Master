@@ -1,5 +1,9 @@
 <template>
-  <v-dialog v-model="isVisible" max-width="500px" @keydown.esc="hide">
+  <v-dialog
+    v-model="isVisible"
+    max-width="500px"
+    @keydown.esc="hide"
+  >
     <v-card>
       <v-toolbar dark color="#01002a">
         <v-toolbar-title>{{ title }}</v-toolbar-title>
@@ -46,11 +50,21 @@
       </v-card-text>
       <v-card-actions v-show="!loading">
         <v-spacer></v-spacer>
-        <v-btn v-show="!isUpdate" tile color="success" @click="CreateTeam">
+        <v-btn
+          v-show="!isUpdate"
+          tile
+          color="success"
+          @click="CreateTeam"
+        >
           Save
           <v-icon right> mdi-content-save </v-icon>
         </v-btn>
-        <v-btn v-show="isUpdate" tile color="success" @click="UpdateTeam">
+        <v-btn
+          v-show="isUpdate"
+          tile
+          color="success"
+          @click="UpdateTeam"
+        >
           Save
           <v-icon right> mdi-content-save </v-icon>
         </v-btn>
@@ -67,21 +81,21 @@
 </template>
 
 <script>
-import TeamService from "@/services/TeamService";
+import TeamService from '@/services/TeamService'
 
 export default {
   data: () => ({
     isVisible: false,
     parent: undefined,
-    title: "",
+    title: '',
     item: [],
     isUpdate: false,
     loading: false,
     error: false,
 
     id: null,
-    name: "",
-    leader: ""
+    name: '',
+    leader: ''
   }),
 
   mounted() {},
@@ -89,76 +103,84 @@ export default {
   methods: {
     // To show the dialog
     show(parent, title, item, isUpdate) {
-      this.parent = parent;
-      this.title = title;
-      this.item = item;
-      this.isUpdate = isUpdate;
+      this.parent = parent
+      this.title = title
+      this.item = item
+      this.isUpdate = isUpdate
 
       if (isUpdate) {
-        this.name = item.name;
-        this.leader = item.leader;
+        this.name = item.name
+        this.leader = item.leader
       }
 
-      this.isVisible = true;
+      this.isVisible = true
     },
     hide() {
-      this.$refs.form.reset();
-      this.isVisible = false;
+      this.error = false
+      this.$refs.form.reset()
+      this.isVisible = false
     },
     async CreateTeam() {
-      const result = await this.$validator.validate();
+      const result = await this.$validator.validate()
 
       if (result) {
-        this.loading = true;
+        this.loading = true
 
         let team = {
           name: this.name,
           leader: this.leader
-        };
-
-        const response = await TeamService.CreateTeam(team);
-
-        if (response.isSuccess) {
-          this.$refs.form.reset();
-          this.$snotify.success(team.name + " added successfuly!");
-          this.isVisible = false;
-          this.parent.GetTeams();
-        } else {
-          this.$snotify.error(
-            "Unable to save this team...\nPlease try later..."
-          );
-          this.error = true;
         }
 
-        this.loading = false;
+        const response = await TeamService.CreateTeam(team)
+
+        if (response.isSuccess) {
+          this.$refs.form.reset()
+          this.$snotify.success(
+            team.name + ' added successfuly!'
+          )
+          this.isVisible = false
+          this.parent.GetTeams()
+        } else {
+          this.$snotify.error(
+            'Unable to save this team...\nPlease try later...'
+          )
+          this.error = true
+        }
+
+        this.loading = false
       }
     },
     async UpdateTeam() {
-      const result = await this.$validator.validate();
+      const result = await this.$validator.validate()
 
       if (result) {
-        this.loading = true;
+        this.loading = true
 
-        this.item.name = this.name;
-        this.item.leader = this.leader;
+        this.item.name = this.name
+        this.item.leader = this.leader
 
-        const response = await TeamService.UpdateTeam(this.$store.state.token, this.item);
+        const response = await TeamService.UpdateTeam(
+          this.$store.state.token,
+          this.item
+        )
 
         if (response.result.id) {
-          this.$refs.form.reset();
-          this.$snotify.success(this.item.name + " updated successfuly!");
-          this.isVisible = false;
-          this.parent.GetTeams();
+          this.$refs.form.reset()
+          this.$snotify.success(
+            this.item.name + ' updated successfuly!'
+          )
+          this.isVisible = false
+          this.parent.GetTeams()
         } else {
           this.$snotify.error(
-            "Unable to update this formation...\nPlease try later..."
-          );
-          this.error = true;
+            'Unable to update this formation...\nPlease try later...'
+          )
+          this.error = true
         }
 
-        this.loading = false;
+        this.loading = false
       }
     }
   }
-};
+}
 </script>

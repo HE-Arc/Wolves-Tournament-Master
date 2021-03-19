@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import UserService from "@/services/UserService";
+import UserService from '@/services/UserService'
 
 export default {
   data: () => ({
@@ -13,15 +13,15 @@ export default {
   }),
 
   mounted() {
-    this.GetUsers();
+    this.GetUsers()
   },
 
   methods: {
     async GetUsers() {
-      const response = await UserService.GetUsers();
+      const response = await UserService.GetUsers()
 
-      console.log(response);
+      console.log(response)
     }
   }
-};
+}
 </script>

@@ -1,4 +1,4 @@
-<template> 
+<template>
   <v-col xs="12" offset-sm="3" sm="6" offset-md="4" md="4">
     <v-card>
       <v-card-title>Sign up</v-card-title>
@@ -26,12 +26,14 @@
             :error-messages="errors.collect('email')"
           ></v-text-field>
           <v-text-field
-            :append-icon="showPwd ? 'mdi-eye' : 'mdi-eye-off'"
+            :append-icon="
+              showPwd ? 'mdi-eye' : 'mdi-eye-off'
+            "
             v-model="pwd"
             label="Password"
             outlined
             dense
-            :type="showPwd ? 'text':'password'"
+            :type="showPwd ? 'text' : 'password'"
             clearable
             v-validate="'required|min:8'"
             data-vv-name="password"
@@ -40,16 +42,20 @@
             @click:append="showPwd = !showPwd"
           ></v-text-field>
           <v-text-field
-            :append-icon="showPwd ? 'mdi-eye' : 'mdi-eye-off'"
+            :append-icon="
+              showPwd ? 'mdi-eye' : 'mdi-eye-off'
+            "
             v-model="confirmpwd"
             label="Confrim your password"
             outlined
             dense
-            :type="showPwd ? 'text':'password'"
+            :type="showPwd ? 'text' : 'password'"
             clearable
             v-validate="'required|min:8'"
             data-vv-name="confirm password"
-            :error-messages="errors.collect('confirm password')"
+            :error-messages="
+              errors.collect('confirm password')
+            "
             @click:append="showPwd = !showPwd"
           ></v-text-field>
           <v-alert
@@ -82,7 +88,7 @@
 </template>
 
 <script>
-import UserService from "@/services/UserService";
+import UserService from '@/services/UserService'
 
 export default {
   data: () => ({
@@ -91,18 +97,18 @@ export default {
     showPwd: false,
 
     id: null,
-    username: "",
-    email: "",
-    pwd: "",
-    confirmpwd: "",
+    username: '',
+    email: '',
+    pwd: '',
+    confirmpwd: ''
   }),
 
   methods: {
     async Register() {
-      const result = await this.$validator.validate();
+      const result = await this.$validator.validate()
 
       if (result && this.pwd == this.confirmpwd) {
-        this.loading = true;
+        this.loading = true
 
         let user = {
           username: this.username,
@@ -110,25 +116,29 @@ export default {
           password: this.pwd
         }
 
-        const response = await UserService.CreateUser(user);
+        const response = await UserService.CreateUser(user)
 
         if (response.isSuccess) {
-          this.$refs.registerForm.reset();
-          this.$snotify.success(this.username + " registered successfuly!");
-          this.$router.push({name: 'Home'})
+          this.$refs.registerForm.reset()
+          this.$snotify.success(
+            this.username + ' registered successfuly!'
+          )
+          this.$router.push({ name: 'Home' })
         } else {
-          this.$snotify.error(this.errorMessage);
-          this.error = true;
+          this.$snotify.error(this.errorMessage)
+          this.error = true
         }
 
-        this.loading = false;
-      }
-      else {
-        this.errorMessage = this.pwd == this.confirmpwd ? this.errorMessage : "Passwords doesn't match !"
-        this.$snotify.error(this.errorMessage);
-        this.error = true;
+        this.loading = false
+      } else {
+        this.errorMessage =
+          this.pwd == this.confirmpwd
+            ? this.errorMessage
+            : "Passwords doesn't match !"
+        this.$snotify.error(this.errorMessage)
+        this.error = true
       }
     }
   }
-};
+}
 </script>
