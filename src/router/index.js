@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Teams from "../views/Teams.vue";
 import Register from "../views/Register.vue";
 import Tournament from "../views/Tournament.vue";
+import Notifications from "../views/Notifications.vue";
 
 Vue.use(VueRouter);
 
@@ -29,6 +30,11 @@ const routes = [
     name: "Tournament",
     component: Tournament,
 
+  },
+  {
+    path: "/notifications",
+    name: "Notifications",
+    component: Notifications,
   },
   {
     path: "/about",
