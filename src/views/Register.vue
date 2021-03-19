@@ -104,9 +104,15 @@ export default {
       if (result && this.pwd == this.confirmpwd) {
         this.loading = true;
 
-        const response = await AuthenticationService.Register(this.username, this.email, this.password);
+        let user = {
+          username: this.username,
+          email: this.email,
+          password: this.pwd
+        }
 
-        if (response) {
+        const response = await UserService.CreateUser(user);
+
+        if (response.isSuccess) {
           this.$refs.registerForm.reset();
           this.$snotify.success(this.username + " registered successfuly!");
           this.$router.push({name: 'Home'})

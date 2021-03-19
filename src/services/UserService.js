@@ -8,14 +8,10 @@ export default {
       axios
         .get(this.apiurl + "users/")
         .then(response => {
-          if (response.data) {
-            resolve(response.data);
-          } else {
-            resolve("Error");
-          }
+          resolve({isSuccess: true, result: response.data});
         })
         .catch(error => {
-          resolve(error);
+          resolve({isSuccess: false, result: error});
         });
     });
   },
@@ -23,14 +19,10 @@ export default {
     return new Promise(resolve => {
       axios.post(this.apiurl + "users/", user)
         .then(response => {
-          if (response.data) {
-            resolve(response.data);
-          } else {
-            resolve("Error");
-          }
+          resolve({isSuccess: true, result: response.data});
         })
         .catch(error => {
-          resolve(error);
+          resolve({isSuccess: false, result: error});
         });
     });
   },
@@ -38,15 +30,10 @@ export default {
     return new Promise(resolve => {
       axios.post(this.apiurl + "auth/", user)
         .then(response => {
-          if (response.data) {
-            console.log(response.data)
-            resolve(response.data);
-          } else {
-            resolve("Error");
-          }
+          resolve({isSucces: true, result: response.data});
         })
         .catch(error => {
-          resolve(error);
+          resolve({isSuccess: false, result: error});
         });
     });
   }

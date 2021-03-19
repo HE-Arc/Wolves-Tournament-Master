@@ -91,10 +91,10 @@ export default {
     async GetTeams() {
       this.loading = true;
 
-      let result = await TeamService.GetTeams(this.$store.state.token);
+      let response = await TeamService.GetTeams(this.$store.state.token);
 
-      if (result) {
-        this.teams = result;
+      if (response.isSuccess) {
+        this.teams = response.result;
       } else {
         this.$snotify.error("Unable to get teams...");
       }
@@ -105,9 +105,9 @@ export default {
       this.$refs.deleteTeam.show(team);
     },
     async DeleteTeam(team) {
-      let result = await TeamService.DeleteTeam(this.$store.state.token, team);
+      let response = await TeamService.DeleteTeam(this.$store.state.token, team);
 
-      if (result) {
+      if (response.isSuccess) {
         this.$snotify.success("team '" + team.name + "' deleted successfuly");
         this.$refs.deleteTeam.hide();
         this.GetTeams();

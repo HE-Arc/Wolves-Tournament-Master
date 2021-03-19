@@ -98,15 +98,13 @@ export default {
           password: this.pwd
         };
 
-        const result = await UserService.Login(user);
+        const response = await UserService.Login(user);
 
-        if (result) {
-          this.$store.commit('updateToken', result.token)
+        if (response.isSuccess) {
+          this.$store.commit('updateToken', response.result.token)
           this.$store.commit("setAuthUser",
-            {authUserId: result.user_id, authUserEmail: result.email, isAuthenticated: true}
+            {authUserId: response.result.user_id, authUserEmail: response.result.email, isAuthenticated: true}
           )
-          console.log(result);
-          //this.$router.push({name: 'Home'})
 
           this.$refs.form.reset();
           this.$snotify.info(user.username + " logged in successfuly!");

@@ -116,9 +116,9 @@ export default {
           leader: this.leader
         };
 
-        const result = await TeamService.CreateTeam(team);
+        const response = await TeamService.CreateTeam(team);
 
-        if (result) {
+        if (response.isSuccess) {
           this.$refs.form.reset();
           this.$snotify.success(team.name + " added successfuly!");
           this.isVisible = false;
@@ -142,9 +142,9 @@ export default {
         this.item.name = this.name;
         this.item.leader = this.leader;
 
-        const result = await TeamService.UpdateTeam(this.$store.state.token, this.item);
+        const response = await TeamService.UpdateTeam(this.$store.state.token, this.item);
 
-        if (result.id) {
+        if (response.result.id) {
           this.$refs.form.reset();
           this.$snotify.success(this.item.name + " updated successfuly!");
           this.isVisible = false;

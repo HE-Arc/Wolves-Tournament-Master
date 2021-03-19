@@ -7,14 +7,10 @@ export default {
     return new Promise(resolve => {
       axios.get(this.apiurl + "teams/")
         .then(response => {
-          if (response.data) {
-            resolve(response.data);
-          } else {
-            resolve("Error");
-          }
+          resolve({isSuccess: true, result: response.data});
         })
         .catch(error => {
-          resolve(error);
+          resolve({isSuccess: false, result: error});
         });
     });
   },
@@ -22,14 +18,10 @@ export default {
     return new Promise(resolve => {
       axios.post(this.apiurl + "teams/", team)
         .then(response => {
-          if (response.data) {
-            resolve(response.data);
-          } else {
-            resolve("Error");
-          }
+          resolve({isSuccess: true, result: response.data});
         })
         .catch(error => {
-          resolve(error);
+          resolve({isSuccess:false, result: error});
         });
     });
   },
@@ -43,14 +35,10 @@ export default {
 
       axios.put(this.apiurl + "teams/" + team.id + "/", team, config)
         .then(response => {
-          if (response.data) {
-            resolve(response.data);
-          } else {
-            resolve("Error");
-          }
+          resolve({isSuccess: true, result: response.data});
         })
         .catch(error => {
-          resolve(error);
+          resolve({isSuccess: false, result: error});
         });
     });
   },
@@ -64,14 +52,10 @@ export default {
 
       axios.delete(this.apiurl + "teams/" + team.id, config)
         .then(response => {
-          if (response.data) {
-            resolve(response.data);
-          } else {
-            resolve("Error");
-          }
+          resolve({isSuccess: true, result: response.data});
         })
         .catch(error => {
-          resolve(error);
+          resolve({isSuccess: false, result: error});
         });
     });
   }
