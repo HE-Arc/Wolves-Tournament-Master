@@ -72,7 +72,7 @@ import DeleteModal from '@/components/modals/Delete'
 export default {
   components: {
     TeamDialog,
-    DeleteModal
+    DeleteModal,
   },
 
   data: () => ({
@@ -84,7 +84,7 @@ export default {
       { text: 'Leader ID', value: 'leader' },
       { text: 'Actions', value: 'actions', sortable: false }
     ],
-    showteamDialog: false
+    showteamDialog: false,
   }),
   mounted: function() {
     this.GetTeams()
@@ -125,10 +125,7 @@ export default {
       this.$refs.deleteTeam.show(team)
     },
     async DeleteTeam(team) {
-      let response = await TeamService.DeleteTeam(
-        this.$store.state.token,
-        team
-      )
+      let response = await TeamService.DeleteTeam(this.$store.state.token, team);
 
       if (response.isSuccess) {
         this.$snotify.success(
@@ -143,5 +140,5 @@ export default {
       }
     }
   }
-}
+};
 </script>

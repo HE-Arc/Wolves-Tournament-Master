@@ -8,16 +8,12 @@
             <v-card>
               <v-expansion-panels>
                 <v-expansion-panel>
-                  <v-expansion-panel-header>
-                    A
-                  </v-expansion-panel-header>
+                  <v-expansion-panel-header> A </v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <p>Match 1 : 16 - 13</p>
                     <p>Match 1 : 12 - 16</p>
                     <p>Match 1 : 16 - 10</p>
-                    <v-btn tile outlined
-                      >Ajouter un résultat</v-btn
-                    >
+                    <v-btn tile outlined>Ajouter un résultat</v-btn>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
               </v-expansion-panels>
@@ -30,16 +26,12 @@
                   <v-card>
                     <v-expansion-panels>
                       <v-expansion-panel>
-                        <v-expansion-panel-header>
-                          B
-                        </v-expansion-panel-header>
+                        <v-expansion-panel-header> B </v-expansion-panel-header>
                         <v-expansion-panel-content>
                           <p>Match 1 : 16 - 13</p>
                           <p>Match 1 : 12 - 16</p>
                           <p>Match 1 : 16 - 10</p>
-                          <v-btn tile outlined
-                            >Ajouter un résultat</v-btn
-                          >
+                          <v-btn tile outlined>Ajouter un résultat</v-btn>
                         </v-expansion-panel-content>
                       </v-expansion-panel>
                     </v-expansion-panels>
@@ -59,10 +51,7 @@
                                 <p>Match 1 : 16 - 13</p>
                                 <p>Match 1 : 12 - 16</p>
                                 <p>Match 1 : 16 - 10</p>
-                                <v-btn tile outlined
-                                  >Ajouter un
-                                  résultat</v-btn
-                                >
+                                <v-btn tile outlined>Ajouter un résultat</v-btn>
                               </v-expansion-panel-content>
                             </v-expansion-panel>
                           </v-expansion-panels>
@@ -81,8 +70,7 @@
                                   <p>Match 1 : 12 - 16</p>
                                   <p>Match 1 : 16 - 10</p>
                                   <v-btn tile outlined
-                                    >Ajouter un
-                                    résultat</v-btn
+                                    >Ajouter un résultat</v-btn
                                   >
                                 </v-expansion-panel-content>
                               </v-expansion-panel>
@@ -101,8 +89,7 @@
                                   <p>Match 1 : 12 - 16</p>
                                   <p>Match 1 : 16 - 10</p>
                                   <v-btn tile outlined
-                                    >Ajouter un
-                                    résultat</v-btn
+                                    >Ajouter un résultat</v-btn
                                   >
                                 </v-expansion-panel-content>
                               </v-expansion-panel>
@@ -125,10 +112,7 @@
                                 <p>Match 1 : 16 - 13</p>
                                 <p>Match 1 : 12 - 16</p>
                                 <p>Match 1 : 16 - 10</p>
-                                <v-btn tile outlined
-                                  >Ajouter un
-                                  résultat</v-btn
-                                >
+                                <v-btn tile outlined>Ajouter un résultat</v-btn>
                               </v-expansion-panel-content>
                             </v-expansion-panel>
                           </v-expansion-panels>
@@ -147,8 +131,7 @@
                                   <p>Match 1 : 12 - 16</p>
                                   <p>Match 1 : 16 - 10</p>
                                   <v-btn tile outlined
-                                    >Ajouter un
-                                    résultat</v-btn
+                                    >Ajouter un résultat</v-btn
                                   >
                                 </v-expansion-panel-content>
                               </v-expansion-panel>
@@ -167,8 +150,7 @@
                                   <p>Match 1 : 12 - 16</p>
                                   <p>Match 1 : 16 - 10</p>
                                   <v-btn tile outlined
-                                    >Ajouter un
-                                    résultat</v-btn
+                                    >Ajouter un résultat</v-btn
                                   >
                                 </v-expansion-panel-content>
                               </v-expansion-panel>
@@ -187,16 +169,12 @@
                   <v-card>
                     <v-expansion-panels>
                       <v-expansion-panel>
-                        <v-expansion-panel-header>
-                          G
-                        </v-expansion-panel-header>
+                        <v-expansion-panel-header> G </v-expansion-panel-header>
                         <v-expansion-panel-content>
                           <p>Match 1 : 16 - 13</p>
                           <p>Match 1 : 12 - 16</p>
                           <p>Match 1 : 16 - 10</p>
-                          <v-btn tile outlined
-                            >Ajouter un résultat</v-btn
-                          >
+                          <v-btn tile outlined>Ajouter un résultat</v-btn>
                         </v-expansion-panel-content>
                       </v-expansion-panel>
                     </v-expansion-panels>
@@ -216,10 +194,7 @@
                                 <p>Match 1 : 16 - 13</p>
                                 <p>Match 1 : 12 - 16</p>
                                 <p>Match 1 : 16 - 10</p>
-                                <v-btn tile outlined
-                                  >Ajouter un
-                                  résultat</v-btn
-                                >
+                                <v-btn tile outlined>Ajouter un résultat</v-btn>
                               </v-expansion-panel-content>
                             </v-expansion-panel>
                           </v-expansion-panels>
@@ -238,8 +213,7 @@
                                   <p>Match 1 : 12 - 16</p>
                                   <p>Match 1 : 16 - 10</p>
                                   <v-btn tile outlined
-                                    >Ajouter un
-                                    résultat</v-btn
+                                    >Ajouter un résultat</v-btn
                                   >
                                 </v-expansion-panel-content>
                               </v-expansion-panel>
@@ -258,8 +232,7 @@
                                   <p>Match 1 : 12 - 16</p>
                                   <p>Match 1 : 16 - 10</p>
                                   <v-btn tile outlined
-                                    >Ajouter un
-                                    résultat</v-btn
+                                    >Ajouter un résultat</v-btn
                                   >
                                 </v-expansion-panel-content>
                               </v-expansion-panel>
@@ -280,9 +253,7 @@
                             <p>Match 1 : 16 - 13</p>
                             <p>Match 1 : 12 - 16</p>
                             <p>Match 1 : 16 - 10</p>
-                            <v-btn tile outlined
-                              >Ajouter un résultat</v-btn
-                            >
+                            <v-btn tile outlined>Ajouter un résultat</v-btn>
                           </v-expansion-panel-content>
                         </v-expansion-panel>
                       </v-expansion-panels>
@@ -302,14 +273,11 @@
 export default {
   created() {
     //todo remove it
-    this.generateBasematches()
-    this.createParents()
+    this.generateBasematches();
   },
   components: {},
   data: () => ({
     nbTeams: 8,
-    //nbRounds: Math.log2(this.nbTeams),
-    nbRounds: 3,
     matches: [],
     // matchPrototype: {
     //   id: -1,
@@ -321,37 +289,37 @@ export default {
     teams: [
       {
         id: 0,
-        name: 'A'
+        name: "A",
       },
       {
         id: 1,
-        name: 'B'
+        name: "B",
       },
       {
         id: 2,
-        name: 'C'
+        name: "C",
       },
       {
         id: 3,
-        name: 'D'
+        name: "D",
       },
       {
         id: 4,
-        name: 'E'
+        name: "E",
       },
       {
         id: 5,
-        name: 'F'
+        name: "F",
       },
       {
         id: 6,
-        name: 'G'
+        name: "G",
       },
       {
         id: 7,
-        name: 'H'
-      }
-    ]
+        name: "H",
+      },
+    ],
   }),
   mounted: function() {},
   methods: {
@@ -371,69 +339,25 @@ export default {
           id: i / 2,
           idTeam1: this.teams[i].id,
           idTeam2: this.teams[i + 1].id,
-          idParent: null
-        })
+          parent: null,
+        });
 
         // console.log(
         //   "team 1 : " + this.teams[i].name + ", team 2 : " + this.teams[i + 1].name
         // );
       }
-      var dObj = this.matches.filter(m => {
+      var dObj = this.matches.filter((m) => {
         //console.log(m);
-        return m.idTeam1 == 3 || m.idTeam2 == 3
-      })
-      console.log(dObj[0].idParent)
-      //   this.showMatches();
-    },
-    createParents() {
-      // generate all parents matches
-
-      let currentRound = 1
-      let n = 0
-
-      // create parents and link them with children for all the tree
-      while (currentRound <= this.nbRounds) {
-        n = this.matches.length / Math.pow(2, currentRound) //number of new matches to create
-        let beginIndex = this.matches.length
-
-        for (let i = 0; i < n; i++) {
-          let matchIndex = beginIndex + i
-          this.matches.push({
-            id: matchIndex,
-            //idTeam1 is always the winner of the children which has the lowest index
-            idTeam1: null,
-            idTeam2: null,
-            idParent: null
-          })
-
-          //update parent value for begin matches
-          let childMatchIndex = i * 2
-          this.matches[
-            childMatchIndex
-          ].idParent = matchIndex
-          this.matches[
-            childMatchIndex + 1
-          ].idParent = matchIndex
-        }
-
-        currentRound++ //currentround = nbRound ?
-      }
-
-      // iterate for every round
-      //   for (
-      //     let i = 1;
-      //     i < this.nbRounds;
-      //     ++i //i = 1 because the first round is already created
-      //   ) {
-      //     //yo
-      //   }
-      this.showMatches()
+        return m.idTeam1 == 3 || m.idTeam2 == 3;
+      });
+      console.log(dObj[0].parent);
+      this.showMatches();
     },
     showMatches() {
-      console.log(this.matches)
-    }
-  }
-}
+      console.log(this.matches.length);
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -459,7 +383,7 @@ $line-color: black;
     align-items: center;
     &:after {
       position: absolute;
-      content: '';
+      content: "";
       width: $side-margin/2;
       height: 2px;
       left: 0;
@@ -481,7 +405,7 @@ $line-color: black;
     margin-bottom: $vertical-margin;
     position: relative;
     &:before {
-      content: '';
+      content: "";
       position: absolute;
       background-color: $line-color;
       right: 0;
@@ -491,7 +415,7 @@ $line-color: black;
       height: 2px;
     }
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       background-color: $line-color;
       right: -$side-margin / 2;
