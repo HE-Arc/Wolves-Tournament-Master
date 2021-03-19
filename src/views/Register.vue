@@ -98,7 +98,7 @@ export default {
   }),
 
   methods: {
-        async Register() {
+    async Register() {
       const result = await this.$validator.validate();
 
       if (result && this.pwd == this.confirmpwd) {

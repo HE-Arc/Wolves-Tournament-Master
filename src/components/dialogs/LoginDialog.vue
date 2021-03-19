@@ -79,16 +79,16 @@ export default {
   }),
 
   methods: {
-    // To show the dialog
     show() {
-      this.isVisible = true;
+      this.isVisible = true
     },
     hide() {
-      this.$refs.form.reset();
-      this.isVisible = false;
+      this.error = false
+      this.$refs.form.reset()
+      this.isVisible = false
     },
     async Login() {
-      const result = await this.$validator.validate();
+      const result = await this.$validator.validate()
 
       if (result) {
         this.loading = true;
@@ -98,7 +98,7 @@ export default {
           password: this.pwd
         };
 
-        const response = await UserService.Login(user);
+        const response = await UserService.Login(user)
 
         if (response.isSuccess) {
           this.$store.commit('updateToken', response.result.token)
@@ -106,13 +106,12 @@ export default {
             {authUserId: response.result.user_id, authUserEmail: response.result.email, isAuthenticated: true}
           )
 
-          this.$refs.form.reset();
-          this.$snotify.info(user.username + " logged in successfuly!");
-          this.isVisible = false;
-        } else {
-          this.$snotify.error(
-            "Unable to login...\nPlease try later..."
-          );
+          this.$refs.form.reset()
+          this.$snotify.info(user.username + " logged in successfuly!")
+          this.isVisible = false
+        } 
+        else {
+          this.$snotify.error("Unable to login...\nPlease try later...");
           this.error = true;
         }
 

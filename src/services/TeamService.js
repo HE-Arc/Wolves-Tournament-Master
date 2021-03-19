@@ -50,7 +50,7 @@ export default {
         }
       };
 
-      axios.delete(this.apiurl + "teams/" + team.id, config)
+      axios.delete(this.apiurl + "teams/" + team.id + "/", config)
         .then(response => {
           resolve({isSuccess: true, result: response.data});
         })

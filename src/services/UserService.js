@@ -30,7 +30,7 @@ export default {
     return new Promise(resolve => {
       axios.post(this.apiurl + "auth/", user)
         .then(response => {
-          resolve({isSucces: true, result: response.data});
+          resolve({isSuccess: true, result: response});
         })
         .catch(error => {
           resolve({isSuccess: false, result: error});
