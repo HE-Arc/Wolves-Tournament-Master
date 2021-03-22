@@ -19,7 +19,9 @@
             v-for="notification in notifications"
             :key="notification.id"
           >
-            <v-list-item-avatar>
+            <v-list-item-avatar
+              @click="UpdateNotification(notification)"
+            >
               <v-icon
                 v-if="!notification.seen"
                 class="grey lighten-1"
@@ -128,6 +130,26 @@ export default {
         )
       }
       this.loading = false
+    },
+    async UpdateNotification(notification) {
+      console.log('update!')
+      notification.seen = true
+      let response = await NotificationService.UpdateNotification(
+        this.$store.state.token,
+        notification
+      )
+
+      if (response.isSuccess) {
+        this.$store.commit(
+          'updateNotif',
+          this.$store.state.nbrNotif - 1
+        )
+        //this.GetNotifications()
+      } else {
+        this.$snotify.error(
+          'Unable to update notifications ...'
+        )
+      }
     }
   }
 }

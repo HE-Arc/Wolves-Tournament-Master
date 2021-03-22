@@ -48,7 +48,7 @@ class NotificationViewSet(viewsets.ModelViewSet):
 	authentication_classes = (TokenAuthentication,)
 	permission_classes = (AllowAny,)
 
-	# Get all notification not seen by user id
+	# Get all notification by user id
 	def get_queryset(self):
 		queryset = Notification.objects.all()
 		uid = self.request.query_params.get("uid", None)
@@ -56,7 +56,6 @@ class NotificationViewSet(viewsets.ModelViewSet):
 			queryset = queryset.filter(user=uid)
 			#queryset = queryset.filter(seen=False)
 		return queryset
-
 
 class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):

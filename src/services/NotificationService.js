@@ -19,5 +19,22 @@ export default {
           resolve({isSuccess: false, result: error});
         });
     });
+  },
+  UpdateNotification(token, notification) {
+    return new Promise(resolve => {
+      let config = {
+        headers : {
+          'Authorization': 'Token' + token
+        }
+      };
+
+      axios.put(this.apiurl + "notifications/" + notification.id + "/", notification, config)
+        .then(response => {
+          resolve({isSuccess: true, result: response.data});
+        })
+        .catch(error => {
+          resolve({isSuccess: false, result: error});
+        });
+    });
   }
 };
