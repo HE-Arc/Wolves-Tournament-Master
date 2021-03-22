@@ -3,7 +3,11 @@
     <LoginDialog ref="loginDialog" />
     <vue-snotify></vue-snotify>
 
-    <v-navigation-drawer v-model="drawer" app>
+    <v-navigation-drawer
+      v-if="$store.state.authUser.isAuthenticated"
+      v-model="drawer"
+      app
+    >
       <template v-slot:prepend>
         <v-list-item two-line>
           <v-list-item-avatar>
@@ -13,12 +17,12 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title
-              >Jane Smith</v-list-item-title
-            >
-            <v-list-item-subtitle
-              >Logged In</v-list-item-subtitle
-            >
+            <v-list-item-title>
+              {{ $store.state.authUser.name }}
+            </v-list-item-title>
+            <v-list-item-subtitle>
+              Logged In
+            </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -39,17 +43,28 @@
             :to="item.path"
           >
             <v-list-item-content>
-              <v-list-item-title>{{
-                item.title
-              }}</v-list-item-title>
+              <v-list-item-title>
+                {{ item.title }}
+              </v-list-item-title>
             </v-list-item-content>
           </router-link>
         </v-list-item>
       </v-list>
+      <v-divider></v-divider>
+      <v-btn
+        style="margin-top:10px;"
+        color="#01002a"
+        block
+        tile
+        dark
+        @click="Logout"
+        >Logout</v-btn
+      >
     </v-navigation-drawer>
 
     <v-app-bar app color="#01002a" dark>
       <v-app-bar-nav-icon
+        v-if="$store.state.authUser.isAuthenticated"
         @click="drawer = !drawer"
       ></v-app-bar-nav-icon>
       <router-link to="/">

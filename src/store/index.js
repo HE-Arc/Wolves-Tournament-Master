@@ -23,6 +23,7 @@ export default new Vuex.Store({
                 team: null,
                 isAuthenticated: isAuthenticated
             }
+            // TODO: For security purposes, take localStorage out of the project.
             localStorage.setItem('wtm-authuser', JSON.stringify(state.authUser))
         },
         setToken(state, newToken) {
@@ -35,7 +36,13 @@ export default new Vuex.Store({
             localStorage.removeItem('wtm-token')
             localStorage.removeItem('wtm-authuser')
             state.token = null
-            state.authUser = null
+            state.authUser = {
+                id: null,
+                email: null,
+                name: null,
+                team: null,
+                isAuthenticated: false
+            }
         }
     },
     actions: {},
