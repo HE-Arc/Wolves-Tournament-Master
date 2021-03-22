@@ -39,6 +39,7 @@
                   outlined
                   color="#01002a"
                   dark
+                  tile
                   class="mb-2"
                 >
                   New Item

@@ -5,25 +5,37 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        authUser: {},
-        isAuthenticated: false,
-        token: localStorage.getItem('token')
+        authUser: JSON.parse(localStorage.getItem('wtm-authuser')) || {
+            id: null,
+            email: null,
+            name: null,
+            team: null,
+            isAuthenticated: false
+        },
+        token: localStorage.getItem('wtm-token')
     },
     mutations: {
-        setAuthUser(state, { authUserId, authUserEmail, isAuthenticated }) {
-            Vue.set(state, 'authUserId', authUserId)
-            Vue.set(state, 'authUserEmail', authUserEmail)
-            Vue.set(state, 'isAuthenticated', isAuthenticated)
+        setAuthUser(state, { authUserId, authUserEmail, authUserName, isAuthenticated }) {
+            state.authUser = {
+                id: authUserId,
+                email: authUserEmail,
+                name: authUserName,
+                team: null,
+                isAuthenticated: isAuthenticated
+            }
+            localStorage.setItem('wtm-authuser', JSON.stringify(state.authUser))
         },
         setToken(state, newToken) {
             // TODO: For security purposes, take localStorage out of the project.
-            localStorage.setItem('token', newToken)
+            localStorage.setItem('wtm-token', newToken)
             state.token = newToken
         },
         removeToken(state) {
             // TODO: For security purposes, take localStorage out of the project.
-            localStorage.removeItem('token')
+            localStorage.removeItem('wtm-token')
+            localStorage.removeItem('wtm-authuser')
             state.token = null
+            state.authUser = null
         }
     },
     actions: {},

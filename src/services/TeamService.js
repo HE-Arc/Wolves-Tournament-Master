@@ -15,6 +15,18 @@ export default {
                 })
         })
     },
+    GetTeamById(id) {
+        return new Promise(resolve => {
+            axios
+                .get(this.apiurl + 'teams/' + id + '/')
+                .then(response => {
+                    resolve({ isSuccess: true, result: response.data })
+                })
+                .catch(error => {
+                    resolve({ isSuccess: false, result: error })
+                })
+        })
+    },
     CreateTeam(team) {
         return new Promise(resolve => {
             axios
