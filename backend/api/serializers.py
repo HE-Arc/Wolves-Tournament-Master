@@ -36,4 +36,4 @@ class TournamentSerializer(serializers.HyperlinkedModelSerializer):
 class NotificationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Notification
-        fields = ['url', 'id', 'user', 'seen', 'message']
+        fields = ['url', 'id', 'user', 'team', 'seen', 'notificationType', 'message']
