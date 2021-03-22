@@ -127,6 +127,17 @@
               errors.collect('number of teams')
             "
           ></v-text-field>
+
+          <v-text-field
+            v-model="streamUrl"
+            label="Stream URL"
+            dense
+            outlined
+            clearable
+            v-validate="'required'"
+            data-vv-name="stream URL"
+            :error-messages="errors.collect('stream URL')"
+          ></v-text-field>
           <v-alert
             v-show="error"
             v-model="error"
@@ -173,7 +184,8 @@ export default {
     duration: null,
     pause: null,
     limitDate: null,
-    nbrTeams: null
+    nbrTeams: null,
+    streamUrl: null
   }),
   methods: {
     // To show the dialog

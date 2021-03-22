@@ -3,7 +3,7 @@
     <TournamentDialog ref="tournamentDialog" />
     <v-row>
       <v-col
-        v-show="$store.state.isAuthenticated"
+        v-show="$store.state.authUser.isAuthenticated"
         cols="12"
         sm="6"
         md="4"

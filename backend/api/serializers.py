@@ -38,7 +38,7 @@ class TournamentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Tournament
         fields = ['url', 'id', 'organizer', 'name', 'gameName',
-                  'matchDuration', 'breakDuration', 'deadLineDate', 'nbTeam']
+                  'matchDuration', 'breakDuration', 'deadLineDate', 'nbTeam', 'streamURL']
 
 
 class NotificationSerializer(serializers.HyperlinkedModelSerializer):
