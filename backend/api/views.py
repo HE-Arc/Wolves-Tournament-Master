@@ -22,41 +22,46 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class TeamViewSet(viewsets.ModelViewSet):
-	queryset = Team.objects.all()
-	# userset = User.objects.select_related().get 
-	# queryset = teamset|userset
-	# user = User.objects.select_related("leader").get(id = )
-	serializer_class = TeamSerializer
-	authentication_classes = (TokenAuthentication,)
-	permission_classes = (AllowAny,)
+    queryset = Team.objects.all()
+    # userset = User.objects.select_related().get
+    # queryset = teamset|userset
+    # user = User.objects.select_related("leader").get(id = )
+    serializer_class = TeamSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (AllowAny,)
+
 
 class MatchViewSet(viewsets.ModelViewSet):
-	queryset = Match.objects.all()
-	serializer_class = MatchSerializer
-	authentication_classes = (TokenAuthentication,)
-	permission_classes = (AllowAny,)
+    queryset = Match.objects.all()
+    serializer_class = MatchSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (AllowAny,)
+
 
 class TournamentViewSet(viewsets.ModelViewSet):
-	queryset = Tournament.objects.all()
-	serializer_class = TournamentSerializer
-	authentication_classes = (TokenAuthentication,)
-	permission_classes = (AllowAny,)
+    queryset = Tournament.objects.all()
+    serializer_class = TournamentSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (AllowAny,)
+
 
 class NotificationViewSet(viewsets.ModelViewSet):
-	queryset = Notification.objects.all()
-	serializer_class = NotificationSerializer
-	authentication_classes = (TokenAuthentication,)
-	permission_classes = (AllowAny,)
+    queryset = Notification.objects.all()
+    serializer_class = NotificationSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
 
 class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data,
-                                           context={'request': request})
+        serializer = self.serializer_class(
+            data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
         return Response({
             'token': token.key,
             'user_id': user.pk,
+            'name': user.username,
             'email': user.email
         })

@@ -118,6 +118,7 @@ export default {
           this.$store.commit('setAuthUser', {
             authUserId: response.result.user_id,
             authUserEmail: response.result.email,
+            authUserName: response.result.name,
             isAuthenticated: true
           })
 

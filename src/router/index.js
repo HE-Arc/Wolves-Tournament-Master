@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Teams from '../views/Teams.vue'
+import Team from '../views/Team.vue'
 import Register from '../views/Register.vue'
 import Tournament from '../views/Tournament.vue'
 
@@ -17,6 +18,11 @@ const routes = [
         path: '/teams',
         name: 'Teams',
         component: Teams
+    },
+    {
+        path: '/team',
+        name: 'Team',
+        component: Team
     },
     {
         path: '/register',

@@ -32,7 +32,7 @@ export default {
             axios
                 .post(this.apiurl + 'auth/', user)
                 .then(response => {
-                    resolve({ isSuccess: true, result: response })
+                    resolve({ isSuccess: true, result: response.data })
                 })
                 .catch(error => {
                     resolve({ isSuccess: false, result: error })

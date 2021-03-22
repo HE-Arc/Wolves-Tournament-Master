@@ -63,7 +63,17 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn text @click="Login">
+      <v-btn
+        v-if="$store.state.authUser.isAuthenticated"
+        tile
+        text
+      >
+        <span class="mr-2">{{
+          $store.state.authUser.name
+        }}</span>
+        <v-icon>mdi-account</v-icon>
+      </v-btn>
+      <v-btn v-else tile text @click="Login">
         <span class="mr-2">Sign in</span>
         <v-icon>mdi-account</v-icon>
       </v-btn>
@@ -98,6 +108,11 @@ export default {
         title: 'Teams',
         icon: 'mdi-account-multiple',
         path: '/teams'
+      },
+      {
+        title: 'Team',
+        icon: 'mdi-account-multiple',
+        path: '/team'
       },
       {
         title: 'Tournaments',
