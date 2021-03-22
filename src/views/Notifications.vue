@@ -15,27 +15,73 @@
           ></v-progress-circular>
         </v-alert>
         <template>
-          <v-data-table
-            v-show="!loading"
-            :headers="headers"
-            :items="notifications"
-            sort-by="calories"
-            class="elevation-1"
+          <v-list-item
+            v-for="notification in notifications"
+            :key="notification.id"
           >
-            <template v-slot:top>
-              <v-toolbar flat>
-                <v-toolbar-title
-                  >NOTIFICATIONS</v-toolbar-title
-                >
-                <v-divider
-                  class="mx-4"
-                  inset
-                  vertical
-                ></v-divider>
-                <v-spacer></v-spacer>
-              </v-toolbar>
-            </template>
-          </v-data-table>
+            <v-list-item-avatar>
+              <v-icon
+                v-if="!notification.seen"
+                class="grey lighten-1"
+                dark
+              >
+                mdi-bell
+              </v-icon>
+            </v-list-item-avatar>
+
+            <v-list-item-content>
+              <v-list-item-title
+                class="text-sm-left"
+                v-text="
+                  notifiType[notification.notificationType]
+                "
+              ></v-list-item-title>
+
+              <v-list-item-subtitle
+                class="text-sm-left"
+                v-text="notification.message"
+                >" ></v-list-item-subtitle
+              >
+            </v-list-item-content>
+
+            <v-list-item-action
+              v-if="
+                notification.notificationType ==
+                  'INVITATION'
+              "
+            >
+              <v-btn
+                class="ma-2"
+                :loading="loading2"
+                :disabled="loading2"
+                color="success"
+              >
+                Accepter
+                <template v-slot:loader>
+                  <span>Loading...</span>
+                </template>
+              </v-btn>
+            </v-list-item-action>
+
+            <v-list-item-action
+              v-if="
+                notification.notificationType ==
+                  'INVITATION'
+              "
+            >
+              <v-btn
+                class="ma-2"
+                :loading="loading2"
+                :disabled="loading2"
+                color="red darken-4"
+              >
+                Refuser
+                <template v-slot:loader>
+                  <span>Loading...</span>
+                </template>
+              </v-btn>
+            </v-list-item-action>
+          </v-list-item>
         </template>
       </v-flex>
     </v-layout>
@@ -56,7 +102,11 @@ export default {
       { text: 'User', value: 'user' },
       { text: 'Seen', value: 'seen' },
       { text: 'Message', value: 'message', sortable: false }
-    ]
+    ],
+    notifiType: {
+      MESSAGE: 'Information',
+      INVITATION: 'Invitation'
+    }
   }),
   mounted: function() {
     this.GetNotifications()

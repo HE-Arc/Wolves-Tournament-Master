@@ -48,19 +48,13 @@ class NotificationViewSet(viewsets.ModelViewSet):
 	authentication_classes = (TokenAuthentication,)
 	permission_classes = (AllowAny,)
 
-	# def get_queryset(self):
-	# 	queryset = Notification.objects.all()
-	# 	uid = self.request.query_params.get("uid", None)
-	# 	if(uid is not None):
-	# 		queryset = queryset.filter(user=uid)
-	# 	return queryset
-
+	# Get all notification not seen by user id
 	def get_queryset(self):
 		queryset = Notification.objects.all()
 		uid = self.request.query_params.get("uid", None)
 		if(uid is not None):
 			queryset = queryset.filter(user=uid)
-			queryset = queryset.filter(seen=False)
+			#queryset = queryset.filter(seen=False)
 		return queryset
 
 

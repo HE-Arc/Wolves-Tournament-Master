@@ -11,4 +11,4 @@ class Notification(models.Model):
 	team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True)
 
 	def __str__(self):
-		return self.name
+		return self.message

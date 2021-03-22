@@ -12,7 +12,6 @@ export default {
       };
 
       axios.get(this.apiurl + "notifications?uid=" + userid, config)
-      //axios.post(this.apiurl + "notifications/getbyuser/", {uid:userid}, config)
         .then(response => {
           resolve({isSuccess: true, result: response.data});
         })

@@ -148,7 +148,9 @@ export default {
       )
 
       if (response.isSuccess) {
-        let notifNumber = response.result.length
+        let notifNumber = response.result.filter(
+          n => n.seen == false
+        ).length
         console.log('notif number1 = ' + notifNumber)
         this.$store.commit('updateNotif', notifNumber)
       } else {
