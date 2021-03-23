@@ -54,8 +54,7 @@
             >
               <v-btn
                 class="ma-2"
-                :loading="loading2"
-                :disabled="loading2"
+                @click="AcceptTeamInvitation(notification)"
                 color="success"
               >
                 Accepter
@@ -71,12 +70,7 @@
                   'INVITATION'
               "
             >
-              <v-btn
-                class="ma-2"
-                :loading="loading2"
-                :disabled="loading2"
-                color="red darken-4"
-              >
+              <v-btn class="ma-2" color="red darken-4">
                 Refuser
                 <template v-slot:loader>
                   <span>Loading...</span>
@@ -92,6 +86,7 @@
 
 <script>
 import NotificationService from '@/services/NotificationService'
+import TeamService from '@/services/TeamService'
 
 export default {
   components: {},
@@ -132,7 +127,6 @@ export default {
       this.loading = false
     },
     async UpdateNotification(notification) {
-      console.log('update!')
       notification.seen = true
       let response = await NotificationService.UpdateNotification(
         this.$store.state.token,
@@ -144,11 +138,21 @@ export default {
           'updateNotif',
           this.$store.state.nbrNotif - 1
         )
-        //this.GetNotifications()
       } else {
         this.$snotify.error(
           'Unable to update notifications ...'
         )
+      }
+    },
+    async AcceptTeamInvitation(notification) {
+      console.log(
+        "yo j'ai accepté de rejoindre " + notification.team
+      )
+      let response = await TeamService.GetTeamById(1)
+      if (response.isSuccess) {
+        console.log(response.result)
+      } else {
+        this.$snotify.error('Unable to get teams...')
       }
     }
   }
