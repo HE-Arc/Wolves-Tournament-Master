@@ -135,6 +135,7 @@ export default {
           this.pwd == this.confirmpwd
             ? this.errorMessage
             : "Passwords doesn't match !"
+
         this.$snotify.error(this.errorMessage)
         this.error = true
       }

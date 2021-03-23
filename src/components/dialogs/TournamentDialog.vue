@@ -151,7 +151,11 @@
       </v-card-text>
       <v-card-actions v-show="!loading">
         <v-spacer></v-spacer>
-        <v-btn tile color="success">
+        <v-btn
+          tile
+          color="success"
+          @click="CreateTournament"
+        >
           Save
           <v-icon right> mdi-content-save </v-icon>
         </v-btn>
@@ -168,6 +172,8 @@
 </template>
 
 <script>
+import TournamentService from '@/services/TournamentService'
+
 export default {
   data: () => ({
     isVisible: false,
@@ -188,7 +194,6 @@ export default {
     streamUrl: null
   }),
   methods: {
-    // To show the dialog
     show() {
       this.isVisible = true
     },
@@ -196,6 +201,44 @@ export default {
       this.error = false
       this.$refs.form.reset()
       this.isVisible = false
+    },
+    async CreateTournament() {
+      const result = await this.$validator.validate()
+
+      if (result) {
+        this.loading = true
+
+        let tournament = {
+          name: this.name,
+          gameName: this.game,
+          matchDuration: this.duration,
+          breakDuration: this.pause,
+          deadLineDate: this.limitDate,
+          nbTeam: this.nbrTeams,
+          streamURL: this.streamUrl,
+          organizer: this.$store.state.authUser.name
+        }
+
+        const response = await TournamentService.CreateTournament(
+          tournament
+        )
+
+        if (response.isSuccess) {
+          this.$refs.form.reset()
+          this.$snotify.success(
+            tournament.name + ' created successfuly!'
+          )
+          this.isVisible = false
+          this.parent.GetTournaments()
+        } else {
+          this.$snotify.error(
+            'Unable to save this team...\nPlease try later...'
+          )
+          this.error = true
+        }
+
+        this.loading = false
+      }
     }
   }
 }
