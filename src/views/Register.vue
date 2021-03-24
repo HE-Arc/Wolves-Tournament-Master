@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title>Sign up</v-card-title>
       <v-card-text>
-        <v-form ref="form" style="padding:10px;">
+        <v-form ref="registerForm" style="padding:10px;">
           <v-text-field
             v-model="username"
             label="Username"

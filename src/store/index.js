@@ -12,8 +12,8 @@ export default new Vuex.Store({
             team: null,
             isAuthenticated: false
         },
-        token: localStorage.getItem('wtm-token')
-    nbrNotif: 0,
+        token: localStorage.getItem('wtm-token'),
+        nbrNotif: 0,
     },
     mutations: {
         setAuthUser(state, { authUserId, authUserEmail, authUserName, isAuthenticated }) {
@@ -44,11 +44,11 @@ export default new Vuex.Store({
                 team: null,
                 isAuthenticated: false
             }
+        },
+        updateNotif(state, newNumber) {
+          state.nbrNotif = newNumber;
         }
     },
     actions: {},
     modules: {}
 })
-    updateNotif(state, newNumber) {
-      state.nbrNotif = newNumber;
-    },

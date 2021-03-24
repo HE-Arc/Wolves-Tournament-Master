@@ -74,5 +74,25 @@ export default {
                     resolve({ isSuccess: false, result: error })
                 })
         })
+    },
+    AddUser(token, uid, tid){
+        return new Promise(resolve => {
+            let data = {
+                userid: uid
+            }
+            let config = {
+                headers: {
+                    Authorization: 'Token' + token
+                }
+            }
+            axios
+                .post(this.apiurl + 'teams/' + tid + "/adduser/", data, config)
+                .then(response => {
+                    resolve({ isSuccess: true, result: response.data })
+                })
+                .catch(error => {
+                    resolve({ isSuccess: false, result: error })
+                })
+        })
     }
 }

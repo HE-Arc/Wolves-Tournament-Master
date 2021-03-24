@@ -10,6 +10,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import action
+from rest_framework import status
 
 
 # Create your views here.
@@ -30,6 +32,25 @@ class TeamViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
 
+    @action(methods = ["POST"], detail = True)
+    def adduser(self, request, pk = None):
+        if "userid" in request.data:
+            team = Team.objects.get(id = pk)
+            userid = request.data["userid"]
+            user = User.objects.get(id = userid)
+            team.members.add(user)
+
+            response = {
+                "message": "user added successfuly"
+            }
+            return Response(response, status= status.HTTP_200_OK)
+        else:
+            response = {
+                "message": "can't add user"
+            }
+            return Response(response, status= status.HTTP_400_BAD_REQUEST)
+
+
 
 class MatchViewSet(viewsets.ModelViewSet):
     queryset = Match.objects.all()
@@ -49,17 +70,17 @@ class NotificationViewSet(viewsets.ModelViewSet):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
 
-	# Get all notification by user id
-	def get_queryset(self):
-		queryset = Notification.objects.all()
-		uid = self.request.query_params.get("uid", None)
-		if(uid is not None):
-			queryset = queryset.filter(user=uid)
-			#queryset = queryset.filter(seen=False)
-		return queryset
+    # Get all notification by user id
+    def get_queryset(self):
+        queryset = Notification.objects.all()
+        uid = self.request.query_params.get("uid", None)
+        if(uid is not None):
+            queryset = queryset.filter(user=uid)
+            #queryset = queryset.filter(seen=False)
+        return queryset
 
 class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
