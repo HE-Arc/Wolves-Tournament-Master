@@ -111,10 +111,10 @@ export default {
   methods: {
     async GetNotifications() {
       this.loading = true
-
+      console.log('token= ' + this.$store.state.token)
       let response = await NotificationService.GetNotifications(
         this.$store.state.token,
-        this.$store.state.authUserId
+        this.$store.state.authUser.id
       )
 
       if (response.isSuccess) {
@@ -145,15 +145,14 @@ export default {
       }
     },
     async AcceptTeamInvitation(notification) {
-      console.log(
-        "yo j'ai accepté de rejoindre " + notification.team
-      )
-      let response = await TeamService.GetTeamById(
+      let response = await TeamService.AddUser(
+        this.$store.state.token,
+        this.$store.state.authUser.id,
         notification.team
       )
       if (response.isSuccess) {
         console.log(response.result)
-        //response.result.users.add()
+        this.$snotify.success('User added!')
       } else {
         this.$snotify.error('Unable to get teams...')
       }

@@ -36,6 +36,11 @@ const routes = [
         component: Tournament
     },
     {
+        path: "/notifications",
+        name: "Notifications",
+        component: Notifications,
+    },
+    {
         path: '/about',
         name: 'About',
         // route level code-splitting
@@ -44,12 +49,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
     }
 ]
-
-  {
-    path: "/notifications",
-    name: "Notifications",
-    component: Notifications,
-  },
 const router = new VueRouter({
     routes
 })

@@ -144,6 +144,11 @@ export default {
         title: 'Tournaments',
         icon: 'mdi-google-controller',
         path: '/tournament'
+      },
+      {
+        title: 'Notifications',
+        icon: 'mdi-bell',
+        path: '/notifications'
       }
     ]
   }),

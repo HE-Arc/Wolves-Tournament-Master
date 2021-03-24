@@ -145,7 +145,7 @@ export default {
 
       let response = await NotificationService.GetNotifications(
         this.$store.state.token,
-        this.$store.state.authUserId
+        this.$store.state.authUser.id
       )
 
       if (response.isSuccess) {
