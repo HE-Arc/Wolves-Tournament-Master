@@ -148,9 +148,12 @@ export default {
       console.log(
         "yo j'ai accepté de rejoindre " + notification.team
       )
-      let response = await TeamService.GetTeamById(1)
+      let response = await TeamService.GetTeamById(
+        notification.team
+      )
       if (response.isSuccess) {
         console.log(response.result)
+        //response.result.users.add()
       } else {
         this.$snotify.error('Unable to get teams...')
       }
