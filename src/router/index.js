@@ -5,6 +5,7 @@ import Teams from '../views/Teams.vue'
 import Team from '../views/Team.vue'
 import Register from '../views/Register.vue'
 import Tournament from '../views/Tournament.vue'
+import Notifications from "../views/Notifications.vue";
 
 Vue.use(VueRouter)
 
@@ -44,6 +45,11 @@ const routes = [
     }
 ]
 
+  {
+    path: "/notifications",
+    name: "Notifications",
+    component: Notifications,
+  },
 const router = new VueRouter({
     routes
 })

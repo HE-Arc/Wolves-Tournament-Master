@@ -13,6 +13,7 @@ export default new Vuex.Store({
             isAuthenticated: false
         },
         token: localStorage.getItem('wtm-token')
+    nbrNotif: 0,
     },
     mutations: {
         setAuthUser(state, { authUserId, authUserEmail, authUserName, isAuthenticated }) {
@@ -48,3 +49,6 @@ export default new Vuex.Store({
     actions: {},
     modules: {}
 })
+    updateNotif(state, newNumber) {
+      state.nbrNotif = newNumber;
+    },

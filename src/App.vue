@@ -35,7 +35,18 @@
           :key="item.title"
         >
           <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-badge
+              v-if="
+                item.title == 'Notifications' &&
+                  $store.state.nbrNotif > 0
+              "
+              overlap
+              color="red"
+              :content="$store.state.nbrNotif"
+            >
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-badge>
+            <v-icon v-else>{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <router-link

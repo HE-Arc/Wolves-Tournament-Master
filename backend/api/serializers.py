@@ -20,28 +20,24 @@ class UserSerializer(serializers.ModelSerializer):
         Token.objects.create(user=user)
         return user
 
-
-class TeamSerializer(serializers.HyperlinkedModelSerializer):
+class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = ['url', 'id', 'name', 'image', 'leader']
 
-
-class MatchSerializer(serializers.HyperlinkedModelSerializer):
+class MatchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Match
         fields = ['url', 'id', 'team1', 'team2', 'tournament',
                   'score1', 'score2', 'nLap', 'posLap']
 
-
-class TournamentSerializer(serializers.HyperlinkedModelSerializer):
+class TournamentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tournament
         fields = ['url', 'id', 'organizer', 'name', 'gameName',
                   'matchDuration', 'breakDuration', 'deadLineDate', 'nbTeam', 'streamURL']
 
-
-class NotificationSerializer(serializers.HyperlinkedModelSerializer):
+class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
-        fields = ['url', 'id', 'user', 'seen', 'message']
+        fields = ['url', 'id', 'user', 'team', 'seen', 'notificationType', 'message']
