@@ -149,11 +149,7 @@ export default {
       )
 
       if (response.isSuccess) {
-        let notifNumber = response.result.filter(
-          n => n.seen == false
-        ).length
-        console.log('notif number1 = ' + notifNumber)
-        this.$store.commit('updateNotif', notifNumber)
+        this.$store.commit('updateNotif', response.counter)
       } else {
         this.$snotify.error(
           'Unable to get notifications ...'

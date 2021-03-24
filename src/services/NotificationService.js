@@ -10,10 +10,12 @@ export default {
           'Authorization': 'Token' + token
         }
       };
-
       axios.get(this.apiurl + "notifications?uid=" + userid, config)
         .then(response => {
-          resolve({isSuccess: true, result: response.data});
+          let notifNumber = response.data.filter(
+            n => n.seen == false
+          ).length
+          resolve({isSuccess: true, result: response.data, counter: notifNumber});
         })
         .catch(error => {
           resolve({isSuccess: false, result: error});
