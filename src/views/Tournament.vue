@@ -5,89 +5,43 @@
       <div class="wrapper">
         <div class="item">
           <div class="item-parent">
-            <v-card>
-              <v-expansion-panels>
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
-                    A
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
-                    <p>Match 1 : 16 - 13</p>
-                    <p>Match 1 : 12 - 16</p>
-                    <p>Match 1 : 16 - 10</p>
-                    <v-btn tile outlined
-                      >Ajouter un résultat</v-btn
-                    >
-                  </v-expansion-panel-content>
-                </v-expansion-panel>
-              </v-expansion-panels>
-            </v-card>
+            <TournamentCard
+              :idMatch="1"
+              :teamName="'A'"
+              :scoreMatch1="'12 - 16'"
+              :scoreMatch2="'16 - 12'"
+            ></TournamentCard>
           </div>
           <div class="item-childrens">
             <div class="item-child">
               <div class="item">
                 <div class="item-parent">
-                  <v-card>
-                    <v-expansion-panels>
-                      <v-expansion-panel>
-                        <v-expansion-panel-header>
-                          B
-                        </v-expansion-panel-header>
-                        <v-expansion-panel-content>
-                          <p>Match 1 : 16 - 13</p>
-                          <p>Match 1 : 12 - 16</p>
-                          <p>Match 1 : 16 - 10</p>
-                          <v-btn tile outlined
-                            >Ajouter un résultat</v-btn
-                          >
-                        </v-expansion-panel-content>
-                      </v-expansion-panel>
-                    </v-expansion-panels>
-                  </v-card>
+                  <TournamentCard
+                    :idMatch="2"
+                    :teamName="'B'"
+                    :scoreMatch1="'12 - 16'"
+                    :scoreMatch2="'16 - 12'"
+                  ></TournamentCard>
                 </div>
                 <div class="item-childrens">
                   <div class="item-child">
                     <div class="item">
                       <div class="item-parent">
-                        <v-card>
-                          <v-expansion-panels>
-                            <v-expansion-panel>
-                              <v-expansion-panel-header>
-                                C
-                              </v-expansion-panel-header>
-                              <v-expansion-panel-content>
-                                <p>Match 1 : 16 - 13</p>
-                                <p>Match 1 : 12 - 16</p>
-                                <p>Match 1 : 16 - 10</p>
-                                <v-btn tile outlined
-                                  >Ajouter un
-                                  résultat</v-btn
-                                >
-                              </v-expansion-panel-content>
-                            </v-expansion-panel>
-                          </v-expansion-panels>
-                        </v-card>
+                        <TournamentCard
+                          :idMatch="3"
+                          :teamName="'C'"
+                          :scoreMatch1="'12 - 16'"
+                          :scoreMatch2="'16 - 12'"
+                        ></TournamentCard>
                       </div>
                       <div class="item-childrens">
                         <div class="item-child">
-                          <v-card>
-                            <v-expansion-panels>
-                              <v-expansion-panel>
-                                <v-expansion-panel-header>
-                                  D
-                                </v-expansion-panel-header>
-                                <v-expansion-panel-content>
-                                  <p>Match 1 : 16 - 13</p>
-                                  <p>Match 1 : 12 - 16</p>
-                                  <p>Match 1 : 16 - 10</p>
-                                  <v-btn tile outlined
-                                    >Ajouter un
-                                    résultat</v-btn
-                                  >
-                                </v-expansion-panel-content>
-                              </v-expansion-panel>
-                            </v-expansion-panels>
-                          </v-card>
+                          <TournamentCard
+                            :idMatch="4"
+                            :teamName="'D'"
+                            :scoreMatch1="'12 - 16'"
+                            :scoreMatch2="'16 - 12'"
+                          ></TournamentCard>
                         </div>
                         <div class="item-child">
                           <v-card>
@@ -299,25 +253,24 @@
 </template>
 
 <script>
+import TournamentCard from '../components/tournamentcard'
+
 export default {
   created() {
-    //todo remove it
-    this.generateBasematches()
-    this.createParents()
+    // todo add it only on creation
+    this.generateEmptyMatches()
+    this.setParents()
+    this.setTeams()
+    this.showMatches()
   },
-  components: {},
+  components: {
+    TournamentCard
+  },
   data: () => ({
     nbTeams: 8,
     //nbRounds: Math.log2(this.nbTeams),
     nbRounds: 3,
     matches: [],
-    // matchPrototype: {
-    //   id: -1,
-    //   team1: "team1",
-    //   team2: "team2",
-    //   parent: null,
-    //   roundNb: -1,
-    // },
     teams: [
       {
         id: 0,
@@ -353,84 +306,184 @@ export default {
       }
     ]
   }),
+  computed: {
+    nbParents: function() {
+      // Get the number of parent nodes (non-leaf nodes)
+      let nbParents = 0
+      for (
+        let round = 0;
+        round < this.nbRounds - 1;
+        round++
+      ) {
+        nbParents += Math.pow(2, round)
+      }
+      return nbParents
+    },
+    nbMatches: function() {
+      // returns the number of matches if it was a perfect binarytree
+      return Math.pow(2, this.nbRounds) - 1
+    }
+  },
   mounted: function() {},
   methods: {
-    generateBasematches() {
-      // generate random base matches within every team that participate to this tournament
-      // this functions should be called when the tournament is created, not here.
-      // TODO : generate random matches. For the moment, the matches are allocated manually
-      // matchPrototype: {
-      //   id: -1,
-      //   team1: "team1",
-      //   team2: "team2",
-      //   parent: null,
-      //   roundNb: -1,
-      // },
-      for (let i = 0; i < this.nbTeams - 1; i += 2) {
+    /*
+      ===================
+        Tree
+      ===================
+    */
+
+    generateEmptyMatches() {
+      /*
+        Generate tree with empty matches
+      */
+      //TODO get it from the db
+      this.matches.push(null)
+
+      //in binary trees, the first id is one
+      for (let i = 0; i < this.nbMatches; i++) {
         this.matches.push({
-          id: i / 2,
-          idTeam1: this.teams[i].id,
-          idTeam2: this.teams[i + 1].id,
+          id: i + 1,
+          idTeam1: 'unknow',
+          idTeam2: 'unknow',
           idParent: null
         })
-
-        // console.log(
-        //   "team 1 : " + this.teams[i].name + ", team 2 : " + this.teams[i + 1].name
-        // );
       }
-      var dObj = this.matches.filter(m => {
-        //console.log(m);
-        return m.idTeam1 == 3 || m.idTeam2 == 3
-      })
-      console.log(dObj[0].idParent)
-      //   this.showMatches();
     },
-    createParents() {
-      // generate all parents matches
-
-      let currentRound = 1
-      let n = 0
-
-      // create parents and link them with children for all the tree
-      while (currentRound <= this.nbRounds) {
-        n = this.matches.length / Math.pow(2, currentRound) //number of new matches to create
-        let beginIndex = this.matches.length
-
-        for (let i = 0; i < n; i++) {
-          let matchIndex = beginIndex + i
-          this.matches.push({
-            id: matchIndex,
-            //idTeam1 is always the winner of the children which has the lowest index
-            idTeam1: null,
-            idTeam2: null,
-            idParent: null
-          })
-
-          //update parent value for begin matches
-          let childMatchIndex = i * 2
-          this.matches[
-            childMatchIndex
-          ].idParent = matchIndex
-          this.matches[
-            childMatchIndex + 1
-          ].idParent = matchIndex
+    setParents() {
+      /*
+        Set the parent for each node
+      */
+      for (
+        let idParent = 1;
+        idParent <= this.nbParents;
+        idParent++
+      ) {
+        let firstChildId = 2 * idParent
+        if (firstChildId <= this.nbMatches) {
+          this.matches[firstChildId].idParent = idParent
         }
 
-        currentRound++ //currentround = nbRound ?
+        if (firstChildId + 1 <= this.nbMatches) {
+          this.matches[firstChildId + 1].idParent = idParent
+        }
       }
-
-      // iterate for every round
-      //   for (
-      //     let i = 1;
-      //     i < this.nbRounds;
-      //     ++i //i = 1 because the first round is already created
-      //   ) {
-      //     //yo
-      //   }
-      this.showMatches()
+    },
+    setTeams() {
+      /*
+        Set teams into leafs (on an empty tournament)
+      */
+      let teamIndex = 0
+      console.log('nbmatches : ' + this.matches.length)
+      for (
+        let i = this.nbParents + 1;
+        i <= this.nbMatches;
+        i++
+      ) {
+        console.log('i' + i)
+        this.matches[i].idTeam1 = this.teams[teamIndex++].id
+        if (teamIndex < this.nbTeams) {
+          this.matches[i].idTeam2 = this.teams[
+            teamIndex++
+          ].id
+        }
+      }
     },
     showMatches() {
-      console.log(this.matches)
+      this.matches.forEach(element => {
+        if (element != null && element.idParent != null) {
+          console.log(
+            'id : ' +
+              element.id +
+              ' team_name : ' +
+              this.teams[element.id - 1].name +
+              ', parent : ' +
+              element.idParent +
+              ' parent_name : ' +
+              this.teams[element.idParent - 1].name +
+              ', team1 : ' +
+              element.idTeam1 +
+              ', team2 : ' +
+              element.idTeam2
+          )
+        } else {
+          if (element != null) {
+            console.log('id : ' + element.id)
+          }
+        }
+      })
+    },
+
+    /*
+      ===================
+        Tree generation
+      ===================
+    */
+    getTournamentCardString(
+      idMatch,
+      teamName,
+      scoreMatch1,
+      scoreMatch2
+    ) {
+      return (
+        '<TournamentCard ' +
+        ':idMatch="' +
+        idMatch +
+        '" ' +
+        ':teamName="\'' +
+        teamName +
+        '\'" ' +
+        ':scoreMatch1="\'' +
+        scoreMatch1 +
+        '\'" ' +
+        ':scoreMatch2="\'' +
+        scoreMatch2 +
+        '\'" ' +
+        '></TournamentCard>'
+      )
+    },
+
+    displayTree() {
+      /*
+        Set the parent for each node
+      */
+      for (
+        let idMatch = 1;
+        idMatch <= this.matches.length;
+        idMatch++
+      ) {
+        /*
+          Note : each item contains its parent node
+
+          for each parents :
+            - search the corresponding item with its id
+            - create a parent div and insert its data into it (add a tournament card into it)
+                - add this parent div in the item
+            - Create a children-items div
+              - into this div, create a child div and an item div for each children
+              - the item div will have the id of the child
+
+          if the item is not a parent :
+            - just create a child-item div and add its tournament card into it
+        */
+
+        let firstChildId = 2 * idMatch
+        let idChild1 = -1
+        // let idChild2 = -1
+
+        if (firstChildId <= this.nbMatches) {
+          idChild1 = firstChildId
+        }
+
+        // if (firstChildId + 1 <= this.nbMatches) {
+        //   idChild2 = firstChildId
+        // }
+
+        if (idChild1 != -1) {
+          // it's a prent
+        } else {
+          //just create a child-item div and add its tournament card into it
+        }
+      }
     }
   }
 }
