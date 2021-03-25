@@ -3,250 +3,7 @@
     <h1>ESL One 2018</h1>
     <div class="row">
       <div class="wrapper">
-        <div class="item">
-          <div class="item-parent">
-            <TournamentCard
-              :idMatch="1"
-              :teamName="'A'"
-              :scoreMatch1="'12 - 16'"
-              :scoreMatch2="'16 - 12'"
-            ></TournamentCard>
-          </div>
-          <div class="item-childrens">
-            <div class="item-child">
-              <div class="item">
-                <div class="item-parent">
-                  <TournamentCard
-                    :idMatch="2"
-                    :teamName="'B'"
-                    :scoreMatch1="'12 - 16'"
-                    :scoreMatch2="'16 - 12'"
-                  ></TournamentCard>
-                </div>
-                <div class="item-childrens">
-                  <div class="item-child">
-                    <div class="item">
-                      <div class="item-parent">
-                        <TournamentCard
-                          :idMatch="3"
-                          :teamName="'C'"
-                          :scoreMatch1="'12 - 16'"
-                          :scoreMatch2="'16 - 12'"
-                        ></TournamentCard>
-                      </div>
-                      <div class="item-childrens">
-                        <div class="item-child">
-                          <TournamentCard
-                            :idMatch="4"
-                            :teamName="'D'"
-                            :scoreMatch1="'12 - 16'"
-                            :scoreMatch2="'16 - 12'"
-                          ></TournamentCard>
-                        </div>
-                        <div class="item-child">
-                          <v-card>
-                            <v-expansion-panels>
-                              <v-expansion-panel>
-                                <v-expansion-panel-header>
-                                  E
-                                </v-expansion-panel-header>
-                                <v-expansion-panel-content>
-                                  <p>Match 1 : 16 - 13</p>
-                                  <p>Match 1 : 12 - 16</p>
-                                  <p>Match 1 : 16 - 10</p>
-                                  <v-btn tile outlined
-                                    >Ajouter un
-                                    résultat</v-btn
-                                  >
-                                </v-expansion-panel-content>
-                              </v-expansion-panel>
-                            </v-expansion-panels>
-                          </v-card>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="item-child">
-                    <div class="item">
-                      <div class="item-parent">
-                        <v-card>
-                          <v-expansion-panels>
-                            <v-expansion-panel>
-                              <v-expansion-panel-header>
-                                F
-                              </v-expansion-panel-header>
-                              <v-expansion-panel-content>
-                                <p>Match 1 : 16 - 13</p>
-                                <p>Match 1 : 12 - 16</p>
-                                <p>Match 1 : 16 - 10</p>
-                                <v-btn tile outlined
-                                  >Ajouter un
-                                  résultat</v-btn
-                                >
-                              </v-expansion-panel-content>
-                            </v-expansion-panel>
-                          </v-expansion-panels>
-                        </v-card>
-                      </div>
-                      <div class="item-childrens">
-                        <div class="item-child">
-                          <v-card>
-                            <v-expansion-panels>
-                              <v-expansion-panel>
-                                <v-expansion-panel-header>
-                                  YO
-                                </v-expansion-panel-header>
-                                <v-expansion-panel-content>
-                                  <p>Match 1 : 16 - 13</p>
-                                  <p>Match 1 : 12 - 16</p>
-                                  <p>Match 1 : 16 - 10</p>
-                                  <v-btn tile outlined
-                                    >Ajouter un
-                                    résultat</v-btn
-                                  >
-                                </v-expansion-panel-content>
-                              </v-expansion-panel>
-                            </v-expansion-panels>
-                          </v-card>
-                        </div>
-                        <div class="item-child">
-                          <v-card>
-                            <v-expansion-panels>
-                              <v-expansion-panel>
-                                <v-expansion-panel-header>
-                                  Andyto
-                                </v-expansion-panel-header>
-                                <v-expansion-panel-content>
-                                  <p>Match 1 : 16 - 13</p>
-                                  <p>Match 1 : 12 - 16</p>
-                                  <p>Match 1 : 16 - 10</p>
-                                  <v-btn tile outlined
-                                    >Ajouter un
-                                    résultat</v-btn
-                                  >
-                                </v-expansion-panel-content>
-                              </v-expansion-panel>
-                            </v-expansion-panels>
-                          </v-card>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item-child">
-              <div class="item">
-                <div class="item-parent">
-                  <v-card>
-                    <v-expansion-panels>
-                      <v-expansion-panel>
-                        <v-expansion-panel-header>
-                          G
-                        </v-expansion-panel-header>
-                        <v-expansion-panel-content>
-                          <p>Match 1 : 16 - 13</p>
-                          <p>Match 1 : 12 - 16</p>
-                          <p>Match 1 : 16 - 10</p>
-                          <v-btn tile outlined
-                            >Ajouter un résultat</v-btn
-                          >
-                        </v-expansion-panel-content>
-                      </v-expansion-panel>
-                    </v-expansion-panels>
-                  </v-card>
-                </div>
-                <div class="item-childrens">
-                  <div class="item-child">
-                    <div class="item">
-                      <div class="item-parent">
-                        <v-card>
-                          <v-expansion-panels>
-                            <v-expansion-panel>
-                              <v-expansion-panel-header>
-                                H
-                              </v-expansion-panel-header>
-                              <v-expansion-panel-content>
-                                <p>Match 1 : 16 - 13</p>
-                                <p>Match 1 : 12 - 16</p>
-                                <p>Match 1 : 16 - 10</p>
-                                <v-btn tile outlined
-                                  >Ajouter un
-                                  résultat</v-btn
-                                >
-                              </v-expansion-panel-content>
-                            </v-expansion-panel>
-                          </v-expansion-panels>
-                        </v-card>
-                      </div>
-                      <div class="item-childrens">
-                        <div class="item-child">
-                          <v-card>
-                            <v-expansion-panels>
-                              <v-expansion-panel>
-                                <v-expansion-panel-header>
-                                  I
-                                </v-expansion-panel-header>
-                                <v-expansion-panel-content>
-                                  <p>Match 1 : 16 - 13</p>
-                                  <p>Match 1 : 12 - 16</p>
-                                  <p>Match 1 : 16 - 10</p>
-                                  <v-btn tile outlined
-                                    >Ajouter un
-                                    résultat</v-btn
-                                  >
-                                </v-expansion-panel-content>
-                              </v-expansion-panel>
-                            </v-expansion-panels>
-                          </v-card>
-                        </div>
-                        <div class="item-child">
-                          <v-card>
-                            <v-expansion-panels>
-                              <v-expansion-panel>
-                                <v-expansion-panel-header>
-                                  J
-                                </v-expansion-panel-header>
-                                <v-expansion-panel-content>
-                                  <p>Match 1 : 16 - 13</p>
-                                  <p>Match 1 : 12 - 16</p>
-                                  <p>Match 1 : 16 - 10</p>
-                                  <v-btn tile outlined
-                                    >Ajouter un
-                                    résultat</v-btn
-                                  >
-                                </v-expansion-panel-content>
-                              </v-expansion-panel>
-                            </v-expansion-panels>
-                          </v-card>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="item-child">
-                    <v-card>
-                      <v-expansion-panels>
-                        <v-expansion-panel>
-                          <v-expansion-panel-header>
-                            K
-                          </v-expansion-panel-header>
-                          <v-expansion-panel-content>
-                            <p>Match 1 : 16 - 13</p>
-                            <p>Match 1 : 12 - 16</p>
-                            <p>Match 1 : 16 - 10</p>
-                            <v-btn tile outlined
-                              >Ajouter un résultat</v-btn
-                            >
-                          </v-expansion-panel-content>
-                        </v-expansion-panel>
-                      </v-expansion-panels>
-                    </v-card>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="item" id="match_1"></div>
       </div>
     </div>
   </div>
@@ -256,14 +13,17 @@
 import TournamentCard from '../components/tournamentcard'
 
 export default {
-  created() {
+  //created() {
+  mounted() {
     // todo add it only on creation
     this.generateEmptyMatches()
     this.setParents()
     this.setTeams()
-    this.showMatches()
+    this.displayTree()
+    //this.showMatches()
   },
   components: {
+    // eslint-disable-next-line vue/no-unused-components
     TournamentCard
   },
   data: () => ({
@@ -324,7 +84,6 @@ export default {
       return Math.pow(2, this.nbRounds) - 1
     }
   },
-  mounted: function() {},
   methods: {
     /*
       ===================
@@ -373,13 +132,11 @@ export default {
         Set teams into leafs (on an empty tournament)
       */
       let teamIndex = 0
-      console.log('nbmatches : ' + this.matches.length)
       for (
         let i = this.nbParents + 1;
         i <= this.nbMatches;
         i++
       ) {
-        console.log('i' + i)
         this.matches[i].idTeam1 = this.teams[teamIndex++].id
         if (teamIndex < this.nbTeams) {
           this.matches[i].idTeam2 = this.teams[
@@ -441,7 +198,66 @@ export default {
         '></TournamentCard>'
       )
     },
+    getParentHTMLAsString(teamId) {
+      return (
+        '<div class="item-parent" id="\'' +
+        teamId +
+        '\'">' +
+        this.getTournamentCardString(
+          teamId,
+          this.teams[teamId].name,
+          '11-12',
+          '11-16'
+        ) +
+        '</div>'
+      )
+    },
+    getChildrenHTMLAsString(childId) {
+      return (
+        '<div class="item-childrens">' +
+        '<div class="item-child">' +
+        '<div class="item" id="' +
+        childId +
+        '">' +
+        '</div>' +
+        '</div>' +
+        '</div>'
+      )
+    },
+    createChildrenDOMNode(childId) {
+      return this.createDOMNodeFromHTML(
+        this.getChildrenHTMLAsString(childId)
+      )
+    },
+    createParentDOMNode(
+      id
+      //child1Id
+      //child2Id
+    ) {
+      let node = this.createDOMNodeFromHTML(
+        this.getParentHTMLAsString(id)
+      )
+      // let child1Node = this.createDOMNodeFromHTML(
+      //   this.getChildrenHTMLAsString(child1Id)
+      // )
 
+      // node.append(child1Node)
+
+      return node
+      //(child2Id != -1)
+      //? this.getChildrenHTMLAsString(child2Id)
+      //: ''
+    },
+    createDOMNodeFromHTML(htmlString) {
+      /*
+        create an HTML node from HTML string
+      */
+      var div = document.createElement('div')
+      div.innerHTML = htmlString //.trim()
+
+      // Change this to div.childNodes to support multiple top-level nodes
+      return div.firstChild
+    },
     displayTree() {
       /*
         Set the parent for each node
@@ -468,18 +284,30 @@ export default {
 
         let firstChildId = 2 * idMatch
         let idChild1 = -1
-        // let idChild2 = -1
+        //let idChild2 = -1
 
         if (firstChildId <= this.nbMatches) {
           idChild1 = firstChildId
         }
 
-        // if (firstChildId + 1 <= this.nbMatches) {
-        //   idChild2 = firstChildId
-        // }
+        if (firstChildId + 1 <= this.nbMatches) {
+          //idChild2 = firstChildId
+        }
 
         if (idChild1 != -1) {
-          // it's a prent
+          console.log(idMatch)
+          // it's a parent
+          let item = document.getElementById(
+            'match_' + idMatch
+          )
+          item.appendChild(
+            this.createParentDOMNode(idMatch)
+          )
+          item.appendChild(
+            this.createChildrenDOMNode(idChild1)
+          )
+
+          // idChild2
         } else {
           //just create a child-item div and add its tournament card into it
         }
