@@ -32,24 +32,32 @@ class TeamViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
 
-    @action(methods = ["POST"], detail = True)
-    def adduser(self, request, pk = None):
+    @action(methods=["POST"], detail=True)
+    def adduser(self, request, pk=None):
         if "userid" in request.data:
-            team = Team.objects.get(id = pk)
+            team = Team.objects.get(id=pk)
             userid = request.data["userid"]
-            user = User.objects.get(id = userid)
+            user = User.objects.get(id=userid)
             team.members.add(user)
 
             response = {
                 "message": "user added successfuly"
             }
-            return Response(response, status= status.HTTP_200_OK)
+            return Response(response, status=status.HTTP_200_OK)
         else:
             response = {
                 "message": "can't add user"
             }
-            return Response(response, status= status.HTTP_400_BAD_REQUEST)
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
+    # @action(methods=["GET"], detail=True)
+    # def get_queryset(self):
+    #     queryset = Team.objects.all()
+    #     uid = self.request.query_params.get("uid", None)
+    #     user = User.objects.get(id=uid)
+    #     if uid is not None:
+    #         queryset = queryset.filter(members=user)
+    #     return queryset
 
 
 class MatchViewSet(viewsets.ModelViewSet):
@@ -72,8 +80,8 @@ class NotificationViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
 
-
     # Get all notification by user id
+
     def get_queryset(self):
         queryset = Notification.objects.all()
         uid = self.request.query_params.get("uid", None)
@@ -81,6 +89,7 @@ class NotificationViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(user=uid)
             #queryset = queryset.filter(seen=False)
         return queryset
+
 
 class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
