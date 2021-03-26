@@ -50,15 +50,12 @@ class TeamViewSet(viewsets.ModelViewSet):
             }
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
-    # @action(methods=["GET"], detail=True)
-    # def get_queryset(self):
-    #     queryset = Team.objects.all()
-    #     uid = self.request.query_params.get("uid", None)
-    #     user = User.objects.get(id=uid)
-    #     if uid is not None:
-    #         queryset = queryset.filter(members=user)
-    #     return queryset
-
+    def get_queryset(self):
+        queryset = Team.objects.all()
+        uid = self.request.query_params.get("uid", None)
+        if(uid is not None):
+            queryset = queryset.filter(members = uid)
+            return queryset
 
 class MatchViewSet(viewsets.ModelViewSet):
     queryset = Match.objects.all()

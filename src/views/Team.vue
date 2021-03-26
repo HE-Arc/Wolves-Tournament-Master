@@ -182,6 +182,7 @@ export default {
       )
 
       if (response.isSuccess) {
+        console.log('teams = ' + response.result)
         this.teams = response.result
       } else {
         this.$snotify.error('Unable to get teams...')

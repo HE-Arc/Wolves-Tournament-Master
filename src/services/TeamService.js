@@ -34,7 +34,6 @@ export default {
                     Authorization: 'Token' + token
                 }
             }
-
             axios
                 .get(this.apiurl + 'teams?uid=' + member, config)
                 .then(response => {
