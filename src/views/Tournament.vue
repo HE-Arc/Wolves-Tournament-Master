@@ -108,6 +108,10 @@ export default {
           idTeam1: 'unknow',
           idTeam2: 'unknow',
           idParent: null
+          // score team 1
+          // score team 2
+          // id in tournament
+          // tournament id
         })
       }
     },
