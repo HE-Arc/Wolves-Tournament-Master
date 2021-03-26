@@ -2,6 +2,7 @@
   <div style="margin-top: 20px">
     <h1>ESL One 2018</h1>
     <div class="row">
+      <div id="test"></div>
       <div class="wrapper">
         <div class="item" id="match_1"></div>
       </div>
@@ -10,7 +11,9 @@
 </template>
 
 <script>
-import TournamentCard from '../components/tournamentcard'
+// const Vue = require('vue').default
+import Vue from 'vue'
+import TournamentCard from '@/components/tournamentcard'
 
 export default {
   //created() {
@@ -175,52 +178,65 @@ export default {
         Tree generation
       ===================
     */
-    getTournamentCardString(
+    appendTournamentCard(
       idMatch,
       teamName,
       scoreMatch1,
       scoreMatch2
     ) {
-      return (
-        '<TournamentCard ' +
-        ':idMatch="' +
-        idMatch +
-        '" ' +
-        ':teamName="\'' +
-        teamName +
-        '\'" ' +
-        ':scoreMatch1="\'' +
-        scoreMatch1 +
-        '\'" ' +
-        ':scoreMatch2="\'' +
-        scoreMatch2 +
-        '\'" ' +
-        '></TournamentCard>'
+      /*
+        Create a VueJS component on the fly and
+        append it on DOM node
+      */
+      const TournamentCardConstructor = Vue.extend(
+        TournamentCard
       )
+      new TournamentCardConstructor({
+        propsData: {
+          idMatch: idMatch,
+          teamName: teamName,
+          scoreMatch1: scoreMatch1,
+          scoreMatch2: scoreMatch2
+        }
+      }).$mount('#match_to_remove_' + idMatch)
     },
-    getParentHTMLAsString(teamId) {
-      return (
-        '<div class="item-parent" id="\'' +
+    getParentHTMLAsString(teamId, child1Id, child2Id) {
+      /*
+        Create a prent div and 
+      */
+      let parentHTML =
+        '<div class="item-parent">' +
+        '<div id="match_to_remove_' +
         teamId +
-        '\'">' +
-        this.getTournamentCardString(
-          teamId,
-          this.teams[teamId].name,
-          '11-12',
-          '11-16'
-        ) +
+        '"></div>' +
         '</div>'
+
+      let child1HTML = this.getChildrenHTMLAsString(
+        child1Id
       )
+      let child2HTML = ''
+      if (child2Id != -1) {
+        child2HTML = this.getChildrenHTMLAsString(child2Id)
+      }
+
+      let childListHTML =
+        '<div class="item-childrens">' +
+        '<div class="item-child">' +
+        child1HTML +
+        child2HTML +
+        '</div>' +
+        '</div>'
+
+      return parentHTML + childListHTML
     },
     getChildrenHTMLAsString(childId) {
       return (
-        '<div class="item-childrens">' +
-        '<div class="item-child">' +
-        '<div class="item" id="' +
+        '<div class="item" id="match_' +
         childId +
         '">' +
-        '</div>' +
-        '</div>' +
+        '<div id="match_to_remove_' +
+        childId +
+        '"></div>' +
         '</div>'
       )
     },
@@ -229,24 +245,11 @@ export default {
         this.getChildrenHTMLAsString(childId)
       )
     },
-    createParentDOMNode(
-      id
-      //child1Id
-      //child2Id
-    ) {
+    createParentDOMNode(id) {
       let node = this.createDOMNodeFromHTML(
         this.getParentHTMLAsString(id)
       )
-      // let child1Node = this.createDOMNodeFromHTML(
-      //   this.getChildrenHTMLAsString(child1Id)
-      // )
-
-      // node.append(child1Node)
-
       return node
-      //(child2Id != -1)
-      //? this.getChildrenHTMLAsString(child2Id)
-      //: ''
     },
     createDOMNodeFromHTML(htmlString) {
       /*
@@ -284,18 +287,19 @@ export default {
 
         let firstChildId = 2 * idMatch
         let idChild1 = -1
-        //let idChild2 = -1
+        let idChild2 = -1
 
         if (firstChildId <= this.nbMatches) {
           idChild1 = firstChildId
         }
 
         if (firstChildId + 1 <= this.nbMatches) {
-          //idChild2 = firstChildId
+          idChild2 = firstChildId + 1
         }
 
         if (idChild1 != -1) {
           console.log(idMatch)
+          //console.log(document.getElementById('match_2'))
           // it's a parent
           let item = document.getElementById(
             'match_' + idMatch
@@ -303,9 +307,24 @@ export default {
           item.appendChild(
             this.createParentDOMNode(idMatch)
           )
+
+          this.appendTournamentCard(
+            idMatch,
+            this.teams[idMatch].name,
+            '11-0',
+            '0-12'
+          )
+
           item.appendChild(
             this.createChildrenDOMNode(idChild1)
           )
+
+          // add list item in the parent function
+          if (idChild2 != -1) {
+            item.appendChild(
+              this.createChildrenDOMNode(idChild2)
+            )
+          }
 
           // idChild2
         } else {
