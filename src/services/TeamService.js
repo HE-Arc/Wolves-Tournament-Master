@@ -27,6 +27,23 @@ export default {
                 })
         })
     },
+    GetTeamsByMember(token, member) {
+        return new Promise(resolve => {
+            let config = {
+                headers: {
+                    Authorization: 'Token' + token
+                }
+            }
+            axios
+                .get(this.apiurl + 'teams?uid=' + member, config)
+                .then(response => {
+                    resolve({ isSuccess: true, result: response.data })
+                })
+                .catch(error => {
+                    resolve({ isSuccess: false, result: error })
+                })
+        })
+    },
     CreateTeam(team) {
         return new Promise(resolve => {
             axios

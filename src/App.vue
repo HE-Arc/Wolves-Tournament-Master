@@ -69,8 +69,9 @@
         tile
         dark
         @click="Logout"
-        >Logout</v-btn
       >
+        Logout
+      </v-btn>
     </v-navigation-drawer>
 
     <v-app-bar app color="#01002a" dark>
@@ -94,9 +95,9 @@
         tile
         text
       >
-        <span class="mr-2">{{
-          $store.state.authUser.name
-        }}</span>
+        <span class="mr-2">
+          {{ $store.state.authUser.name }}
+        </span>
         <v-icon>mdi-account</v-icon>
       </v-btn>
       <v-btn v-else tile text @click="Login">
@@ -124,7 +125,11 @@ export default {
   data: () => ({
     drawer: null,
     items: [
-      { title: 'Home', icon: 'mdi-home', path: '/' },
+      {
+        title: 'Home',
+        icon: 'mdi-home',
+        path: '/'
+      },
       {
         title: 'My account',
         icon: 'mdi-account',

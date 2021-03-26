@@ -58,9 +58,14 @@ class TeamViewSet(viewsets.ModelViewSet):
             response = {
                 "message": "can't add user"
             }
-            return Response(response, status= status.HTTP_400_BAD_REQUEST)
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
-
+    def get_queryset(self):
+        queryset = Team.objects.all()
+        uid = self.request.query_params.get("uid", None)
+        if(uid is not None):
+            queryset = queryset.filter(members = uid)
+            return queryset
 
 class MatchViewSet(viewsets.ModelViewSet):
     queryset = Match.objects.all()
@@ -82,8 +87,8 @@ class NotificationViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
 
-
     # Get all notification by user id
+
     def get_queryset(self):
         queryset = Notification.objects.all()
         uid = self.request.query_params.get("uid", None)
@@ -91,6 +96,7 @@ class NotificationViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(user=uid)
             #queryset = queryset.filter(seen=False)
         return queryset
+
 
 class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):

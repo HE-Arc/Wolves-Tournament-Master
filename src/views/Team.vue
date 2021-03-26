@@ -155,7 +155,7 @@ export default {
     ]
   }),
   mounted: function() {
-    this.GetTeamById()
+    this.GetTeamsByMember()
   },
   methods: {
     async GetTeamById() {
@@ -166,6 +166,23 @@ export default {
       )
 
       if (response.isSuccess) {
+        this.teams = response.result
+      } else {
+        this.$snotify.error('Unable to get teams...')
+      }
+
+      this.loading = false
+    },
+    async GetTeamsByMember() {
+      this.loading = true
+
+      let response = await TeamService.GetTeamsByMember(
+        this.$store.state.token,
+        this.$store.state.authUser.id
+      )
+
+      if (response.isSuccess) {
+        console.log('teams = ' + response.result)
         this.teams = response.result
       } else {
         this.$snotify.error('Unable to get teams...')
