@@ -90,7 +90,7 @@ export default {
   methods: {
     /*
       ===================
-        Tree
+        Tree logic
       ===================
     */
 
@@ -175,8 +175,14 @@ export default {
 
     /*
       ===================
-        Tree generation
+        Tree rendering
       ===================
+    */
+
+    /*
+      ===========================
+        DOM manipulations
+      ===========================
     */
     appendTournamentCard(
       idMatch,
@@ -200,17 +206,53 @@ export default {
         }
       }).$mount('#match_to_remove_' + idMatch)
     },
-    getParentHTMLAsString(teamId, child1Id, child2Id) {
+    appendParentNode(idMatch, child1Id, child2Id) {
       /*
-        Create a prent div and 
+        Create a parent match structure which contains :
+          - an item-parent element
+          - a item-children element
+            - item-child whith an item into it for each child
+
+        The VueJS TournamentCard component needs to be added when this structure 
+        has been added to the DOM.
       */
-      let parentHTML =
+
+      // add the parent node to the DOM
+      let item = document.getElementById('match_' + idMatch)
+      item.appendChild(this.createParentDOMNode(idMatch))
+
+      // add the TournamentCard component to the DOM
+      this.appendTournamentCard(
+        idMatch,
+        this.teams[idMatch - 1].name,
+        '11-0',
+        '0-12'
+      )
+
+      // add children item list to the DOM
+      item.appendChild(
+        this.createChildrensDOMNode(child1Id, child2Id)
+      )
+    },
+    appendChildNode() {
+      //TODO
+    },
+
+    /*
+      ===========================
+        HTML strings generations
+      ===========================
+    */
+    getParentHTMLAsString(idMatch) {
+      return (
         '<div class="item-parent">' +
         '<div id="match_to_remove_' +
-        teamId +
+        idMatch +
         '"></div>' +
         '</div>'
-
+      )
+    },
+    getChildrensHTMLAsString(child1Id, child2Id) {
       let child1HTML = this.getChildrenHTMLAsString(
         child1Id
       )
@@ -219,35 +261,34 @@ export default {
         child2HTML = this.getChildrenHTMLAsString(child2Id)
       }
 
-      let childListHTML =
+      return (
         '<div class="item-childrens">' +
-        '<div class="item-child">' +
         child1HTML +
         child2HTML +
-        '</div>' +
         '</div>'
-
-      return parentHTML + childListHTML
+      )
     },
     getChildrenHTMLAsString(childId) {
       return (
+        '<div class="item-child">' +
         '<div class="item" id="match_' +
         childId +
         '">' +
         '<div id="match_to_remove_' +
         childId +
         '"></div>' +
+        '</div>' +
         '</div>'
       )
     },
-    createChildrenDOMNode(childId) {
+    createChildrensDOMNode(child1Id, child2Id) {
       return this.createDOMNodeFromHTML(
-        this.getChildrenHTMLAsString(childId)
+        this.getChildrensHTMLAsString(child1Id, child2Id)
       )
     },
-    createParentDOMNode(id) {
+    createParentDOMNode(idMatch) {
       let node = this.createDOMNodeFromHTML(
-        this.getParentHTMLAsString(id)
+        this.getParentHTMLAsString(idMatch)
       )
       return node
     },
@@ -286,45 +327,46 @@ export default {
         */
 
         let firstChildId = 2 * idMatch
-        let idChild1 = -1
-        let idChild2 = -1
+        let child1Id = -1
+        let child2Id = -1
 
         if (firstChildId <= this.nbMatches) {
-          idChild1 = firstChildId
+          child1Id = firstChildId
         }
 
         if (firstChildId + 1 <= this.nbMatches) {
-          idChild2 = firstChildId + 1
+          child2Id = firstChildId + 1
         }
 
-        if (idChild1 != -1) {
+        if (child1Id != -1) {
           console.log(idMatch)
+          this.appendParentNode(idMatch, child1Id, child2Id)
           //console.log(document.getElementById('match_2'))
           // it's a parent
-          let item = document.getElementById(
-            'match_' + idMatch
-          )
-          item.appendChild(
-            this.createParentDOMNode(idMatch)
-          )
+          // let item = document.getElementById(
+          //   'match_' + idMatch
+          // )
+          // item.appendChild(
+          //   this.createParentDOMNode(idMatch)
+          // )
 
-          this.appendTournamentCard(
-            idMatch,
-            this.teams[idMatch].name,
-            '11-0',
-            '0-12'
-          )
+          // this.appendTournamentCard(
+          //   idMatch,
+          //   this.teams[idMatch].name,
+          //   '11-0',
+          //   '0-12'
+          // )
 
-          item.appendChild(
-            this.createChildrenDOMNode(idChild1)
-          )
+          // item.appendChild(
+          //   this.createChildrenDOMNode(idChild1)
+          // )
 
-          // add list item in the parent function
-          if (idChild2 != -1) {
-            item.appendChild(
-              this.createChildrenDOMNode(idChild2)
-            )
-          }
+          // // add list item in the parent function
+          // if (idChild2 != -1) {
+          //   item.appendChild(
+          //     this.createChildrenDOMNode(idChild2)
+          //   )
+          // }
 
           // idChild2
         } else {
