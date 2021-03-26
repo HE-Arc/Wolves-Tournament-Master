@@ -75,10 +75,11 @@ export default {
                 })
         })
     },
-    AddUser(token, uid, tid){
+    AddUser(token, uid, tid, nid){
         return new Promise(resolve => {
             let data = {
-                userid: uid
+                userid: uid,
+                notificationid: nid
             }
             let config = {
                 headers: {

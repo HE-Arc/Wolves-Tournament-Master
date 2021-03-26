@@ -70,7 +70,11 @@
                   'INVITATION'
               "
             >
-              <v-btn class="ma-2" color="red darken-4">
+              <v-btn
+                class="ma-2"
+                color="red darken-4"
+                @click="RejectTeamInvitation(notification)"
+              >
                 Refuser
                 <template v-slot:loader>
                   <span>Loading...</span>
@@ -119,6 +123,11 @@ export default {
 
       if (response.isSuccess) {
         this.notifications = response.result
+        this.notifications.sort(function(n1, n2) {
+          return n1 === n2 ? 0 : n1 ? -1 : 1
+        })
+
+        this.$store.commit('updateNotif', response.counter)
       } else {
         this.$snotify.error(
           'Unable to get notifications ...'
@@ -127,34 +136,58 @@ export default {
       this.loading = false
     },
     async UpdateNotification(notification) {
-      notification.seen = true
-      let response = await NotificationService.UpdateNotification(
-        this.$store.state.token,
-        notification
-      )
+      if (notification.notificationType != 'INVITATION') {
+        notification.seen = true
+        let response = await NotificationService.UpdateNotification(
+          this.$store.state.token,
+          notification
+        )
 
-      if (response.isSuccess) {
-        this.$store.commit(
-          'updateNotif',
-          this.$store.state.nbrNotif - 1
-        )
-      } else {
-        this.$snotify.error(
-          'Unable to update notifications ...'
-        )
+        if (response.isSuccess) {
+          this.$store.commit(
+            'updateNotif',
+            this.$store.state.nbrNotif - 1
+          )
+        } else {
+          this.$snotify.error(
+            'Unable to update notifications ...'
+          )
+        }
       }
     },
     async AcceptTeamInvitation(notification) {
       let response = await TeamService.AddUser(
         this.$store.state.token,
         this.$store.state.authUser.id,
-        notification.team
+        notification.team,
+        notification.id
       )
       if (response.isSuccess) {
         console.log(response.result)
+        this.GetNotifications()
         this.$snotify.success('User added!')
       } else {
         this.$snotify.error('Unable to get teams...')
+      }
+    },
+    async RejectTeamInvitation(notification) {
+      notification.notificationType = 'MESSAGE'
+      notification.seen = true
+      notification.message =
+        '[Declined] ' + notification.message
+      let response = await NotificationService.UpdateNotification(
+        this.$store.state.token,
+        notification
+      )
+      if (response.isSuccess) {
+        this.GetNotifications()
+        this.$snotify.success(
+          'You refused to join the team'
+        )
+      } else {
+        this.$snotify.error(
+          'Cannot decline team invitation...'
+        )
       }
     }
   }

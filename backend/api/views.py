@@ -34,16 +34,26 @@ class TeamViewSet(viewsets.ModelViewSet):
 
     @action(methods = ["POST"], detail = True)
     def adduser(self, request, pk = None):
-        if "userid" in request.data:
-            team = Team.objects.get(id = pk)
+        if "userid" and "notificationid" in request.data:
+            notification = Notification.objects.get(id = request.data["notificationid"])
             userid = request.data["userid"]
-            user = User.objects.get(id = userid)
-            team.members.add(user)
-
-            response = {
-                "message": "user added successfuly"
-            }
-            return Response(response, status= status.HTTP_200_OK)
+            if notification.user.id == userid and notification.team.id == int(pk):
+                user = User.objects.get(id = userid)
+                team = Team.objects.get(id = pk)
+                team.members.add(user)
+                notification.seen = True
+                notification.message = "[Accepté] " + notification.message
+                notification.notificationType = "MESSAGE"
+                notification.save()
+                response = {
+                    "message": "user added successfuly"
+                }
+                return Response(response, status= status.HTTP_200_OK)
+            else:
+                response = {
+                    "message": "you not allowed to join this team"
+                }
+                return Response(response, status= status.HTTP_400_BAD_REQUEST)
         else:
             response = {
                 "message": "can't add user"
