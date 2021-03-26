@@ -123,6 +123,10 @@ export default {
 
       if (response.isSuccess) {
         this.notifications = response.result
+        this.notifications.sort(function(n1, n2) {
+          return n1 === n2 ? 0 : n1 ? -1 : 1
+        })
+
         this.$store.commit('updateNotif', response.counter)
       } else {
         this.$snotify.error(
@@ -132,21 +136,23 @@ export default {
       this.loading = false
     },
     async UpdateNotification(notification) {
-      notification.seen = true
-      let response = await NotificationService.UpdateNotification(
-        this.$store.state.token,
-        notification
-      )
+      if (notification.notificationType != 'INVITATION') {
+        notification.seen = true
+        let response = await NotificationService.UpdateNotification(
+          this.$store.state.token,
+          notification
+        )
 
-      if (response.isSuccess) {
-        this.$store.commit(
-          'updateNotif',
-          this.$store.state.nbrNotif - 1
-        )
-      } else {
-        this.$snotify.error(
-          'Unable to update notifications ...'
-        )
+        if (response.isSuccess) {
+          this.$store.commit(
+            'updateNotif',
+            this.$store.state.nbrNotif - 1
+          )
+        } else {
+          this.$snotify.error(
+            'Unable to update notifications ...'
+          )
+        }
       }
     },
     async AcceptTeamInvitation(notification) {
