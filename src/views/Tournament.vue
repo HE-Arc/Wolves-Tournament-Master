@@ -38,35 +38,35 @@ export default {
     matches: [],
     teams: [
       {
-        id: 0,
+        id: 1,
         name: 'A'
       },
       {
-        id: 1,
+        id: 2,
         name: 'B'
       },
       {
-        id: 2,
+        id: 3,
         name: 'C'
       },
       {
-        id: 3,
+        id: 4,
         name: 'D'
       },
       {
-        id: 4,
+        id: 5,
         name: 'E'
       },
       {
-        id: 5,
+        id: 6,
         name: 'F'
       },
       {
-        id: 6,
+        id: 7,
         name: 'G'
       },
       {
-        id: 7,
+        id: 8,
         name: 'H'
       }
     ]
@@ -114,8 +114,8 @@ export default {
       for (let i = 0; i < this.nbMatches; i++) {
         this.matches.push({
           //id: i + 1, // pk
-          team1: 'tbd',
-          team2: 'tbd',
+          team1: null,
+          team2: null,
           tournament: 1,
           score1: 0,
           score2: 0,
@@ -261,12 +261,13 @@ export default {
 
       let team1 = this.matches[idMatch].team1
       let team2 = this.matches[idMatch].team2
+
       //add vue component
       this.appendTournamentCard(
         idMatch,
-        this.teams[team1].name +
+        this.teams[team1 - 1].name +
           ' VS ' +
-          this.teams[team2].name,
+          this.teams[team2 - 1].name,
         '11-0',
         '0-12'
       )
@@ -353,7 +354,7 @@ export default {
       */
       for (
         let idMatch = 1;
-        idMatch <= this.matches.length;
+        idMatch < this.matches.length;
         idMatch++
       ) {
         /*

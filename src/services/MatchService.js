@@ -24,6 +24,8 @@ export default {
     */
     matches.forEach(match => {
       if (match != null) {
+        console.log(match.team1)
+        console.log(match.team2)
         //first match is always null
         this.CreateMatch(match)
       }
