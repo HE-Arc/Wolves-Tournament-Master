@@ -52,14 +52,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Match',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('score1', models.IntegerField()),
-                ('score2', models.IntegerField()),
-                ('nLap', models.IntegerField()),
-                ('posLap', models.IntegerField()),
+		        ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('team1', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='team1', to='api.team')),
                 ('team2', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='team2', to='api.team')),
                 ('tournament', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.tournament')),
+                ('score1', models.IntegerField()),
+                ('score2', models.IntegerField()),
+                ('idInTournament', models.IntegerField()),
+	            ('idParent', models.ForeignKey('self', on_delete=models.CASCADE))
             ],
         ),
     ]
