@@ -32,14 +32,15 @@ class TeamViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
 
-    @action(methods = ["POST"], detail = True)
-    def adduser(self, request, pk = None):
+    @action(methods=["POST"], detail=True)
+    def adduser(self, request, pk=None):
         if "userid" and "notificationid" in request.data:
-            notification = Notification.objects.get(id = request.data["notificationid"])
+            notification = Notification.objects.get(
+                id=request.data["notificationid"])
             userid = request.data["userid"]
             if notification.user.id == userid and notification.team.id == int(pk):
-                user = User.objects.get(id = userid)
-                team = Team.objects.get(id = pk)
+                user = User.objects.get(id=userid)
+                team = Team.objects.get(id=pk)
                 team.members.add(user)
                 notification.seen = True
                 notification.message = "[Accepté] " + notification.message
@@ -48,24 +49,25 @@ class TeamViewSet(viewsets.ModelViewSet):
                 response = {
                     "message": "user added successfuly"
                 }
-                return Response(response, status= status.HTTP_200_OK)
+                return Response(response, status=status.HTTP_200_OK)
             else:
                 response = {
                     "message": "you not allowed to join this team"
                 }
-                return Response(response, status= status.HTTP_400_BAD_REQUEST)
+                return Response(response, status=status.HTTP_400_BAD_REQUEST)
         else:
             response = {
                 "message": "can't add user"
             }
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
-    def get_queryset(self):
-        queryset = Team.objects.all()
-        uid = self.request.query_params.get("uid", None)
-        if(uid is not None):
-            queryset = queryset.filter(members = uid)
-            return queryset
+    # def get_queryset(self):
+    #     queryset = Team.objects.all()
+    #     uid = self.request.query_params.get("uid", None)
+    #     if(uid is not None):
+    #         queryset = queryset.filter(members=uid)
+    #         return queryset
+
 
 class MatchViewSet(viewsets.ModelViewSet):
     queryset = Match.objects.all()

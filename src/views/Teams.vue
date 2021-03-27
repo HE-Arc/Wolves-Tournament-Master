@@ -66,8 +66,8 @@
 </template>
 
 <script>
-import TeamService from '@/services/TeamService'
 import TeamDialog from '@/components/dialogs/TeamDialog'
+import WtmApi from '@/services/WtmApiService'
 import DeleteModal from '@/components/modals/Delete'
 
 export default {
@@ -110,8 +110,11 @@ export default {
     async GetTeams() {
       this.loading = true
 
-      let response = await TeamService.GetTeams(
-        this.$store.state.token
+      let response = await WtmApi.Request(
+        'get',
+        this.$store.state.apiUrl + 'teams/',
+        null,
+        this.$store.getters.getAxiosConfig
       )
 
       if (response.isSuccess) {
@@ -126,9 +129,16 @@ export default {
       this.$refs.deleteTeam.show(team)
     },
     async DeleteTeam(team) {
-      let response = await TeamService.DeleteTeam(
-        this.$store.state.token,
-        team
+      // let response = await TeamService.DeleteTeam(
+      //   this.$store.state.token,
+      //   team
+      // )
+
+      const response = await WtmApi.Request(
+        'delete',
+        this.$store.state.apiUrl + 'teams/' + team.id + '/',
+        null,
+        this.$store.getters.getAxiosConfig
       )
 
       if (response.isSuccess) {

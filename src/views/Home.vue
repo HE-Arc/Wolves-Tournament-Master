@@ -35,11 +35,11 @@
           <v-card-text class="text-sm-left">
             {{ tournament.gameName }}
           </v-card-text>
-          <v-card-action>
+          <v-card-actions>
             <v-btn tile block outlined>
               Voir les résultats du tournoi
             </v-btn>
-          </v-card-action>
+          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>

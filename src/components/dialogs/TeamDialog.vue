@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import TeamService from '@/services/TeamService'
+import WtmApi from '@/services/WtmApiService'
 
 export default {
   data: () => ({
@@ -131,7 +131,12 @@ export default {
           leader: this.leader
         }
 
-        const response = await TeamService.CreateTeam(team)
+        const response = await WtmApi.Request(
+          'post',
+          this.$store.state.apiUrl + 'teams/',
+          team,
+          this.$store.getters.getAxiosConfig
+        )
 
         if (response.isSuccess) {
           this.$refs.form.reset()
@@ -159,12 +164,17 @@ export default {
         this.item.name = this.name
         this.item.leader = this.leader
 
-        const response = await TeamService.UpdateTeam(
-          this.$store.state.token,
-          this.item
+        const response = await WtmApi.Request(
+          'put',
+          this.$store.state.apiUrl +
+            'teams/' +
+            this.item.id +
+            '/',
+          this.item,
+          this.$store.getters.getAxiosConfig
         )
 
-        if (response.result.id) {
+        if (response.isSuccess) {
           this.$refs.form.reset()
           this.$snotify.success(
             this.item.name + ' updated successfuly!'

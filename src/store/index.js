@@ -14,6 +14,7 @@ export default new Vuex.Store({
         },
         token: localStorage.getItem('wtm-token'),
         nbrNotif: 0,
+        apiUrl: 'http://localhost:8000/api/'
     },
     mutations: {
         setAuthUser(state, { authUserId, authUserEmail, authUserName, isAuthenticated }) {
@@ -50,5 +51,10 @@ export default new Vuex.Store({
         }
     },
     actions: {},
-    modules: {}
+    modules: {},
+    getters: {
+        getAxiosConfig: state => {
+          return { headers: { Authorization: 'Token' + state.token } }
+        }
+    }
 })
