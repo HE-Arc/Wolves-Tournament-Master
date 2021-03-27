@@ -4,22 +4,16 @@ from .tournamentmodel import Tournament
 from django.db.models.signals import post_save, post_delete
 
 class Match(models.Model):
-	team1 = models.ForeignKey(Team, related_name = "team1",  on_delete=models.CASCADE)
-	team2 = models.ForeignKey(Team, related_name = "team2", on_delete=models.CASCADE)
+    # blank = True for form validation and null=true for database nullable
+	team1 = models.ForeignKey(Team, related_name = "team1",  on_delete=models.CASCADE, blank=True, null=True)
+	team2 = models.ForeignKey(Team, related_name = "team2", on_delete=models.CASCADE, blank=True, null=True)
 	tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
-	score1 = models.IntegerField()
-	score2 = models.IntegerField()
+	score1 = models.IntegerField(blank=True, null=True)
+	score2 = models.IntegerField(blank=True, null=True)
 	idInTournament = models.IntegerField() # id of this match inside a tournament
-	idParent = models.ForeignKey('self', on_delete=models.CASCADE) # create a many-to-one relationship on itself
+	idParent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True) # create a many-to-one relationship on itself
 
 	def __str__(self):
-		return self.team1 + " VS " + self.team2
-
-		        #         ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                # ('team1', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='team1', to='api.team')),
-                # ('team2', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='team2', to='api.team')),
-                # ('tournament', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.tournament')),
-                # ('score1', models.IntegerField()),
-                # ('score2', models.IntegerField()),
-                # ('idInTournament', models.IntegerField()),
-	            # ('idParent', models.ForeignKey('self', on_delete=models.CASCADE))
+		team1 = self.team1 if self.team1 is not None else "tbd"
+		team2 = self.team2 if self.team2 is not None else "tbd"
+		return team1 + " VS " + team2

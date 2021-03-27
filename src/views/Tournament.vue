@@ -101,7 +101,7 @@ export default {
       this.setParents()
       this.setTeams()
 
-      MatchService.CreateMatches(this.matches)
+      MatchService.CreateMatchs(this.matches)
     },
     generateEmptyMatches() {
       /*
@@ -114,13 +114,13 @@ export default {
       for (let i = 0; i < this.nbMatches; i++) {
         this.matches.push({
           //id: i + 1, // pk
-          idInTournament: i + 1, // id into the tournament
-          team1: 'unknow',
-          team2: 'unknow',
-          idParent: null, // id in the tournament, not the pk
+          team1: 'tbd',
+          team2: 'tbd',
+          tournament: 1,
           score1: 0,
           score2: 0,
-          tournament: 1
+          idInTournament: i + 1, // id into the tournament
+          idParent: null // id in the tournament, not the pk
           // score team 2
           // id in tournament
           // tournament id
