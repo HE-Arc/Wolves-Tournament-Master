@@ -111,8 +111,7 @@ export default {
         const response = await WtmApi.Request(
           'post',
           this.$store.state.apiUrl + 'auth/',
-          user,
-          null
+          user
         )
 
         if (response.isSuccess) {
