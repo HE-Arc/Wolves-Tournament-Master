@@ -208,8 +208,9 @@ export default {
       const response = await WtmApi.Request(
         'get',
         this.$store.state.apiUrl +
-          'teams?uid=' +
-          this.$store.state.authUser.id,
+          'teams/' +
+          this.$store.state.authUser.id +
+          '/getteamsbymember/',
         null,
         this.$store.getters.getAxiosConfig
       )
