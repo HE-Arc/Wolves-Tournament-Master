@@ -12,6 +12,7 @@
     "core-js": "^3.6.5",
     "vee-validate": "^2.1.2",
     "vue": "^2.6.11",
+    "vue-meta": "^2.4.0",
     "vue-router": "^3.2.0",
     "vue-snotify": "^3.2.1",
     "vue-tournament-bracket": "^2.1.2",
