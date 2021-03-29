@@ -54,6 +54,25 @@ export default {
                 .catch(error => {
                     resolve({ isSuccess: false, result: error })
                 })
+        .catch(error => {
+          resolve({ isSuccess: false, result: error })
+    },
+    GetTeamMembers(token, team){
+        return new Promise(resolve => {
+            let config = {
+                headers: {
+                    Authorization: 'Token' + token
+                }
+            }
+            axios
+            // .post(this.apiurl + 'teams/' + tid + "/adduser/", data, config)
+                .get(this.apiurl + 'teams/' + team.id + '/getallmembers/', config)
+                .then(response => {
+                    resolve({ isSuccess: true, result: response.data })
+                })
+                .catch(error => {
+                    resolve({ isSuccess: false, result: error })
+                })
         })
     },
     UpdateTeam(token, team) {
@@ -63,6 +82,62 @@ export default {
                     Authorization: 'Token' + token
                 }
             }
+    },
+    CreateTeam(team) {
+        return new Promise(resolve => {
+            axios
+                .post(this.apiurl + 'teams/', team)
+                .then(response => {
+                    resolve({ isSuccess: true, result: response.data })
+                })
+                .catch(error => {
+                    resolve({ isSuccess: false, result: error })
+                })
+        })
+    })
+  },
+  GetTeamsByMember(token, member) {
+    return new Promise(resolve => {
+      let config = {
+        headers: {
+          Authorization: 'Token' + token
+        }
+      }
+      axios
+        .get(this.apiurl + 'teams?uid=' + member, config)
+        .then(response => {
+          resolve({
+            isSuccess: true,
+            result: response.data
+          })
+        })
+        .catch(error => {
+          resolve({ isSuccess: false, result: error })
+        })
+    })
+  },
+  CreateTeam(team) {
+    return new Promise(resolve => {
+      axios
+        .post(this.apiurl + 'teams/', team)
+        .then(response => {
+          resolve({
+            isSuccess: true,
+            result: response.data
+          })
+        })
+        .catch(error => {
+          resolve({ isSuccess: false, result: error })
+        })
+    })
+  },
+  UpdateTeam(token, team) {
+    return new Promise(resolve => {
+      let config = {
+        headers: {
+          Authorization: 'Token' + token
+        }
+      }
 
             axios
                 .put(this.apiurl + 'teams/' + team.id + '/', team, config)

@@ -67,6 +67,15 @@ class TeamViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(members = uid)
             return queryset
 
+    @action(methods = ["GET"], detail = True)
+    def getallmembers(self, request, pk = None):
+        queryset = Team.objects.all()
+        if(pk is not None):
+            queryset = queryset.filter(id = pk)
+            data = TeamSerializer(queryset).data
+            return Response(data, status=status.HTTP_200_OK)
+    
+
 class MatchViewSet(viewsets.ModelViewSet):
     queryset = Match.objects.all()
     serializer_class = MatchSerializer
