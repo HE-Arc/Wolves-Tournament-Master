@@ -94,7 +94,7 @@
 </template>
 
 <script>
-import TeamService from '@/services/TeamService'
+import WtmApi from '@/services/WtmApiService'
 
 export default {
   components: {},
@@ -161,8 +161,14 @@ export default {
     async GetTeamById() {
       this.loading = true
 
-      let response = await TeamService.GetTeamById(
-        this.$store.state.authUser.team
+      const response = await WtmApi.Request(
+        'get',
+        this.$store.state.apiUrl +
+          'teams/' +
+          this.$store.state.authUser.team +
+          '/',
+        null,
+        this.$store.getters.getAxiosConfig
       )
 
       if (response.isSuccess) {
@@ -176,9 +182,13 @@ export default {
     async GetTeamsByMember() {
       this.loading = true
 
-      let response = await TeamService.GetTeamsByMember(
-        this.$store.state.token,
-        this.$store.state.authUser.id
+      const response = await WtmApi.Request(
+        'get',
+        this.$store.state.apiUrl +
+          'teams?uid=' +
+          this.$store.state.authUser.id,
+        null,
+        this.$store.getters.getAxiosConfig
       )
 
       if (response.isSuccess) {

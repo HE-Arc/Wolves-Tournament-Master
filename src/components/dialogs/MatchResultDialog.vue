@@ -18,12 +18,22 @@
       <v-card-text>
         <v-form ref="form" style="padding:10px;">
           <v-text-field
-            v-model="result"
-            label="Result"
+            v-model="item.score1"
+            :label="'Score: ' + item.team1"
             dense
             outlined
             clearable
-            v-validate="'required|numeric'"
+            v-validate="'required'"
+            data-vv-name="result"
+            :error-messages="errors.collect('result')"
+          ></v-text-field>
+          <v-text-field
+            v-model="item.score2"
+            :label="'Score: ' + item.team2"
+            dense
+            outlined
+            clearable
+            v-validate="'required'"
             data-vv-name="result"
             :error-messages="errors.collect('result')"
           ></v-text-field>
@@ -57,24 +67,62 @@
 </template>
 
 <script>
+import WtmApi from '@/services/WtmApiService'
+
 export default {
   data: () => ({
     isVisible: false,
     loading: false,
     error: false,
 
-    id: null,
-    result: null
+    item: {
+      team1: '',
+      team2: '',
+      score1: '',
+      score2: ''
+    }
   }),
   methods: {
     // To show the dialog
-    show() {
+    show(item) {
       this.isVisible = true
+      this.item = item
     },
     hide() {
       this.error = false
       this.$refs.form.reset()
       this.isVisible = false
+    },
+    async UpdateMatch() {
+      const result = await this.$validator.validate()
+
+      if (result) {
+        this.loading = true
+
+        const response = await WtmApi.Request(
+          'put',
+          this.$store.state.apiUrl +
+            '/matchs/' +
+            this.item.id +
+            '/',
+          this.item,
+          this.$store.state.axiosConfig
+        )
+
+        if (response.isSuccess) {
+          this.$refs.form.reset()
+          this.$snotify.success(
+            'Scores updated successfuly!'
+          )
+          this.isVisible = false
+        } else {
+          this.$snotify.error(
+            'Unable to update this match...\nPlease try later...'
+          )
+          this.error = true
+        }
+        this.loading = false
+      }
     }
   }
 }

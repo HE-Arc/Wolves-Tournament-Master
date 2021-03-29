@@ -1,5 +1,6 @@
 <template>
   <v-card>
+    <MatchResultDialog ref="matchResultDialog" />
     <v-expansion-panels>
       <v-expansion-panel>
         <v-expansion-panel-header>
@@ -8,7 +9,12 @@
         <v-expansion-panel-content>
           <p>Match 1 : {{ this.scoreMatch1 }}</p>
           <p>Match 2 : {{ this.scoreMatch2 }}</p>
-          <v-btn tile outlined>Ajouter un résultat</v-btn>
+          <v-btn
+            tile
+            outlined
+            @click="OpenMatchResultDialog"
+            >Ajouter un résultat</v-btn
+          >
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -16,6 +22,8 @@
 </template>
 
 <script>
+import MatchResultDialog from '@/components/dialogs/MatchResultDialog'
+
 export default {
   props: {
     idMatch: {
@@ -31,9 +39,12 @@ export default {
     },
     scoreMatch2: {
       type: String // score team 1 - score team 2
+    },
+    match: {
+      type: Object
     }
   },
-  components: {},
+  components: { MatchResultDialog },
   data: () => ({
     // empty
   }),
@@ -44,7 +55,9 @@ export default {
     // watch a prop modified from the outside
   },
   methods: {
-    // empty
+    async OpenMatchResultDialog(match) {
+      this.$refs.matchResultDialog.show(match)
+    }
   }
 }
 </script>

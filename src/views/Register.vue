@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import UserService from '@/services/UserService'
+import WtmApi from '@/services/WtmApiService'
 
 export default {
   data: () => ({
@@ -116,7 +116,11 @@ export default {
           password: this.pwd
         }
 
-        const response = await UserService.CreateUser(user)
+        const response = await WtmApi.Request(
+          'post',
+          this.$store.state.apiUrl + 'users/',
+          user
+        )
 
         if (response.isSuccess) {
           this.$refs.registerForm.reset()

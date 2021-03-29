@@ -74,8 +74,7 @@
 </template>
 
 <script>
-import UserService from '@/services/UserService'
-import NotificationService from '@/services/NotificationService'
+import WtmApi from '@/services/WtmApiService'
 
 export default {
   data: () => ({
@@ -109,9 +108,13 @@ export default {
           password: this.pwd
         }
 
-        const response = await UserService.Login(user)
-        console.log('======== response ======')
-        console.log(response)
+        const response = await WtmApi.Request(
+          'post',
+          this.$store.state.apiUrl + 'auth/',
+          user,
+          null
+        )
+
         if (response.isSuccess) {
           this.$store.commit(
             'setToken',
@@ -143,9 +146,11 @@ export default {
     async GetNotifications() {
       this.loading = true
 
-      let response = await NotificationService.GetNotifications(
-        this.$store.state.token,
-        this.$store.state.authUser.id
+      const response = await WtmApi.GetNotifications(
+        this.$store.state.apiUrl +
+          'notifications?uid=' +
+          this.$store.state.authUser.id,
+        this.$store.getters.getAxiosConfig
       )
 
       if (response.isSuccess) {

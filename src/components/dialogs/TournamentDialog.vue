@@ -172,7 +172,7 @@
 </template>
 
 <script>
-import TournamentService from '@/services/TournamentService'
+import WtmApi from '@/services/WtmApiService'
 
 export default {
   data: () => ({
@@ -219,8 +219,11 @@ export default {
           organizer: this.$store.state.authUser.name
         }
 
-        const response = await TournamentService.CreateTournament(
-          tournament
+        const response = await WtmApi.Request(
+          'post',
+          this.$store.state.apiUrl + 'tournaments/',
+          tournament,
+          this.$store.getters.getAxiosConfig
         )
 
         if (response.isSuccess) {
