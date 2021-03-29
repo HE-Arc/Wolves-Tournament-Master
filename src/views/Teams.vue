@@ -110,7 +110,7 @@ export default {
     async GetTeams() {
       this.loading = true
 
-      let response = await WtmApi.Request(
+      const response = await WtmApi.Request(
         'get',
         this.$store.state.apiUrl + 'teams/',
         null,
@@ -129,11 +129,6 @@ export default {
       this.$refs.deleteTeam.show(team)
     },
     async DeleteTeam(team) {
-      // let response = await TeamService.DeleteTeam(
-      //   this.$store.state.token,
-      //   team
-      // )
-
       const response = await WtmApi.Request(
         'delete',
         this.$store.state.apiUrl + 'teams/' + team.id + '/',
