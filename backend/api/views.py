@@ -22,6 +22,15 @@ class UserViewSet(viewsets.ModelViewSet):
     # authentication_classes = (TokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
 
+    @action(methods = ["GET"], detail = True)
+    def getteammembers(self, request, pk = None):
+        if(pk is not None):
+            team = Team.objects.get(id = pk)
+            members = team.members.all()
+            data = self.get_serializer(members, many=True).data
+
+            return Response(data)
+
 
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
@@ -60,21 +69,14 @@ class TeamViewSet(viewsets.ModelViewSet):
             }
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
-    # def get_queryset(self):
-    #     queryset = Team.objects.all()
-    #     uid = self.request.query_params.get("uid", None)
-    #     if(uid is not None):
-    #         queryset = queryset.filter(members = uid)
-    #         return queryset
-
     @action(methods = ["GET"], detail = True)
-    def getallmembers(self, request, pk = None):
-        queryset = Team.objects.all()
+    def getteamsbymember(self, request, pk = None):
         if(pk is not None):
-            queryset = queryset.filter(id = pk)
-            data = TeamSerializer(queryset).data
-            return Response(data, status=status.HTTP_200_OK)
-    
+            teams = Team.objects.filter(members__id=pk)
+            data = self.get_serializer(teams, many=True).data
+
+            return Response(data)
+
 
 class MatchViewSet(viewsets.ModelViewSet):
     queryset = Match.objects.all()

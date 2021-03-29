@@ -15,6 +15,24 @@ export default {
                 })
         })
     },
+    GetTeamMembers(token, team){
+        return new Promise(resolve => {
+            let config = {
+                headers: {
+                    Authorization: 'Token' + token
+                }
+            }
+            axios
+            // .post(this.apiurl + 'teams/' + tid + "/adduser/", data, config)
+                .get(this.apiurl + 'users/' + team.id + '/getteammembers/', config)
+                .then(response => {
+                    resolve({ isSuccess: true, result: response.data })
+                })
+                .catch(error => {
+                    resolve({ isSuccess: false, result: error })
+                })
+        })
+    },
     CreateUser(user) {
         return new Promise(resolve => {
             axios

@@ -35,25 +35,7 @@ export default {
                 }
             }
             axios
-                .get(this.apiurl + 'teams?uid=' + member, config)
-                .then(response => {
-                    resolve({ isSuccess: true, result: response.data })
-                })
-                .catch(error => {
-                    resolve({ isSuccess: false, result: error })
-                })
-        })
-    },
-    GetTeamMembers(token, team){
-        return new Promise(resolve => {
-            let config = {
-                headers: {
-                    Authorization: 'Token' + token
-                }
-            }
-            axios
-            // .post(this.apiurl + 'teams/' + tid + "/adduser/", data, config)
-                .get(this.apiurl + 'teams/' + team.id + '/getallmembers/', config)
+                .get(this.apiurl + 'teams/' + member +'/getteamsbymember/', config)
                 .then(response => {
                     resolve({ isSuccess: true, result: response.data })
                 })

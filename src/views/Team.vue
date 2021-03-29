@@ -116,6 +116,7 @@
 
 <script>
 import TeamService from '@/services/TeamService'
+import UserService from '@/services/UserService'
 
 export default {
   components: {},
@@ -218,7 +219,7 @@ export default {
     },
     async GetTeamMembers(team) {
       this.loading = true
-      let response = await TeamService.GetTeamMembers(
+      let response = await UserService.GetTeamMembers(
         this.$store.state.token,
         team,
         this.$store.state.authUser.id
