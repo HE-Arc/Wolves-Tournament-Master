@@ -118,6 +118,15 @@ import LoginDialog from '@/components/dialogs/LoginDialog'
 export default {
   name: 'App',
 
+  metaInfo: {
+    title: 'Home',
+    titleTemplate: '%s - WTM',
+    htmlAttrs: {
+      lang: 'en',
+      amp: true
+    }
+  },
+
   components: {
     LoginDialog
   },

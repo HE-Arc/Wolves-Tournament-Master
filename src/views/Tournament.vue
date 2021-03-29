@@ -16,14 +16,8 @@ import Vue from 'vue'
 import TournamentCard from '@/components/tournamentcard'
 
 export default {
-  //created() {
-  mounted() {
-    // todo add it only on creation
-    this.generateEmptyMatches()
-    this.setParents()
-    this.setTeams()
-    this.displayTree()
-    //this.showMatches()
+  metaInfo: {
+    title: 'Tournament'
   },
   components: {
     // eslint-disable-next-line vue/no-unused-components
@@ -86,6 +80,14 @@ export default {
       // returns the number of matches if it was a perfect binarytree
       return Math.pow(2, this.nbRounds) - 1
     }
+  },
+  mounted() {
+    // todo add it only on creation
+    this.generateEmptyMatches()
+    this.setParents()
+    this.setTeams()
+    this.displayTree()
+    //this.showMatches()
   },
   methods: {
     /*

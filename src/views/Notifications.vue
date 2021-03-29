@@ -93,7 +93,9 @@ import WtmApi from '@/services/WtmApiService'
 
 export default {
   components: {},
-
+  metaInfo: {
+    title: 'Notifications'
+  },
   data: () => ({
     notifications: [],
     loading: false,

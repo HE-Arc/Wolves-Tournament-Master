@@ -91,6 +91,9 @@
 import WtmApi from '@/services/WtmApiService'
 
 export default {
+  metaInfo: {
+    title: 'Register'
+  },
   data: () => ({
     loading: false,
     error: false,

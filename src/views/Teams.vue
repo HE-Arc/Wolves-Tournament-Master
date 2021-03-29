@@ -75,7 +75,9 @@ export default {
     TeamDialog,
     DeleteModal
   },
-
+  metaInfo: {
+    title: 'Teams'
+  },
   data: () => ({
     teams: [],
     loading: false,

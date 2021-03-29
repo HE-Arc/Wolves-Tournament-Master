@@ -119,7 +119,9 @@ import WtmApi from '@/services/WtmApiService'
 
 export default {
   components: {},
-
+  metaInfo: {
+    title: 'Team'
+  },
   data: () => ({
     teams: [],
     selectedTeam: 0,

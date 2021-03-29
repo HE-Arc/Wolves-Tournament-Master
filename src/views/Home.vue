@@ -55,6 +55,9 @@ export default {
   components: {
     TournamentDialog
   },
+  metaInfo: {
+    title: 'Home'
+  },
   data: () => ({
     loading: false,
     error: false,

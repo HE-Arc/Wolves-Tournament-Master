@@ -6,6 +6,9 @@
 
 <script>
 export default {
+  metaInfo: {
+    title: 'About'
+  },
   data: () => ({
     users: []
   }),
