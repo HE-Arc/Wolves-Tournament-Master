@@ -1,5 +1,26 @@
 <template>
   <div style="margin:30px;">
+    <v-row>
+      <v-slide-group multiple show-arrows xs="12">
+        <v-slide-item
+          v-for="team in teams"
+          :key="team.name"
+          v-slot="{ active }"
+        >
+          <v-btn
+            class="mx-2"
+            :input-value="active"
+            active-class="purple white--text"
+            @click="SelectTeam(team)"
+          >
+            {{ team.name }}
+          </v-btn>
+        </v-slide-item>
+      </v-slide-group>
+    </v-row>
+    <v-row>
+      <v-divider> </v-divider>
+    </v-row>
     <v-row align="center">
       <img
         width="80px"
@@ -8,7 +29,7 @@
         alt="logo"
       />
       <h1 style="margin-left:10px;" class="text-xs-left">
-        Faze Clan
+        {{ this.selectedTeam.name }}
       </h1>
       <v-spacer></v-spacer>
       <v-btn color="#01002a" tile dark large
@@ -100,6 +121,8 @@ export default {
   components: {},
 
   data: () => ({
+    teams: [],
+    selectedTeam: 0,
     items: [
       {
         action: 'mdi-ticket',
@@ -111,7 +134,7 @@ export default {
         title: 'CS : GO'
       },
       {
-        action: 'mdi-silverware-fork-knife',
+        action: 'mdi-trophy-variant',
         active: true,
         items: [{ title: '3ème - LCS' }],
         title: 'LoL'
@@ -192,7 +215,29 @@ export default {
       )
 
       if (response.isSuccess) {
-        console.log('teams = ' + response.result)
+        this.teams = response.result
+      } else {
+        this.$snotify.error('Unable to get teams...')
+      }
+
+      this.loading = false
+    },
+    SelectTeam(team) {
+      this.GetTeamMembers(team)
+      this.selectedTeam = team
+    },
+    async GetTeamMembers(team) {
+      this.loading = true
+      const response = await WtmApi.Request(
+        'get',
+        this.$store.state.apiUrl +
+          'users/' +
+          team.id +
+          '/getteammembers/',
+        null,
+        this.$store.getters.getAxiosConfig
+      )
+      if (response.isSuccess) {
         this.teams = response.result
       } else {
         this.$snotify.error('Unable to get teams...')
