@@ -163,7 +163,8 @@ export default {
       this.$refs.loginDialog.show()
     },
     Logout() {
-      this.$store.commit('removeToken')
+      this.$store.commit('logout')
+      this.$router.push('/')
     }
   }
 }

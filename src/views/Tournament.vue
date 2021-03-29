@@ -1,6 +1,5 @@
 <template>
   <div style="margin-top: 20px">
-    <MatchResultDialog ref="matchResultDialog" />
     <h1>ESL One 2018</h1>
     <div class="row">
       <div id="test"></div>
@@ -15,7 +14,6 @@
 // const Vue = require('vue').default
 import Vue from 'vue'
 import TournamentCard from '@/components/tournamentcard'
-import MatchResultDialog from '@/components/dialogs/MatchResultDialog'
 
 export default {
   //created() {
@@ -29,8 +27,7 @@ export default {
   },
   components: {
     // eslint-disable-next-line vue/no-unused-components
-    TournamentCard,
-    MatchResultDialog
+    TournamentCard
   },
   data: () => ({
     nbTeams: 8,
@@ -91,10 +88,6 @@ export default {
     }
   },
   methods: {
-    async OpenMatchResultDialog(match) {
-      this.$refs.matchResultDialog.show(match)
-    },
-
     /*
       ===================
         Tree logic

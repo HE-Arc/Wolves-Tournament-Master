@@ -48,7 +48,7 @@
 
 <script>
 import TournamentDialog from '@/components/dialogs/TournamentDialog'
-import TournamentService from '@/services/TournamentService'
+import WtmApi from '@/services/WtmApiService'
 
 export default {
   name: 'Home',
@@ -72,7 +72,10 @@ export default {
     async GetTournaments() {
       this.loading = true
 
-      let response = await TournamentService.GetTournaments()
+      const response = await WtmApi.Request(
+        'get',
+        this.$store.state.apiUrl + 'tournaments/'
+      )
 
       if (response.isSuccess) {
         this.tournaments = response.result

@@ -33,7 +33,7 @@ export default new Vuex.Store({
             localStorage.setItem('wtm-token', newToken)
             state.token = newToken
         },
-        removeToken(state) {
+        logout(state) {
             // TODO: For security purposes, take localStorage out of the project.
             localStorage.removeItem('wtm-token')
             localStorage.removeItem('wtm-authuser')

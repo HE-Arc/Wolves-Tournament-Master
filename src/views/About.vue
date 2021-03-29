@@ -5,23 +5,13 @@
 </template>
 
 <script>
-import UserService from '@/services/UserService'
-
 export default {
   data: () => ({
     users: []
   }),
 
-  mounted() {
-    this.GetUsers()
-  },
+  mounted() {},
 
-  methods: {
-    async GetUsers() {
-      const response = await UserService.GetUsers()
-
-      console.log(response)
-    }
-  }
+  methods: {}
 }
 </script>

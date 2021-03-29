@@ -121,7 +121,6 @@ export default {
           )
           this.error = true
         }
-
         this.loading = false
       }
     }

@@ -89,8 +89,7 @@
 </template>
 
 <script>
-import NotificationService from '@/services/NotificationService'
-import TeamService from '@/services/TeamService'
+import WtmApi from '@/services/WtmApiService'
 
 export default {
   components: {},
@@ -115,10 +114,12 @@ export default {
   methods: {
     async GetNotifications() {
       this.loading = true
-      console.log('token= ' + this.$store.state.token)
-      let response = await NotificationService.GetNotifications(
-        this.$store.state.token,
-        this.$store.state.authUser.id
+
+      const response = await WtmApi.GetNotifications(
+        this.$store.state.apiUrl +
+          'notifications?uid=' +
+          this.$store.state.authUser.id,
+        this.$store.getters.getAxiosConfig
       )
 
       if (response.isSuccess) {
@@ -138,9 +139,15 @@ export default {
     async UpdateNotification(notification) {
       if (notification.notificationType != 'INVITATION') {
         notification.seen = true
-        let response = await NotificationService.UpdateNotification(
-          this.$store.state.token,
-          notification
+
+        const response = await WtmApi.Request(
+          'put',
+          this.$store.state.apiurl +
+            'notifications/' +
+            notification.id +
+            '/',
+          notification,
+          this.$store.getters.getAxiosConfig
         )
 
         if (response.isSuccess) {
@@ -156,11 +163,19 @@ export default {
       }
     },
     async AcceptTeamInvitation(notification) {
-      let response = await TeamService.AddUser(
-        this.$store.state.token,
-        this.$store.state.authUser.id,
-        notification.team,
-        notification.id
+      let data = {
+        userid: this.$store.state.authUser.id,
+        notificationid: notification.id
+      }
+
+      const response = await WtmApi.Request(
+        'post',
+        this.$store.state.apiUrl +
+          'teams/' +
+          notification.team +
+          '/adduser/',
+        data,
+        this.$store.getters.getAxiosConfig
       )
       if (response.isSuccess) {
         console.log(response.result)
@@ -175,10 +190,17 @@ export default {
       notification.seen = true
       notification.message =
         '[Declined] ' + notification.message
-      let response = await NotificationService.UpdateNotification(
-        this.$store.state.token,
-        notification
+
+      const response = await WtmApi.Request(
+        'put',
+        this.$store.state.apiUrl +
+          'notifications/' +
+          notification.id +
+          '/',
+        notification,
+        this.$store.getters.getAxiosConfig
       )
+
       if (response.isSuccess) {
         this.GetNotifications()
         this.$snotify.success(
