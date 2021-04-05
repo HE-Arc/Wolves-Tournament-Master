@@ -26,9 +26,7 @@
             :error-messages="errors.collect('email')"
           ></v-text-field>
           <v-text-field
-            :append-icon="
-              showPwd ? 'mdi-eye' : 'mdi-eye-off'
-            "
+            :append-icon="showPwd ? 'mdi-eye' : 'mdi-eye-off'"
             v-model="pwd"
             label="Password"
             outlined
@@ -42,20 +40,16 @@
             @click:append="showPwd = !showPwd"
           ></v-text-field>
           <v-text-field
-            :append-icon="
-              showPwd ? 'mdi-eye' : 'mdi-eye-off'
-            "
+            :append-icon="showPwd ? 'mdi-eye' : 'mdi-eye-off'"
             v-model="confirmpwd"
-            label="Confrim your password"
+            label="Confirm your password"
             outlined
             dense
             :type="showPwd ? 'text' : 'password'"
             clearable
             v-validate="'required|min:8'"
             data-vv-name="confirm password"
-            :error-messages="
-              errors.collect('confirm password')
-            "
+            :error-messages="errors.collect('confirm password')"
             @click:append="showPwd = !showPwd"
           ></v-text-field>
           <v-alert
@@ -127,9 +121,7 @@ export default {
 
         if (response.isSuccess) {
           this.$refs.registerForm.reset()
-          this.$snotify.success(
-            this.username + ' registered successfuly!'
-          )
+          this.$snotify.success(user.username + ' registered successfuly!')
           this.$router.push({ name: 'Home' })
         } else {
           this.$snotify.error(this.errorMessage)

@@ -1,9 +1,5 @@
 <template>
-  <v-dialog
-    v-model="isVisible"
-    max-width="500px"
-    @keydown.esc="hide"
-  >
+  <v-dialog v-model="isVisible" max-width="500px" @keydown.esc="hide">
     <v-card>
       <v-toolbar dark color="#01002a">
         <v-toolbar-title>Sign in</v-toolbar-title>
@@ -28,9 +24,7 @@
             :error-messages="errors.collect('username')"
           ></v-text-field>
           <v-text-field
-            :append-icon="
-              showPwd ? 'mdi-eye' : 'mdi-eye-off'
-            "
+            :append-icon="showPwd ? 'mdi-eye' : 'mdi-eye-off'"
             v-model="pwd"
             label="Password"
             outlined
@@ -58,9 +52,7 @@
           >Sign up for free !</router-link
         >
         <v-spacer></v-spacer>
-        <v-btn tile color="success" @click="Login"
-          >Sign in</v-btn
-        >
+        <v-btn tile color="success" @click="Login">Sign in</v-btn>
       </v-card-actions>
       <v-card-actions v-show="loading">
         <v-spacer></v-spacer>
@@ -115,10 +107,7 @@ export default {
         )
 
         if (response.isSuccess) {
-          this.$store.commit(
-            'setToken',
-            response.result.token
-          )
+          this.$store.commit('setToken', response.result.token)
           this.$store.commit('setAuthUser', {
             authUserId: response.result.user_id,
             authUserEmail: response.result.email,
@@ -127,15 +116,11 @@ export default {
           })
 
           this.$refs.form.reset()
-          this.$snotify.info(
-            user.username + ' logged in successfuly!'
-          )
+          this.$snotify.info(user.username + ' logged in successfuly!')
           this.GetNotifications()
           this.isVisible = false
         } else {
-          this.$snotify.error(
-            'Unable to login...\nPlease try later...'
-          )
+          this.$snotify.error('Unable to login...\nPlease try later...')
           this.error = true
         }
 
@@ -155,9 +140,7 @@ export default {
       if (response.isSuccess) {
         this.$store.commit('updateNotif', response.counter)
       } else {
-        this.$snotify.error(
-          'Unable to get notifications ...'
-        )
+        this.$snotify.error('Unable to get notifications ...')
       }
       this.loading = false
     }

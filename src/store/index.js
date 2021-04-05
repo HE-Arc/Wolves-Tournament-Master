@@ -14,7 +14,8 @@ export default new Vuex.Store({
         },
         token: localStorage.getItem('wtm-token'),
         nbrNotif: 0,
-        apiUrl: 'http://localhost:8000/api/'
+        apiUrl: 'http://localhost:8000/api/',
+        navigationDrawer: false
     },
     mutations: {
         setAuthUser(state, { authUserId, authUserEmail, authUserName, isAuthenticated }) {
@@ -48,6 +49,9 @@ export default new Vuex.Store({
         },
         updateNotif(state, newNumber) {
           state.nbrNotif = newNumber;
+        },
+        setNavigationDrawer(state) {
+            state.navigationDrawer = !state.navigationDrawer
         }
     },
     actions: {},

@@ -1,9 +1,5 @@
 <template>
-  <v-dialog
-    v-model="isVisible"
-    max-width="500px"
-    @keydown.esc="hide"
-  >
+  <v-dialog v-model="isVisible" max-width="500px" @keydown.esc="hide">
     <v-card>
       <v-toolbar dark color="#01002a">
         <v-toolbar-title>{{ title }}</v-toolbar-title>
@@ -50,21 +46,11 @@
       </v-card-text>
       <v-card-actions v-show="!loading">
         <v-spacer></v-spacer>
-        <v-btn
-          v-show="!isUpdate"
-          tile
-          color="success"
-          @click="CreateTeam"
-        >
+        <v-btn v-show="!isUpdate" tile color="success" @click="CreateTeam">
           Save
           <v-icon right> mdi-content-save </v-icon>
         </v-btn>
-        <v-btn
-          v-show="isUpdate"
-          tile
-          color="success"
-          @click="UpdateTeam"
-        >
+        <v-btn v-show="isUpdate" tile color="success" @click="UpdateTeam">
           Save
           <v-icon right> mdi-content-save </v-icon>
         </v-btn>
@@ -140,9 +126,7 @@ export default {
 
         if (response.isSuccess) {
           this.$refs.form.reset()
-          this.$snotify.success(
-            team.name + ' added successfuly!'
-          )
+          this.$snotify.success(team.name + ' added successfuly!')
           this.isVisible = false
           this.parent.GetTeams()
         } else {
@@ -166,19 +150,14 @@ export default {
 
         const response = await WtmApi.Request(
           'put',
-          this.$store.state.apiUrl +
-            'teams/' +
-            this.item.id +
-            '/',
+          this.$store.state.apiUrl + 'teams/' + this.item.id + '/',
           this.item,
           this.$store.getters.getAxiosConfig
         )
 
         if (response.isSuccess) {
           this.$refs.form.reset()
-          this.$snotify.success(
-            this.item.name + ' updated successfuly!'
-          )
+          this.$snotify.success(this.item.name + ' updated successfuly!')
           this.isVisible = false
           this.parent.GetTeams()
         } else {

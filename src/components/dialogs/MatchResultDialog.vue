@@ -1,9 +1,5 @@
 <template>
-  <v-dialog
-    v-model="isVisible"
-    max-width="500px"
-    @keydown.esc="hide"
-  >
+  <v-dialog v-model="isVisible" max-width="500px" @keydown.esc="hide">
     <v-card>
       <v-toolbar dark color="#01002a">
         <v-toolbar-title>Add a result</v-toolbar-title>
@@ -101,19 +97,14 @@ export default {
 
         const response = await WtmApi.Request(
           'put',
-          this.$store.state.apiUrl +
-            '/matchs/' +
-            this.item.id +
-            '/',
+          this.$store.state.apiUrl + '/matchs/' + this.item.id + '/',
           this.item,
           this.$store.state.axiosConfig
         )
 
         if (response.isSuccess) {
           this.$refs.form.reset()
-          this.$snotify.success(
-            'Scores updated successfuly!'
-          )
+          this.$snotify.success('Scores updated successfuly!')
           this.isVisible = false
         } else {
           this.$snotify.error(

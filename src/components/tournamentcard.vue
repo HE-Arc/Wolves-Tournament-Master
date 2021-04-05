@@ -9,10 +9,7 @@
         <v-expansion-panel-content>
           <p>Match 1 : {{ this.scoreMatch1 }}</p>
           <p>Match 2 : {{ this.scoreMatch2 }}</p>
-          <v-btn
-            tile
-            outlined
-            @click="OpenMatchResultDialog"
+          <v-btn tile outlined @click="OpenMatchResultDialog"
             >Ajouter un résultat</v-btn
           >
         </v-expansion-panel-content>

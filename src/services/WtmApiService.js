@@ -28,6 +28,7 @@ export default {
           let notifNumber = response.data.filter(
             n => n.seen == false
           ).length
+          
           resolve({isSuccess: true, result: response.data, counter: notifNumber});
         })
         .catch(error => {

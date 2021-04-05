@@ -19,14 +19,8 @@
             v-for="notification in notifications"
             :key="notification.id"
           >
-            <v-list-item-avatar
-              @click="UpdateNotification(notification)"
-            >
-              <v-icon
-                v-if="!notification.seen"
-                class="grey lighten-1"
-                dark
-              >
+            <v-list-item-avatar @click="UpdateNotification(notification)">
+              <v-icon v-if="!notification.seen" class="grey lighten-1" dark>
                 mdi-bell
               </v-icon>
             </v-list-item-avatar>
@@ -34,9 +28,7 @@
             <v-list-item-content>
               <v-list-item-title
                 class="text-sm-left"
-                v-text="
-                  notifiType[notification.notificationType]
-                "
+                v-text="notifiType[notification.notificationType]"
               ></v-list-item-title>
 
               <v-list-item-subtitle
@@ -47,10 +39,7 @@
             </v-list-item-content>
 
             <v-list-item-action
-              v-if="
-                notification.notificationType ==
-                  'INVITATION'
-              "
+              v-if="notification.notificationType == 'INVITATION'"
             >
               <v-btn
                 class="ma-2"
@@ -65,10 +54,7 @@
             </v-list-item-action>
 
             <v-list-item-action
-              v-if="
-                notification.notificationType ==
-                  'INVITATION'
-              "
+              v-if="notification.notificationType == 'INVITATION'"
             >
               <v-btn
                 class="ma-2"
@@ -132,9 +118,7 @@ export default {
 
         this.$store.commit('updateNotif', response.counter)
       } else {
-        this.$snotify.error(
-          'Unable to get notifications ...'
-        )
+        this.$snotify.error('Unable to get notifications ...')
       }
       this.loading = false
     },
@@ -144,23 +128,15 @@ export default {
 
         const response = await WtmApi.Request(
           'put',
-          this.$store.state.apiurl +
-            'notifications/' +
-            notification.id +
-            '/',
+          this.$store.state.apiurl + 'notifications/' + notification.id + '/',
           notification,
           this.$store.getters.getAxiosConfig
         )
 
         if (response.isSuccess) {
-          this.$store.commit(
-            'updateNotif',
-            this.$store.state.nbrNotif - 1
-          )
+          this.$store.commit('updateNotif', this.$store.state.nbrNotif - 1)
         } else {
-          this.$snotify.error(
-            'Unable to update notifications ...'
-          )
+          this.$snotify.error('Unable to update notifications ...')
         }
       }
     },
@@ -172,10 +148,7 @@ export default {
 
       const response = await WtmApi.Request(
         'post',
-        this.$store.state.apiUrl +
-          'teams/' +
-          notification.team +
-          '/adduser/',
+        this.$store.state.apiUrl + 'teams/' + notification.team + '/adduser/',
         data,
         this.$store.getters.getAxiosConfig
       )
@@ -190,28 +163,20 @@ export default {
     async RejectTeamInvitation(notification) {
       notification.notificationType = 'MESSAGE'
       notification.seen = true
-      notification.message =
-        '[Declined] ' + notification.message
+      notification.message = '[Declined] ' + notification.message
 
       const response = await WtmApi.Request(
         'put',
-        this.$store.state.apiUrl +
-          'notifications/' +
-          notification.id +
-          '/',
+        this.$store.state.apiUrl + 'notifications/' + notification.id + '/',
         notification,
         this.$store.getters.getAxiosConfig
       )
 
       if (response.isSuccess) {
         this.GetNotifications()
-        this.$snotify.success(
-          'You refused to join the team'
-        )
+        this.$snotify.success('You refused to join the team')
       } else {
-        this.$snotify.error(
-          'Cannot decline team invitation...'
-        )
+        this.$snotify.error('Cannot decline team invitation...')
       }
     }
   }

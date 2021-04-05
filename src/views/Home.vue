@@ -8,10 +8,7 @@
         sm="6"
         md="4"
       >
-        <v-card
-          @click="OpenTournamentDialog"
-          style="padding:10px;"
-        >
+        <v-card @click="OpenTournamentDialog" style="padding:10px;">
           <v-icon large>mdi-plus</v-icon>
         </v-card>
       </v-col>

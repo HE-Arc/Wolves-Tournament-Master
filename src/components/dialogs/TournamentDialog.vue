@@ -1,14 +1,8 @@
 <template>
-  <v-dialog
-    v-model="isVisible"
-    max-width="500px"
-    @keydown.esc="hide"
-  >
+  <v-dialog v-model="isVisible" max-width="500px" @keydown.esc="hide">
     <v-card>
       <v-toolbar dark color="#01002a">
-        <v-toolbar-title
-          >Create a tournament</v-toolbar-title
-        >
+        <v-toolbar-title>Create a tournament</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
           <v-btn icon dark @click="hide">
@@ -83,9 +77,7 @@
                 clearable
                 v-validate="'required'"
                 data-vv-name="limit date"
-                :error-messages="
-                  errors.collect('limit date')
-                "
+                :error-messages="errors.collect('limit date')"
               ></v-combobox>
             </template>
             <v-date-picker
@@ -95,18 +87,10 @@
               :min="new Date().toISOString().slice(0, 10)"
             >
               <v-spacer></v-spacer>
-              <v-btn
-                text
-                color="#01002a"
-                @click="menu = false"
-              >
+              <v-btn text color="#01002a" @click="menu = false">
                 Cancel
               </v-btn>
-              <v-btn
-                text
-                color="#01002a"
-                @click="$refs.menu.save(limitDate)"
-              >
+              <v-btn text color="#01002a" @click="$refs.menu.save(limitDate)">
                 OK
               </v-btn>
             </v-date-picker>
@@ -119,13 +103,9 @@
             outlined
             clearable
             hint="Must be between 2 and 16"
-            v-validate="
-              'required|numeric|min_value:2|max_value:16'
-            "
+            v-validate="'required|numeric|min_value:2|max_value:16'"
             data-vv-name="number of teams"
-            :error-messages="
-              errors.collect('number of teams')
-            "
+            :error-messages="errors.collect('number of teams')"
           ></v-text-field>
 
           <v-text-field
@@ -151,11 +131,7 @@
       </v-card-text>
       <v-card-actions v-show="!loading">
         <v-spacer></v-spacer>
-        <v-btn
-          tile
-          color="success"
-          @click="CreateTournament"
-        >
+        <v-btn tile color="success" @click="CreateTournament">
           Save
           <v-icon right> mdi-content-save </v-icon>
         </v-btn>
@@ -228,9 +204,7 @@ export default {
 
         if (response.isSuccess) {
           this.$refs.form.reset()
-          this.$snotify.success(
-            tournament.name + ' created successfuly!'
-          )
+          this.$snotify.success(tournament.name + ' created successfuly!')
           this.isVisible = false
           this.parent.GetTournaments()
         } else {

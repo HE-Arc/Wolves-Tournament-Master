@@ -1,14 +1,8 @@
 <template>
-  <v-dialog
-    v-model="isVisible"
-    persistent
-    max-width="500px"
-  >
+  <v-dialog v-model="isVisible" persistent max-width="500px">
     <v-card>
       <v-toolbar dark color="#01002a">
-        <v-toolbar-title
-          >Delete {{ item.name }}</v-toolbar-title
-        >
+        <v-toolbar-title>Delete {{ item.name }}</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
           <v-btn v-show="!loading" icon dark @click="hide">
@@ -19,9 +13,7 @@
       <v-card-title></v-card-title>
       <v-card-text>
         You realy want to delete "
-        <span style="font-size:15px;font-weight:bold;">{{
-          item.name
-        }}</span
+        <span style="font-size:15px;font-weight:bold;">{{ item.name }}</span
         >" ?
       </v-card-text>
       <v-card-actions v-show="!loading">

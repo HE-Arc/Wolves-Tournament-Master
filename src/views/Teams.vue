@@ -28,11 +28,7 @@
             <template v-slot:top>
               <v-toolbar flat>
                 <v-toolbar-title>TEAMS</v-toolbar-title>
-                <v-divider
-                  class="mx-4"
-                  inset
-                  vertical
-                ></v-divider>
+                <v-divider class="mx-4" inset vertical></v-divider>
                 <v-spacer></v-spacer>
                 <v-btn
                   @click.stop="CreateTeam"
@@ -47,11 +43,7 @@
               </v-toolbar>
             </template>
             <template v-slot:[`item.actions`]="{ item }">
-              <v-icon
-                small
-                class="mr-2"
-                @click="UpdateTeam(item)"
-              >
+              <v-icon small class="mr-2" @click="UpdateTeam(item)">
                 mdi-pencil
               </v-icon>
               <v-icon small @click="OpenDeleteModal(item)">
@@ -94,20 +86,10 @@ export default {
   },
   methods: {
     async CreateTeam() {
-      this.$refs.teamDialog.show(
-        this,
-        'Add a new team',
-        null,
-        false
-      )
+      this.$refs.teamDialog.show(this, 'Add a new team', null, false)
     },
     async UpdateTeam(team) {
-      this.$refs.teamDialog.show(
-        this,
-        'Update team',
-        team,
-        true
-      )
+      this.$refs.teamDialog.show(this, 'Update team', team, true)
     },
     async GetTeams() {
       this.loading = true
@@ -139,9 +121,7 @@ export default {
       )
 
       if (response.isSuccess) {
-        this.$snotify.success(
-          'team ' + team.name + ' deleted successfuly'
-        )
+        this.$snotify.success('team ' + team.name + ' deleted successfuly')
         this.$refs.deleteTeam.hide()
         this.GetTeams()
       } else {
