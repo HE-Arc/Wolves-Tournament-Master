@@ -34,58 +34,69 @@ export default {
     Tournament tree logic
   */
   createGame(p1Id, p2Id, p1Name, p2Name, isP1Win, isP2Win) {
+    /*
+        just create a game (node) for the bracket    
+    */
     return {
       player1: { id: p1Id, name: p1Name, winner: isP1Win },
       player2: { id: p2Id, name: p2Name, winner: isP2Win }
     }
   },
-  createRounds(teams) {
+  createRounds(matches, teams) {
     /*
-        Generate base matches "all in code", without interactions with the DB
-        and display the tournament brackets
+        Generate brackets from matches.
     */
-
     let rounds = []
-    let nbMatches = parseInt((teams.length + 1) / 2)
-    let nbRounds = Math.sqrt(nbMatches) + 1
+    let nbRounds = parseInt(Math.sqrt(matches.length)) + 1
 
-    // create first matches with teams
-    let teamGames = []
-    for (let teamId = 0; teamId < teams.length; teamId += 2) {
-      let team1 = teams[teamId]
-      let team2 = {
-        id: 0,
-        name: 'none'
-      }
+    // the match array should be sorted according to idInTournament at this stage
+    let matchId = 0
 
-      if (teamId + 1 < teams.length) {
-        team2 = teams[teamId + 1]
-      }
-
-      teamGames.push(
-        this.createGame(
-          team1.id.toString(),
-          team2.id.toString(),
-          team1.name,
-          team2.name,
-          true,
-          true
-        )
-      )
-    }
-
-    rounds.push({
-      games: teamGames
-    })
-
-    // create other empty matches
-    for (let round = nbRounds - 2; round >= 0; --round) {
+    // get every match from every round. To display the brackets correctly,
+    // the matches of the same round should be in the same subarray
+    for (let round = nbRounds - 1; round >= 0; --round) {
       let games = []
+      for (
+        let matchInRound = 0;
+        matchInRound < Math.pow(2, round);
+        ++matchInRound
+      ) {
+        if (matchId < matches.length) {
+          // go through all matches on each round
+          let currentMatch = matches[matchId]
+          let emptyTeam = {
+            id: 0,
+            name: 'none'
+          }
 
-      for (let match = 0; match < Math.pow(2, round); ++match) {
-        games.push(this.createGame('-1', '-1', 'tbd', 'tbd', true, true))
+          // prepare teams
+          let team1 =
+            currentMatch.team1 != null
+              ? teams[currentMatch.team1 - 1]
+              : emptyTeam
+
+          let team2 =
+            currentMatch.team2 != null
+              ? teams[currentMatch.team2 - 1]
+              : emptyTeam
+
+          // add teams into the game
+          games.push(
+            this.createGame(
+              team1.id,
+              team2.id,
+              team1.name,
+              team2.name,
+              true, //TODO put results here !
+              true //TODO put results here !
+            )
+          ) // get teams to put team name here !
+
+          ++matchId
+        }
       }
 
+      // add matches of this round in the brackets
       rounds.push({
         games: games
       })
@@ -95,7 +106,8 @@ export default {
   },
   createBaseMatches(teams, tournamentId) {
     /*
-        Create matches objects with the base matches. They'll be pushed in the DB
+        Create matches objects with the teams. Fill only the leaf matches.
+        They'll be pushed in the DB at tournament creation
     */
 
     let nbMatches = parseInt((teams.length + 1) / 2)
@@ -132,7 +144,11 @@ export default {
     // create other matches. They're all empty at tournament creation
     // TODO optimize it
     for (let round = nbRounds - 2; round >= 0; --round) {
-      for (let match = 0; match < Math.pow(2, round); ++match) {
+      for (
+        let matchInRound = 0;
+        matchInRound < Math.pow(2, round);
+        ++matchInRound
+      ) {
         matches.push({
           team1: null,
           team2: null,

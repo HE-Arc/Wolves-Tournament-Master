@@ -58,7 +58,7 @@ export default {
       teams: teams,
       tournamentId: 1, // TODO remove hardcoded id
       matches: [],
-      rounds: TournamentService.createRounds(teams)
+      rounds: []
     }
   },
   methods: {
@@ -70,17 +70,27 @@ export default {
       )
 
       if (response.isSuccess) {
-        response.result.forEach(element => {
-          if (element != null) {
-            console.log(element)
-          }
-        })
         this.matches = response.result
+        this.SortMatchesArray() // sort by id in tournament
+
+        // TODO place it elsewhere
+        this.rounds = TournamentService.createRounds(this.matches, this.teams)
       } else {
         this.$snotify.error('Unable to get matches...')
       }
 
       this.loading = false
+    },
+    SortMatchesArray() {
+      this.matches.sort((m1, m2) => {
+        if (m1.idInTournament > m2.idInTournament) {
+          return 1
+        }
+        if (m1.idInTournament < m2.idInTournament) {
+          return -1
+        }
+        return 0 //shloudn't happen
+      })
     }
   }
 }
