@@ -7,10 +7,8 @@ from .teammodel import Team
 
 class Match(models.Model):
     # blank = True for form validation and null=true for database nullable
-    team1 = models.ForeignKey(
-        Team, related_name="team1",  on_delete=models.CASCADE, blank=True, null=True)
-    team2 = models.ForeignKey(
-        Team, related_name="team2", on_delete=models.CASCADE, blank=True, null=True)
+    team1 = models.ForeignKey(Team, related_name="team1", on_delete=models.CASCADE, blank=True, null=True)
+    team2 = models.ForeignKey(Team, related_name="team2", on_delete=models.CASCADE, blank=True, null=True)
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     score1 = models.IntegerField(blank=True, null=True)
     score2 = models.IntegerField(blank=True, null=True)
