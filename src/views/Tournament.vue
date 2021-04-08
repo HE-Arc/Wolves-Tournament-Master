@@ -4,7 +4,17 @@
     <div class="row">
       <div id="test"></div>
       <div class="wrapper">
-        <div class="item" id="match_1"></div>
+        <!-- <div class="item" id="match_1"></div> -->
+        <!-- for (let idMatch = 1; idMatch <= this.matches.length; idMatch++) { -->
+        <div v-for="match in matches" :key="match.id" :matches="match.children">
+          <!-- FIRST NODE  -->
+          <div v-if="match.id == 1" class="item-parent"></div>
+          <!-- PARENT -->
+          <div
+            v-else-if="match.id != 0 && match.id * 2 < matches.length"
+            class="item-parent"
+          ></div>
+        </div>
       </div>
     </div>
   </div>
@@ -14,18 +24,10 @@
 // const Vue = require('vue').default
 import Vue from 'vue'
 import TournamentCard from '@/components/tournamentcard'
-import MatchService from '@/services/MatchService'
 
 export default {
-  //created() {
-  mounted() {
-    // todo add it only on creation
-    this.createTreeIntoDB()
-    // this.generateEmptyMatches()
-    // this.setParents()
-    // this.setTeams()
-    this.displayTree()
-    //this.showMatches()
+  metaInfo: {
+    title: 'Tournament'
   },
   components: {
     // eslint-disable-next-line vue/no-unused-components
@@ -38,35 +40,35 @@ export default {
     matches: [],
     teams: [
       {
-        id: 1,
+        id: 0,
         name: 'A'
       },
       {
-        id: 2,
+        id: 1,
         name: 'B'
       },
       {
-        id: 3,
+        id: 2,
         name: 'C'
       },
       {
-        id: 4,
+        id: 3,
         name: 'D'
       },
       {
-        id: 5,
+        id: 4,
         name: 'E'
       },
       {
-        id: 6,
+        id: 5,
         name: 'F'
       },
       {
-        id: 7,
+        id: 6,
         name: 'G'
       },
       {
-        id: 8,
+        id: 7,
         name: 'H'
       }
     ]
@@ -75,11 +77,7 @@ export default {
     nbParents: function() {
       // Get the number of parent nodes (non-leaf nodes)
       let nbParents = 0
-      for (
-        let round = 0;
-        round < this.nbRounds - 1;
-        round++
-      ) {
+      for (let round = 0; round < this.nbRounds - 1; round++) {
         nbParents += Math.pow(2, round)
       }
       return nbParents
@@ -89,20 +87,21 @@ export default {
       return Math.pow(2, this.nbRounds) - 1
     }
   },
+  mounted() {
+    // todo add it only on creation
+    this.generateEmptyMatches()
+    this.setParents()
+    this.setTeams()
+    this.displayTree()
+    //this.showMatches()
+  },
   methods: {
     /*
       ===================
         Tree logic
       ===================
     */
-    createTreeIntoDB() {
-      // create and empty tree (without any match score) in the DB
-      this.generateEmptyMatches()
-      this.setParents()
-      this.setTeams()
 
-      MatchService.CreateMatchs(this.matches)
-    },
     generateEmptyMatches() {
       /*
         Generate tree with empty matches
@@ -113,14 +112,11 @@ export default {
       //in binary trees, the first id is one
       for (let i = 0; i < this.nbMatches; i++) {
         this.matches.push({
-          //id: i + 1, // pk
-          team1: null,
-          team2: null,
-          tournament: 1,
-          score1: 0,
-          score2: 0,
-          idInTournament: i + 1, // id into the tournament
-          idParent: null // id in the tournament, not the pk
+          id: i + 1,
+          idTeam1: 'unknow',
+          idTeam2: 'unknow',
+          idParent: null
+          // score team 1
           // score team 2
           // id in tournament
           // tournament id
@@ -131,11 +127,7 @@ export default {
       /*
         Set the parent for each node
       */
-      for (
-        let idParent = 1;
-        idParent <= this.nbParents;
-        idParent++
-      ) {
+      for (let idParent = 1; idParent <= this.nbParents; idParent++) {
         let firstChildId = 2 * idParent
         if (firstChildId <= this.nbMatches) {
           this.matches[firstChildId].idParent = idParent
@@ -151,15 +143,10 @@ export default {
         Set teams into leafs (on an empty tournament)
       */
       let teamIndex = 0
-      for (
-        let i = this.nbParents + 1;
-        i <= this.nbMatches;
-        i++
-      ) {
-        this.matches[i].team1 = this.teams[teamIndex++].id
-
+      for (let i = this.nbParents + 1; i <= this.nbMatches; i++) {
+        this.matches[i].idTeam1 = this.teams[teamIndex++].id
         if (teamIndex < this.nbTeams) {
-          this.matches[i].team2 = this.teams[teamIndex++].id
+          this.matches[i].idTeam2 = this.teams[teamIndex++].id
         }
       }
     },
@@ -168,18 +155,22 @@ export default {
         if (element != null && element.idParent != null) {
           console.log(
             'id : ' +
-              element.idInTournament +
+              element.id +
               ' team_name : ' +
-              this.teams[element.idInTournament - 1].name +
+              this.teams[element.id - 1].name +
               ', parent : ' +
               element.idParent +
               ' parent_name : ' +
               this.teams[element.idParent - 1].name +
               ', team1 : ' +
-              element.team1 +
+              element.idTeam1 +
               ', team2 : ' +
-              element.team2
+              element.idTeam2
           )
+        } else {
+          if (element != null) {
+            console.log('id : ' + element.id)
+          }
         }
       })
     },
@@ -195,19 +186,12 @@ export default {
         DOM manipulations
       ===========================
     */
-    appendTournamentCard(
-      idMatch,
-      teamName,
-      scoreMatch1,
-      scoreMatch2
-    ) {
+    appendTournamentCard(idMatch, teamName, scoreMatch1, scoreMatch2) {
       /*
         Create a VueJS component on the fly and
         append it on DOM node
       */
-      const TournamentCardConstructor = Vue.extend(
-        TournamentCard
-      )
+      const TournamentCardConstructor = Vue.extend(TournamentCard)
       new TournamentCardConstructor({
         propsData: {
           idMatch: idMatch,
@@ -235,18 +219,13 @@ export default {
       // add the TournamentCard component to the DOM
       this.appendTournamentCard(
         idMatch,
-        //TODO add child name
-        //this.team[this.matches[idMatch].team1].name +
-        ' VS ',
-        //this.team[this.matches[idMatch].team2].name,
+        this.teams[idMatch - 1].name,
         '11-0',
         '0-12'
       )
 
       // add children item list to the DOM
-      item.appendChild(
-        this.createChildrenDOMNode(child1Id, child2Id)
-      )
+      item.appendChild(this.createChildrenDOMNode(child1Id, child2Id))
     },
     appendChildNode(idMatch) {
       /*
@@ -259,15 +238,10 @@ export default {
       let childNode = this.createDOMNodeFromHTML(nodeHTML)
       item.appendChild(childNode)
 
-      let team1 = this.matches[idMatch].team1
-      let team2 = this.matches[idMatch].team2
-
       //add vue component
       this.appendTournamentCard(
         idMatch,
-        this.teams[team1 - 1].name +
-          ' VS ' +
-          this.teams[team2 - 1].name,
+        this.teams[idMatch - 1].name,
         '11-0',
         '0-12'
       )
@@ -304,12 +278,7 @@ export default {
         child2HTML = this.getChildHTMLAsString(child2Id)
       }
 
-      return (
-        '<div class="item-childrens">' +
-        child1HTML +
-        child2HTML +
-        '</div>'
-      )
+      return '<div class="item-childrens">' + child1HTML + child2HTML + '</div>'
     },
     getChildHTMLAsString(childId) {
       return (
@@ -343,20 +312,14 @@ export default {
       )
     },
     createParentDOMNode(idMatch) {
-      let node = this.createDOMNodeFromHTML(
-        this.getParentHTMLAsString(idMatch)
-      )
+      let node = this.createDOMNodeFromHTML(this.getParentHTMLAsString(idMatch))
       return node
     },
     displayTree() {
       /*
         Set the parent for each node
       */
-      for (
-        let idMatch = 1;
-        idMatch < this.matches.length;
-        idMatch++
-      ) {
+      for (let idMatch = 1; idMatch <= this.matches.length; idMatch++) {
         /*
           Note : each item contains its parent node
 
@@ -384,6 +347,7 @@ export default {
           child2Id = firstChildId + 1
         }
 
+        console.log(idMatch)
         if (child1Id != -1) {
           // parent
           this.appendParentNode(idMatch, child1Id, child2Id)

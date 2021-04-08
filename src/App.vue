@@ -11,9 +11,7 @@
       <template v-slot:prepend>
         <v-list-item two-line>
           <v-list-item-avatar>
-            <img
-              src="https://randomuser.me/api/portraits/women/81.jpg"
-            />
+            <img src="https://randomuser.me/api/portraits/women/81.jpg" />
           </v-list-item-avatar>
 
           <v-list-item-content>
@@ -30,16 +28,10 @@
       <v-divider></v-divider>
 
       <v-list dense>
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-        >
+        <v-list-item v-for="item in items" :key="item.title">
           <v-list-item-icon>
             <v-badge
-              v-if="
-                item.title == 'Notifications' &&
-                  $store.state.nbrNotif > 0
-              "
+              v-if="item.title == 'Notifications' && $store.state.nbrNotif > 0"
               overlap
               color="red"
               :content="$store.state.nbrNotif"
@@ -49,10 +41,7 @@
             <v-icon v-else>{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
-          <router-link
-            style="text-decoration:none;color:gray;"
-            :to="item.path"
-          >
+          <router-link style="text-decoration:none;color:gray;" :to="item.path">
             <v-list-item-content>
               <v-list-item-title>
                 {{ item.title }}
@@ -80,21 +69,12 @@
         @click="drawer = !drawer"
       ></v-app-bar-nav-icon>
       <router-link to="/">
-        <img
-          alt="WTM Logo"
-          src="@/assets/wtm.png"
-          width="auto"
-          height="50"
-        />
+        <img alt="WTM Logo" src="@/assets/wtm.png" width="auto" height="50" />
       </router-link>
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        v-if="$store.state.authUser.isAuthenticated"
-        tile
-        text
-      >
+      <v-btn v-if="$store.state.authUser.isAuthenticated" tile text>
         <span class="mr-2">
           {{ $store.state.authUser.name }}
         </span>
@@ -148,6 +128,7 @@ export default {
       {
         title: 'Tournaments',
         icon: 'mdi-google-controller',
+        //path: '/tournament'
         path: '/tournament'
       },
       {
