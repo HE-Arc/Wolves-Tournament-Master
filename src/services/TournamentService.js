@@ -93,14 +93,13 @@ export default {
 
     return rounds
   },
-  createBaseMatches(teams) {
+  createBaseMatches(teams, tournamentId) {
     /*
         Create matches objects with the base matches. They'll be pushed in the DB
     */
 
     let nbMatches = parseInt((teams.length + 1) / 2)
     let nbRounds = Math.sqrt(nbMatches) + 1
-    let tournamentId = 1 // TODO get it from the DB
 
     // create first matches with teams
 
@@ -143,8 +142,8 @@ export default {
           idInTournament: idInTournament,
           idParent: null //still usefull ? Perhaps for the update, check it later
         })
+        ++idInTournament
       }
-      ++idInTournament
     }
 
     return matches

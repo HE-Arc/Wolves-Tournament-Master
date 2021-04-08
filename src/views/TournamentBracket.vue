@@ -47,14 +47,40 @@ export default {
     Bracket
   },
   mounted() {
-    // TODO only for tests, remove it after first matchs creation
-    // let matches = TournamentService.createBaseMatches(teams)
+    // TODO move it on tournament creation.
+    // The tells should come from the DB --> getTournamentTeams
+    // let matches = TournamentService.createBaseMatches(teams, this.tournamentId)
     // MatchService.CreateMatches(matches)
+    this.GetMatchesbyTournament()
   },
   data() {
     return {
       teams: teams,
+      tournamentId: 1, // TODO remove hardcoded id
+      matches: [],
       rounds: TournamentService.createRounds(teams)
+    }
+  },
+  methods: {
+    async GetMatchesbyTournament() {
+      this.loading = true
+
+      let response = await MatchService.GetMatchesByTournament(
+        this.tournamentId
+      )
+
+      if (response.isSuccess) {
+        response.result.forEach(element => {
+          if (element != null) {
+            console.log(element)
+          }
+        })
+        this.matches = response.result
+      } else {
+        this.$snotify.error('Unable to get matches...')
+      }
+
+      this.loading = false
     }
   }
 }

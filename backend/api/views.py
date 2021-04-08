@@ -73,6 +73,15 @@ class MatchViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
 
+    def get_queryset(self):
+        queryset = Match.objects.all()
+        tid = self.request.query_params.get("tid", None)
+        
+        # get all matches of a tournament
+        if( tid is not None):
+            queryset = queryset.filter(tournament = tid)
+            return queryset
+
 
 class TournamentViewSet(viewsets.ModelViewSet):
     queryset = Tournament.objects.all()

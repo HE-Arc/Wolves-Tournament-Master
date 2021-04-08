@@ -27,20 +27,20 @@ export default {
         this.CreateMatch(match)
       }
     })
+  },
+  GetMatchesByTournament(tournamentId) {
+    return new Promise(resolve => {
+      axios
+        .get(this.apiurl + 'matchs?tid=' + tournamentId)
+        .then(response => {
+          resolve({
+            isSuccess: true,
+            result: response.data
+          })
+        })
+        .catch(error => {
+          resolve({ isSuccess: false, result: error })
+        })
+    })
   }
-  // GetTournamentMatches(tournamentId) {
-  //   return new Promise(resolve => {
-  //     axios
-  //       .post(this.apiurl + 'matchs/', match)
-  //       .then(response => {
-  //         resolve({
-  //           isSuccess: true,
-  //           result: response.data
-  //         })
-  //       })
-  //       .catch(error => {
-  //         resolve({ isSuccess: false, result: error })
-  //       })
-  //   })
-  // }
 }
