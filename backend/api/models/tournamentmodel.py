@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from .teammodel import Team
 from django.db.models.signals import post_save, post_delete
 
 
@@ -13,6 +14,7 @@ class Tournament(models.Model):
     deadLineDate = models.DateField()
     nbTeam = models.IntegerField()
     streamURL = models.CharField(max_length=1000)
+    teams = models.ManyToManyField(Team)
 
     def __str__(self):
         return self.name

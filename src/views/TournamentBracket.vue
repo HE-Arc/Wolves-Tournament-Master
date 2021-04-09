@@ -10,37 +10,38 @@
 import Bracket from 'vue-tournament-bracket'
 import MatchService from '@/services/MatchService'
 import TournamentService from '@/services/TournamentService'
+import TeamService from '@/services/TeamService'
 
-const teams = [
-  {
-    id: 1,
-    name: 'A'
-  },
-  {
-    id: 2,
-    name: 'B'
-  },
-  {
-    id: 3,
-    name: 'C'
-  },
-  {
-    id: 4,
-    name: 'D'
-  },
-  {
-    id: 5,
-    name: 'E'
-  },
-  {
-    id: 6,
-    name: 'F'
-  },
-  {
-    id: 7,
-    name: 'G'
-  }
-]
+// const teams = [
+//   {
+//     id: 1,
+//     name: 'A'
+//   },
+//   {
+//     id: 2,
+//     name: 'B'
+//   },
+//   {
+//     id: 3,
+//     name: 'C'
+//   },
+//   {
+//     id: 4,
+//     name: 'D'
+//   },
+//   {
+//     id: 5,
+//     name: 'E'
+//   },
+//   {
+//     id: 6,
+//     name: 'F'
+//   },
+//   {
+//     id: 7,
+//     name: 'G'
+//   }
+// ]
 
 export default {
   components: {
@@ -51,11 +52,12 @@ export default {
     // The tells should come from the DB --> getTournamentTeams
     // let matches = TournamentService.createBaseMatches(teams, this.tournamentId)
     // MatchService.CreateMatches(matches)
-    this.GetMatchesbyTournament()
+    // this.GetMatchesbyTournament()
+    this.GetTeamsByTournament()
   },
   data() {
     return {
-      teams: teams,
+      teams: [],
       tournamentId: 1, // TODO remove hardcoded id
       matches: [],
       rounds: []
@@ -75,6 +77,25 @@ export default {
 
         // TODO place it elsewhere
         this.rounds = TournamentService.createRounds(this.matches, this.teams)
+      } else {
+        this.$snotify.error('Unable to get matches...')
+      }
+
+      this.loading = false
+    },
+    async GetTeamsByTournament() {
+      this.loading = true
+
+      let response = await TeamService.GetTeamsByTournament(
+        this.$store.state.token,
+        this.tournamentId
+      )
+
+      if (response.isSuccess) {
+        this.teams = response.result
+        console.log(this.teams[0].name)
+
+        this.GetMatchesbyTournament()
       } else {
         this.$snotify.error('Unable to get matches...')
       }

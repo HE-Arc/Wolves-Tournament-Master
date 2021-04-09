@@ -33,6 +33,26 @@ export default {
         })
     })
   },
+  GetTeamsByTournament(token, tid) {
+    return new Promise(resolve => {
+      let config = {
+        headers: {
+          Authorization: 'Token' + token
+        }
+      }
+      axios
+        .get(this.apiurl + 'teams?tid=' + tid, config)
+        .then(response => {
+          resolve({
+            isSuccess: true,
+            result: response.data
+          })
+        })
+        .catch(error => {
+          resolve({ isSuccess: false, result: error })
+        })
+    })
+  },
   GetTeamsByMember(token, member) {
     return new Promise(resolve => {
       let config = {
@@ -77,11 +97,7 @@ export default {
       }
 
       axios
-        .put(
-          this.apiurl + 'teams/' + team.id + '/',
-          team,
-          config
-        )
+        .put(this.apiurl + 'teams/' + team.id + '/', team, config)
         .then(response => {
           resolve({
             isSuccess: true,
@@ -102,10 +118,7 @@ export default {
       }
 
       axios
-        .delete(
-          this.apiurl + 'teams/' + team.id + '/',
-          config
-        )
+        .delete(this.apiurl + 'teams/' + team.id + '/', config)
         .then(response => {
           resolve({
             isSuccess: true,
@@ -129,11 +142,7 @@ export default {
         }
       }
       axios
-        .post(
-          this.apiurl + 'teams/' + tid + '/adduser/',
-          data,
-          config
-        )
+        .post(this.apiurl + 'teams/' + tid + '/adduser/', data, config)
         .then(response => {
           resolve({
             isSuccess: true,

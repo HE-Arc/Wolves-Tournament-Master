@@ -62,9 +62,17 @@ class TeamViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = Team.objects.all()
+
+        # get the team member with id=uid
         uid = self.request.query_params.get("uid", None)
         if(uid is not None):
             queryset = queryset.filter(members = uid)
+            return queryset
+
+        # get every team which participates to the tournament with id=tid
+        tid = self.request.query_params.get("tid", None)
+        if(tid is not None):
+            queryset.filter(tournament=tid)
             return queryset
 
 class MatchViewSet(viewsets.ModelViewSet):
