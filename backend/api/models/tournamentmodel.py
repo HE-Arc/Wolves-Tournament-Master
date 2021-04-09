@@ -14,6 +14,7 @@ class Tournament(models.Model):
     deadLineDate = models.DateField()
     nbTeam = models.IntegerField()
     streamURL = models.CharField(max_length=1000)
+    # teams = models.ManyToManyField(Team, related_name='tournament', null=True, blank='True')
     teams = models.ManyToManyField(Team)
 
     def __str__(self):

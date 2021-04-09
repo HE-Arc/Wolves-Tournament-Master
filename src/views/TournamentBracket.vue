@@ -48,17 +48,13 @@ export default {
     Bracket
   },
   mounted() {
-    // TODO move it on tournament creation.
-    // The tells should come from the DB --> getTournamentTeams
-    // let matches = TournamentService.createBaseMatches(teams, this.tournamentId)
-    // MatchService.CreateMatches(matches)
     // this.GetMatchesbyTournament()
     this.GetTeamsByTournament()
   },
   data() {
     return {
       teams: [],
-      tournamentId: 1, // TODO remove hardcoded id
+      tournamentId: 2, // TODO remove hardcoded id
       matches: [],
       rounds: []
     }
@@ -73,6 +69,7 @@ export default {
 
       if (response.isSuccess) {
         this.matches = response.result
+
         this.SortMatchesArray() // sort by id in tournament
 
         // TODO place it elsewhere
@@ -93,7 +90,14 @@ export default {
 
       if (response.isSuccess) {
         this.teams = response.result
-        console.log(this.teams[0].name)
+
+        // Create matches in DB. TODO move it on tournament creation.
+        // let matches = TournamentService.createBaseMatches(
+        //   this.teams,
+        //   this.tournamentId
+        // )
+        // MatchService.CreateMatches(matches)
+        // console.log(matches)
 
         this.GetMatchesbyTournament()
       } else {

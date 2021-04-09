@@ -42,12 +42,17 @@ export default {
       player2: { id: p2Id, name: p2Name, winner: isP2Win }
     }
   },
+  getTeam(teams, tid) {
+    return teams.find(team => team.id == tid)
+  },
   createRounds(matches, teams) {
     /*
         Generate brackets from matches.
     */
     let rounds = []
-    let nbRounds = parseInt(Math.sqrt(matches.length)) + 1
+    // let nbRounds = parseInt(Math.sqrt(matches.length)) + 1
+    let nbInitMatches = parseInt((teams.length + 1) / 2) //leaf matches
+    let nbRounds = Math.ceil(Math.sqrt(nbInitMatches)) + 1
 
     // the match array should be sorted according to idInTournament at this stage
     let matchId = 0
@@ -61,7 +66,11 @@ export default {
         matchInRound < Math.pow(2, round);
         ++matchInRound
       ) {
-        if (matchId < matches.length) {
+        if (
+          matchId < matches.length &&
+          (round != nbRounds - 1 ||
+            (round == nbRounds - 1 && matchId < nbInitMatches))
+        ) {
           // go through all matches on each round
           let currentMatch = matches[matchId]
           let emptyTeam = {
@@ -72,12 +81,12 @@ export default {
           // prepare teams
           let team1 =
             currentMatch.team1 != null
-              ? teams[currentMatch.team1 - 1]
+              ? this.getTeam(teams, currentMatch.team1) // here, we can't just pick teams based on their position in the teams array. we have to get them by their id
               : emptyTeam
 
           let team2 =
             currentMatch.team2 != null
-              ? teams[currentMatch.team2 - 1]
+              ? this.getTeam(teams, currentMatch.team2)
               : emptyTeam
 
           // add teams into the game
@@ -110,15 +119,14 @@ export default {
         They'll be pushed in the DB at tournament creation
     */
 
-    let nbMatches = parseInt((teams.length + 1) / 2)
-    let nbRounds = Math.sqrt(nbMatches) + 1
+    let nbInitMatches = parseInt((teams.length + 1) / 2) //leaf matches
+    let nbRounds = Math.ceil(Math.sqrt(nbInitMatches)) + 1 //always round up
 
     // create first matches with teams
-
     let idInTournament = 1 // child have lower id than parents, the rounds start from the bottom (leafs)
     let matches = []
     for (let teamId = 0; teamId < teams.length; teamId += 2) {
-      let team1 = teams[teamId]
+      let team1 = teams[teamId] //here, we create the tournament. The order by which we add teams doesn't matter.
       let team2 = {
         id: null,
         name: 'tbd'
