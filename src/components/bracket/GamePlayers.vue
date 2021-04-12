@@ -31,6 +31,10 @@
               </div>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
+              <p>
+                Score : {{ bracketNode.match.score1 }} -
+                {{ bracketNode.match.score2 }}
+              </p>
               <v-btn tile outlined @click="OpenMatchResultDialog(bracketNode)"
                 >Ajouter un résultat</v-btn
               >
