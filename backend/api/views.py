@@ -78,7 +78,6 @@ class TeamViewSet(viewsets.ModelViewSet):
 
             return Response(data)
 
-
 class MatchViewSet(viewsets.ModelViewSet):
     queryset = Match.objects.all()
     serializer_class = MatchSerializer

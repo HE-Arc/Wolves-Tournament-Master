@@ -16,6 +16,16 @@
             {{ team.name }}
           </v-btn>
         </v-slide-item>
+        <v-slide-item v-if="teams.length == 0">
+          <v-btn
+            class="mx-2"
+            :input-value="active"
+            active-class="purple white--text"
+            @click="SelectTeam(team)"
+          >
+            + Créer une équipe
+          </v-btn>
+        </v-slide-item>
       </v-slide-group>
     </v-row>
     <v-row>
@@ -80,7 +90,54 @@
             >Membres</v-card-title
           >
           <v-list three-line>
-            <template v-for="(item, index) in players">
+            <template>
+              <v-list-item
+                v-for="member in members"
+                :key="member.id"
+              >
+                <v-list-item-avatar>
+                  <v-icon
+                    v-if="
+                      member.username == selectedTeam.leader
+                    "
+                    class="grey lighten-1"
+                    dark
+                  >
+                    mdi-account-star
+                  </v-icon>
+                  <v-icon
+                    v-else
+                    class="grey lighten-1"
+                    dark
+                  >
+                    mdi-account
+                  </v-icon>
+                </v-list-item-avatar>
+
+                <v-list-item-content>
+                  <v-list-item-title
+                    class="text-sm-left"
+                    v-html="member.username"
+                  ></v-list-item-title>
+                  <v-list-item-subtitle
+                    class="text-sm-left"
+                    v-html="member.email"
+                  ></v-list-item-subtitle>
+                </v-list-item-content>
+                <v-btn
+                  v-if="
+                    selectedTeam.leader ==
+                      $store.state.authUser.name &&
+                      selectedTeam.leader != member.username
+                  "
+                  tile
+                  outlined
+                  color="#01002a"
+                  >Virer</v-btn
+                >
+              </v-list-item>
+            </template>
+            <!-- <template v-for="(item, index) in members">
               <v-divider
                 v-if="item.divider"
                 :key="index"
@@ -95,18 +152,18 @@
                 <v-list-item-content>
                   <v-list-item-title
                     class="text-sm-left"
-                    v-html="item.title"
+                    v-html="item.username"
                   ></v-list-item-title>
                   <v-list-item-subtitle
                     class="text-sm-left"
-                    v-html="item.subtitle"
+                    v-html="item.email"
                   ></v-list-item-subtitle>
                 </v-list-item-content>
                 <v-btn tile outlined color="#01002a"
                   >Virer</v-btn
                 >
               </v-list-item>
-            </template>
+            </template> -->
           </v-list>
         </v-card>
       </v-col>
@@ -122,6 +179,7 @@ export default {
 
   data: () => ({
     teams: [],
+    members: [],
     selectedTeam: 0,
     items: [
       {
@@ -139,43 +197,43 @@ export default {
         items: [{ title: '3ème - LCS' }],
         title: 'LoL'
       }
-    ],
-    players: [
-      {
-        avatar:
-          'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-        title: 'Ali Connors',
-        subtitle: 'CS:GO, LoL'
-      },
-      { divider: true, inset: true },
-      {
-        avatar:
-          'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-        title: 'Alex Scott',
-        subtitle: 'CS:GO'
-      },
-      { divider: true, inset: true },
-      {
-        avatar:
-          'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-        title: 'Sandra Adams',
-        subtitle: 'CS:GO, LoL'
-      },
-      { divider: true, inset: true },
-      {
-        avatar:
-          'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-        title: 'Trevor Hanse',
-        subtitle: 'LoL'
-      },
-      { divider: true, inset: true },
-      {
-        avatar:
-          'https://cdn.vuetifyjs.com/images/lists/5.jpg',
-        title: 'Britta Holt',
-        subtitle: 'CS:GO'
-      }
     ]
+    // players: [
+    //   {
+    //     avatar:
+    //       'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+    //     title: 'Ali Connors',
+    //     subtitle: 'CS:GO, LoL'
+    //   },
+    //   { divider: true, inset: true },
+    //   {
+    //     avatar:
+    //       'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+    //     title: 'Alex Scott',
+    //     subtitle: 'CS:GO'
+    //   },
+    //   { divider: true, inset: true },
+    //   {
+    //     avatar:
+    //       'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+    //     title: 'Sandra Adams',
+    //     subtitle: 'CS:GO, LoL'
+    //   },
+    //   { divider: true, inset: true },
+    //   {
+    //     avatar:
+    //       'https://cdn.vuetifyjs.com/images/lists/4.jpg',
+    //     title: 'Trevor Hanse',
+    //     subtitle: 'LoL'
+    //   },
+    //   { divider: true, inset: true },
+    //   {
+    //     avatar:
+    //       'https://cdn.vuetifyjs.com/images/lists/5.jpg',
+    //     title: 'Britta Holt',
+    //     subtitle: 'CS:GO'
+    //   }
+    // ]
   }),
   mounted: function() {
     this.GetTeamsByMember()
@@ -217,6 +275,9 @@ export default {
 
       if (response.isSuccess) {
         this.teams = response.result
+        if (this.teams.length > 0) {
+          this.SelectTeam(this.teams[0])
+        }
       } else {
         this.$snotify.error('Unable to get teams...')
       }
@@ -226,6 +287,7 @@ export default {
     SelectTeam(team) {
       this.GetTeamMembers(team)
       this.selectedTeam = team
+      console.log('leader = ' + team.leader)
     },
     async GetTeamMembers(team) {
       this.loading = true
@@ -239,7 +301,7 @@ export default {
         this.$store.getters.getAxiosConfig
       )
       if (response.isSuccess) {
-        this.teams = response.result
+        this.members = response.result
       } else {
         this.$snotify.error('Unable to get teams...')
       }
