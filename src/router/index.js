@@ -4,8 +4,8 @@ import Home from '../views/Home.vue'
 import Teams from '../views/Teams.vue'
 import Team from '../views/Team.vue'
 import Register from '../views/Register.vue'
-//import Tournament from '../views/Tournament.vue'
-import TournamentBracket from '../views/TournamentBracket.vue'
+import Tournament from '../views/Tournament.vue'
+//import TournamentBracket from '../views/TournamentBracket.vue'
 import Notifications from '../views/Notifications.vue'
 
 Vue.use(VueRouter)
@@ -36,7 +36,7 @@ const routes = [
     //name: 'Tournament',
     name: 'Tournament',
     //component: Tournament
-    component: TournamentBracket
+    component: Tournament
   },
   {
     path: '/notifications',

@@ -1,5 +1,5 @@
 <template>
-  <bracket :rounds="rounds">
+  <bracket style="margin:20px;" :rounds="rounds">
     <template slot="player" slot-scope="{ player }">
       {{ player.name }}
     </template>
@@ -8,7 +8,7 @@
 
 <script>
 //import BracketNode from '@/component/bracket/BracketNode'
-import Bracket from 'vue-tournament-bracket'
+import Bracket from '@/components/bracket/Bracket'
 import MatchService from '@/services/MatchService'
 import TournamentService from '@/services/TournamentService'
 import TeamService from '@/services/TeamService'
@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       teams: [],
-      tournamentId: 2, // TODO remove hardcoded id
+      tournamentId: 1, // TODO remove hardcoded id
       matches: [],
       rounds: []
     }
