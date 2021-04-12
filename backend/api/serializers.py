@@ -29,7 +29,7 @@ class MatchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Match
         fields = ['url', 'id', 'team1', 'team2', 'tournament',
-                  'score1', 'score2', 'nLap', 'posLap']
+                  'score1', 'score2', 'idInTournament', 'idParent']
 
 class TournamentSerializer(serializers.ModelSerializer):
     class Meta:

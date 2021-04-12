@@ -22,10 +22,10 @@ class UserViewSet(viewsets.ModelViewSet):
     # authentication_classes = (TokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
 
-    @action(methods = ["GET"], detail = True)
-    def getteammembers(self, request, pk = None):
+    @action(methods=["GET"], detail=True)
+    def getteammembers(self, request, pk=None):
         if(pk is not None):
-            team = Team.objects.get(id = pk)
+            team = Team.objects.get(id=pk)
             members = team.members.all()
             data = self.get_serializer(members, many=True).data
 
@@ -70,13 +70,28 @@ class TeamViewSet(viewsets.ModelViewSet):
             }
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(methods = ["GET"], detail = True)
-    def getteamsbymember(self, request, pk = None):
+    @action(methods=["GET"], detail=True)
+    def getteamsbymember(self, request, pk=None):
         if(pk is not None):
             teams = Team.objects.filter(members__id=pk)
             data = self.get_serializer(teams, many=True).data
-
             return Response(data)
+
+    def get_queryset(self):
+        queryset = Team.objects.all()
+
+        # get the team member with id=uid
+        uid = self.request.query_params.get("uid", None)
+        if(uid is not None):
+            queryset = queryset.filter(members=uid)
+            return queryset
+
+        # get every team which participates to the tournament with id=tid
+        tid = self.request.query_params.get("tid", None)
+        if(tid is not None):
+            tournament = Tournament.objects.filter(pk=tid)
+            queryset = queryset.filter(tournament__in=tournament)
+            return queryset
 
 
 class MatchViewSet(viewsets.ModelViewSet):
@@ -84,6 +99,15 @@ class MatchViewSet(viewsets.ModelViewSet):
     serializer_class = MatchSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
+
+    def get_queryset(self):
+        queryset = Match.objects.all()
+        tid = self.request.query_params.get("tid", None)
+
+        # get all matches of a tournament
+        if(tid is not None):
+            queryset = queryset.filter(tournament=tid)
+            return queryset
 
 
 class TournamentViewSet(viewsets.ModelViewSet):
