@@ -125,6 +125,7 @@
                       tile
                       outlined
                       color="#01002a"
+                      @click="DeleteTeamMember(selectedTeam, member)"
                       >Virer</v-btn
                     >
                   </v-list-item>
@@ -221,6 +222,23 @@ export default {
       }
 
       this.loading = false
+    },
+    async DeleteTeamMember(team, member) {
+      let data = {
+        userid: member.id
+      }
+      const response = await WtmApi.Request(
+        'post',
+        this.$store.state.apiUrl + 'teams/' + team.id + '/removeuser/',
+        data,
+        this.$store.getters.getAxiosConfig
+      )
+      if (response.isSuccess) {
+        this.GetTeamMembers(team)
+        this.$snotify.success('User removed!')
+      } else {
+        this.$snotify.error('Unable to remove user...')
+      }
     }
   }
 }
