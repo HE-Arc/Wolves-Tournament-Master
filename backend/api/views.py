@@ -31,7 +31,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
             return Response(data)
 
-
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     # userset = User.objects.select_related().get
@@ -40,6 +39,30 @@ class TeamViewSet(viewsets.ModelViewSet):
     serializer_class = TeamSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
+
+    @action(methods=["POST"], detail=True)
+    def removeuser(self, request, pk=None):
+        if "userid" in request.data:
+            user = User.objects.get(id=request.data["userid"])
+            team = Team.objects.get(id=pk)
+            if user == team.leader:
+                team.members.remove(user)
+                response = {
+                        "message": "user removed successfuly"
+                    }
+                return Response(response, status=status.HTTP_200_OK)
+            else:
+                response = {
+                    "message": "you not allowed to remove this user"
+                }
+                return Response(response, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            response = {
+                "message": "you can't remove this user"
+            }
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
+            
+        
 
     @action(methods=["POST"], detail=True)
     def adduser(self, request, pk=None):
