@@ -31,7 +31,7 @@
               :input-value="active"
               active-class="purple white--text"
             >
-              + Créer une équipe
+              + Create team
             </v-btn>
           </v-slide-item>
         </v-slide-group>
@@ -52,13 +52,13 @@
           </h1>
           <v-spacer></v-spacer>
           <v-btn color="#01002a" tile dark large>
-            Recruter un nouveau membre
+            Recruit a new member
           </v-btn>
         </v-row>
         <v-row>
           <v-col xs="12" md="4">
             <v-card tile>
-              <v-card-title color="#01002a">Palmarès</v-card-title>
+              <v-card-title color="#01002a">Awards</v-card-title>
               <v-list>
                 <v-list-group
                   v-for="item in items"
@@ -90,7 +90,7 @@
           </v-col>
           <v-col xs="12" md="8">
             <v-card tile>
-              <v-card-title color="#01002a">Membres</v-card-title>
+              <v-card-title color="#01002a">Members</v-card-title>
               <v-list three-line>
                 <template>
                   <v-list-item v-for="member in members" :key="member.id">
@@ -126,7 +126,7 @@
                       outlined
                       color="#01002a"
                       @click="DeleteTeamMember(selectedTeam, member)"
-                      >Virer</v-btn
+                      >Exclude</v-btn
                     >
                   </v-list-item>
                 </template>
