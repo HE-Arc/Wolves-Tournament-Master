@@ -70,11 +70,6 @@ export default {
         path: '/'
       },
       {
-        title: 'My account',
-        icon: 'mdi-account',
-        path: '/'
-      },
-      {
         title: 'Teams',
         icon: 'mdi-account-multiple',
         path: '/teams'
@@ -83,11 +78,6 @@ export default {
         title: 'Team',
         icon: 'mdi-account-multiple',
         path: '/team'
-      },
-      {
-        title: 'Tournaments',
-        icon: 'mdi-google-controller',
-        path: '/tournament'
       },
       {
         title: 'Notifications',
