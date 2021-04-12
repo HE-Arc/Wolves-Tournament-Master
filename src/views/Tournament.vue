@@ -7,13 +7,12 @@
 </template>
 
 <script>
-//import BracketNode from '@/component/bracket/BracketNode'
 import Bracket from '@/components/bracket/Bracket'
-import MatchService from '@/services/MatchService'
 import TournamentService from '@/services/TournamentService'
-import TeamService from '@/services/TeamService'
+import WtmApi from '@/services/WtmApiService'
 
 export default {
+  props: ['tournamentId'],
   components: {
     Bracket
   },
@@ -23,25 +22,17 @@ export default {
   data() {
     return {
       teams: [],
-      tournamentId: 1, // TODO remove hardcoded id
       matches: [],
       rounds: []
     }
-  },
-  mounted() {
-    // todo add it only on creation
-    this.generateEmptyMatches()
-    this.setParents()
-    this.setTeams()
-    this.displayTree()
-    //this.showMatches()
   },
   methods: {
     async GetMatchesbyTournament() {
       this.loading = true
 
-      let response = await MatchService.GetMatchesByTournament(
-        this.tournamentId
+      const response = await WtmApi.Request(
+        'get',
+        this.$store.state.apiUrl + 'matchs?tid=' + this.tournamentId
       )
 
       if (response.isSuccess) {
@@ -50,7 +41,7 @@ export default {
         this.SortMatchesArray() // sort by id in tournament
 
         // TODO place it elsewhere
-        this.rounds = TournamentService.createRounds(this.matches, this.teams)
+        this.rounds = TournamentService.CreateRounds(this.matches, this.teams)
       } else {
         this.$snotify.error('Unable to get matches...')
       }
@@ -60,9 +51,9 @@ export default {
     async GetTeamsByTournament() {
       this.loading = true
 
-      let response = await TeamService.GetTeamsByTournament(
-        this.$store.state.token,
-        this.tournamentId
+      const response = await WtmApi.Request(
+        'get',
+        this.$store.state.apiUrl + 'teams?tid=' + this.tournamentId
       )
 
       if (response.isSuccess) {

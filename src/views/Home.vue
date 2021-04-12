@@ -33,7 +33,12 @@
             {{ tournament.gameName }}
           </v-card-text>
           <v-card-actions>
-            <v-btn tile block outlined>
+            <v-btn
+              @click="$router.push('/tournament/' + tournament.id)"
+              tile
+              block
+              outlined
+            >
               Voir les résultats du tournoi
             </v-btn>
           </v-card-actions>

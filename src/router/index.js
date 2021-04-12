@@ -32,11 +32,10 @@ const routes = [
     component: Register
   },
   {
-    path: '/tournament',
-    //name: 'Tournament',
+    path: '/tournament/:tournamentId',
     name: 'Tournament',
-    //component: Tournament
-    component: Tournament
+    component: Tournament,
+    props: true
   },
   {
     path: '/notifications',
