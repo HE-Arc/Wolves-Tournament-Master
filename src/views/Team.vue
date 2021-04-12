@@ -9,6 +9,10 @@
         >
           <v-btn
             class="mx-2"
+            color="#01002a"
+            tile
+            dark
+            large
             :input-value="active"
             active-class="purple white--text"
             @click="SelectTeam(team)"
@@ -19,9 +23,12 @@
         <v-slide-item v-if="teams.length == 0">
           <v-btn
             class="mx-2"
+            color="#01002a"
+            tile
+            dark
+            large
             :input-value="active"
             active-class="purple white--text"
-            @click="SelectTeam(team)"
           >
             + Créer une équipe
           </v-btn>
@@ -32,26 +39,17 @@
       <v-divider> </v-divider>
     </v-row>
     <v-row align="center">
-      <img
-        width="80px"
-        height="auto"
-        src="@/assets/logo.png"
-        alt="logo"
-      />
+      <img width="80px" height="auto" src="@/assets/logo.png" alt="logo" />
       <h1 style="margin-left:10px;" class="text-xs-left">
         {{ this.selectedTeam.name }}
       </h1>
       <v-spacer></v-spacer>
-      <v-btn color="#01002a" tile dark large
-        >Recruter un nouveau membre</v-btn
-      >
+      <v-btn color="#01002a" tile dark large>Recruter un nouveau membre</v-btn>
     </v-row>
     <v-row>
       <v-col xs="12" md="4">
         <v-card tile>
-          <v-card-title color="#01002a"
-            >Palmarès</v-card-title
-          >
+          <v-card-title color="#01002a">Palmarès</v-card-title>
           <v-list>
             <v-list-group
               v-for="item in items"
@@ -69,10 +67,7 @@
                 </v-list-item-content>
               </template>
 
-              <v-list-item
-                v-for="child in item.items"
-                :key="child.title"
-              >
+              <v-list-item v-for="child in item.items" :key="child.title">
                 <v-list-item-content>
                   <v-list-item-title
                     class="text-sm-left"
@@ -86,30 +81,19 @@
       </v-col>
       <v-col xs="12" md="8">
         <v-card tile>
-          <v-card-title color="#01002a"
-            >Membres</v-card-title
-          >
+          <v-card-title color="#01002a">Membres</v-card-title>
           <v-list three-line>
             <template>
-              <v-list-item
-                v-for="member in members"
-                :key="member.id"
-              >
+              <v-list-item v-for="member in members" :key="member.id">
                 <v-list-item-avatar>
                   <v-icon
-                    v-if="
-                      member.username == selectedTeam.leader
-                    "
+                    v-if="member.username == selectedTeam.leader"
                     class="grey lighten-1"
                     dark
                   >
                     mdi-account-star
                   </v-icon>
-                  <v-icon
-                    v-else
-                    class="grey lighten-1"
-                    dark
-                  >
+                  <v-icon v-else class="grey lighten-1" dark>
                     mdi-account
                   </v-icon>
                 </v-list-item-avatar>
@@ -126,8 +110,7 @@
                 </v-list-item-content>
                 <v-btn
                   v-if="
-                    selectedTeam.leader ==
-                      $store.state.authUser.name &&
+                    selectedTeam.leader == $store.state.authUser.name &&
                       selectedTeam.leader != member.username
                   "
                   tile
@@ -137,33 +120,6 @@
                 >
               </v-list-item>
             </template>
-            <!-- <template v-for="(item, index) in members">
-              <v-divider
-                v-if="item.divider"
-                :key="index"
-                :inset="item.inset"
-              ></v-divider>
-
-              <v-list-item v-else :key="item.title">
-                <v-list-item-avatar>
-                  <v-img :src="item.avatar"></v-img>
-                </v-list-item-avatar>
-
-                <v-list-item-content>
-                  <v-list-item-title
-                    class="text-sm-left"
-                    v-html="item.username"
-                  ></v-list-item-title>
-                  <v-list-item-subtitle
-                    class="text-sm-left"
-                    v-html="item.email"
-                  ></v-list-item-subtitle>
-                </v-list-item-content>
-                <v-btn tile outlined color="#01002a"
-                  >Virer</v-btn
-                >
-              </v-list-item>
-            </template> -->
           </v-list>
         </v-card>
       </v-col>
@@ -198,42 +154,6 @@ export default {
         title: 'LoL'
       }
     ]
-    // players: [
-    //   {
-    //     avatar:
-    //       'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-    //     title: 'Ali Connors',
-    //     subtitle: 'CS:GO, LoL'
-    //   },
-    //   { divider: true, inset: true },
-    //   {
-    //     avatar:
-    //       'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-    //     title: 'Alex Scott',
-    //     subtitle: 'CS:GO'
-    //   },
-    //   { divider: true, inset: true },
-    //   {
-    //     avatar:
-    //       'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-    //     title: 'Sandra Adams',
-    //     subtitle: 'CS:GO, LoL'
-    //   },
-    //   { divider: true, inset: true },
-    //   {
-    //     avatar:
-    //       'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-    //     title: 'Trevor Hanse',
-    //     subtitle: 'LoL'
-    //   },
-    //   { divider: true, inset: true },
-    //   {
-    //     avatar:
-    //       'https://cdn.vuetifyjs.com/images/lists/5.jpg',
-    //     title: 'Britta Holt',
-    //     subtitle: 'CS:GO'
-    //   }
-    // ]
   }),
   mounted: function() {
     this.GetTeamsByMember()
@@ -293,10 +213,7 @@ export default {
       this.loading = true
       const response = await WtmApi.Request(
         'get',
-        this.$store.state.apiUrl +
-          'users/' +
-          team.id +
-          '/getteammembers/',
+        this.$store.state.apiUrl + 'users/' + team.id + '/getteammembers/',
         null,
         this.$store.getters.getAxiosConfig
       )
