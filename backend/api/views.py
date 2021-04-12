@@ -77,22 +77,19 @@ class TeamViewSet(viewsets.ModelViewSet):
             data = self.get_serializer(teams, many=True).data
             return Response(data)
 
-    # def get_queryset(self):
-    #     queryset = Team.objects.all()
+    @action(methods=["GET"], detail=False)
+    def getteamsbytournament(self, request, pk=None):
+        queryset = Team.objects.all()
+        # get every team which participates to the tournament with id=tid
+        tid = request.query_params.get("tid", None)
+        
+        if(tid is not None):
+            tournament = Tournament.objects.filter(pk=tid)
+            teams = queryset.filter(tournament__in=tournament)
+            data = self.get_serializer(teams, many=True).data
+            return Response(data)
 
-    #     # get the team member with id=uid
-    #     uid = self.request.query_params.get("uid", None)
-    #     if(uid is not None):
-    #         queryset = queryset.filter(members=uid)
-    #         return queryset
-
-    #     # get every team which participates to the tournament with id=tid
-    #     tid = self.request.query_params.get("tid", None)
-    #     if(tid is not None):
-    #         tournament = Tournament.objects.filter(pk=tid)
-    #         queryset = queryset.filter(tournament__in=tournament)
-    #         return queryset
-
+        return Response({"message": "error"})
 
 class MatchViewSet(viewsets.ModelViewSet):
     queryset = Match.objects.all()
@@ -100,15 +97,19 @@ class MatchViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
 
-    # def get_queryset(self):
-    #     queryset = Match.objects.all()
-    #     tid = self.request.query_params.get("tid", None)
+    @action(methods=["GET"], detail=False)
+    def getmatchsbytournament(self, request, pk=None):
+        queryset = Match.objects.all()
+        tid = self.request.query_params.get("tid", None)
+        print("====== ", tid)
 
-    #     # get all matches of a tournament
-    #     if(tid is not None):
-    #         queryset = queryset.filter(tournament=tid)
-    #         return queryset
+        # get all matches of a tournament
+        if(tid is not None):
+            matchs = queryset.filter(tournament=tid)
+            data = self.get_serializer(matchs, many=True).data
+            return Response(data)
 
+        return Response({"message": "error"})
 
 class TournamentViewSet(viewsets.ModelViewSet):
     queryset = Tournament.objects.all()
