@@ -1,5 +1,6 @@
 <template>
   <div class="vtb-item-players">
+    <MatchResultDialog ref="matchResultDialog" />
     <div>
       <v-card tile>
         <v-expansion-panels>
@@ -30,7 +31,13 @@
               </div>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              <v-btn tile outlined>Ajouter un résultat</v-btn>
+              <p>
+                Score : {{ bracketNode.match.score1 }} -
+                {{ bracketNode.match.score2 }}
+              </p>
+              <v-btn tile outlined @click="OpenMatchResultDialog(bracketNode)"
+                >Ajouter un résultat</v-btn
+              >
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -41,9 +48,14 @@
 </template>
 
 <script>
+import MatchResultDialog from '@/components/dialogs/MatchResultDialog'
+
 export default {
   name: 'game-players',
   props: ['bracketNode', 'highlightedPlayerId'],
+  components: {
+    MatchResultDialog
+  },
   computed: {
     matchProperties() {
       return Object.assign({}, this.bracketNode, {
@@ -71,6 +83,9 @@ export default {
     },
     unhighlightPlayer() {
       this.$emit('onDeselectedPlayer')
+    },
+    async OpenMatchResultDialog(bracketNode) {
+      this.$refs.matchResultDialog.show(bracketNode)
     }
   }
 }

@@ -32,7 +32,9 @@ export default {
 
       const response = await WtmApi.Request(
         'get',
-        this.$store.state.apiUrl + 'matchs?tid=' + this.tournamentId
+        this.$store.state.apiUrl +
+          'matchs/getmatchsbytournament?tid=' +
+          this.tournamentId
       )
 
       if (response.isSuccess) {
@@ -53,7 +55,9 @@ export default {
 
       const response = await WtmApi.Request(
         'get',
-        this.$store.state.apiUrl + 'teams?tid=' + this.tournamentId
+        this.$store.state.apiUrl +
+          'teams/getteamsbytournament?tid=' +
+          this.tournamentId
       )
 
       if (response.isSuccess) {

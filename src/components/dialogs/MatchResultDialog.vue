@@ -2,7 +2,10 @@
   <v-dialog v-model="isVisible" max-width="500px" @keydown.esc="hide">
     <v-card>
       <v-toolbar dark color="#01002a">
-        <v-toolbar-title>Add a result</v-toolbar-title>
+        <v-toolbar-title>
+          Add a result : {{ item.player1.name }} VS
+          {{ item.player2.name }}
+        </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
           <v-btn icon dark @click="hide">
@@ -14,22 +17,22 @@
       <v-card-text>
         <v-form ref="form" style="padding:10px;">
           <v-text-field
-            v-model="item.score1"
-            :label="'Score: ' + item.team1"
+            v-model="item.match.score1"
+            :label="'Score: ' + item.player1.name"
             dense
             outlined
             clearable
-            v-validate="'required'"
+            v-validate="'required|numeric'"
             data-vv-name="result"
             :error-messages="errors.collect('result')"
           ></v-text-field>
           <v-text-field
-            v-model="item.score2"
-            :label="'Score: ' + item.team2"
+            v-model="item.match.score2"
+            :label="'Score: ' + item.player2.name"
             dense
             outlined
             clearable
-            v-validate="'required'"
+            v-validate="'required|numeric'"
             data-vv-name="result"
             :error-messages="errors.collect('result')"
           ></v-text-field>
@@ -46,7 +49,7 @@
       </v-card-text>
       <v-card-actions v-show="!loading">
         <v-spacer></v-spacer>
-        <v-btn tile color="success">
+        <v-btn tile color="success" @click="UpdateMatch">
           Save
           <v-icon right> mdi-content-save </v-icon>
         </v-btn>
@@ -73,9 +76,7 @@ export default {
 
     item: {
       team1: '',
-      team2: '',
-      score1: '',
-      score2: ''
+      team2: ''
     }
   }),
   methods: {
@@ -97,9 +98,9 @@ export default {
 
         const response = await WtmApi.Request(
           'put',
-          this.$store.state.apiUrl + '/matchs/' + this.item.id + '/',
-          this.item,
-          this.$store.state.axiosConfig
+          this.$store.state.apiUrl + 'matchs/' + this.item.match.id + '/',
+          this.item.match,
+          this.$store.getters.getAxiosConfig
         )
 
         if (response.isSuccess) {
