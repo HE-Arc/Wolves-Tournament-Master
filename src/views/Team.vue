@@ -77,7 +77,7 @@
       <v-col xs="12" md="8">
         <v-card tile>
           <v-card-title color="#01002a"
-            >Memmmmmbres</v-card-title
+            >Membres</v-card-title
           >
           <v-list three-line>
             <template v-for="(item, index) in players">
