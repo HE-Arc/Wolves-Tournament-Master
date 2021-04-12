@@ -7,6 +7,7 @@
 </template>
 
 <script>
+//import BracketNode from '@/component/bracket/BracketNode'
 import Bracket from 'vue-tournament-bracket'
 import MatchService from '@/services/MatchService'
 import TournamentService from '@/services/TournamentService'
