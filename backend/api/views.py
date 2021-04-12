@@ -31,7 +31,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
             return Response(data)
 
-
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     # userset = User.objects.select_related().get
@@ -40,6 +39,34 @@ class TeamViewSet(viewsets.ModelViewSet):
     serializer_class = TeamSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
+
+    @action(methods=["POST"], detail=True)
+    def removeuser(self, request, pk=None):
+        if "userid" in request.data:
+            userid = request.data["userid"]
+            user = User.objects.get(id=userid)
+            team = Team.objects.get(id=pk)
+
+            notification = Notification(message = "you have been fired from " + team.name,
+            seen = False,
+            notificationType = "MESSAGE",
+            user = user,
+            team = team)
+            notification.save()
+
+            team.members.remove(user)
+            response = {
+                    "message": "user removed successfuly"
+                }
+            return Response(response, status=status.HTTP_200_OK)
+
+        else:
+            response = {
+                "message": "you can't remove this user"
+            }
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
+            
+        
 
     @action(methods=["POST"], detail=True)
     def adduser(self, request, pk=None):
@@ -52,7 +79,7 @@ class TeamViewSet(viewsets.ModelViewSet):
                 team = Team.objects.get(id=pk)
                 team.members.add(user)
                 notification.seen = True
-                notification.message = "[Accepté] " + notification.message
+                notification.message = "[Accepted] " + notification.message
                 notification.notificationType = "MESSAGE"
                 notification.save()
                 response = {
