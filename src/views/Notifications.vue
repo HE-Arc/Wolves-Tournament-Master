@@ -128,7 +128,7 @@ export default {
 
         const response = await WtmApi.Request(
           'put',
-          this.$store.state.apiurl + 'notifications/' + notification.id + '/',
+          this.$store.state.apiUrl + 'notifications/' + notification.id + '/',
           notification,
           this.$store.getters.getAxiosConfig
         )
