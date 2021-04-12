@@ -1,10 +1,10 @@
-
 export default {
-    CreateGame(p1Id, p2Id, p1Name, p2Name, isP1Win, isP2Win) {
+    CreateGame(p1Id, p2Id, p1Name, p2Name, isP1Win, isP2Win, match) {
         /*
             just create a game (node) for the bracket    
         */
         return {
+          match: match,
           player1: { id: p1Id, name: p1Name, winner: isP1Win },
           player2: { id: p2Id, name: p2Name, winner: isP2Win }
         }
@@ -64,7 +64,8 @@ export default {
                 team1.name,
                 team2.name,
                 true, //TODO put results here !
-                true //TODO put results here !
+                true, //TODO put results here !
+                currentMatch
                 )
             ) // get teams to put team name here !
 
