@@ -21,7 +21,7 @@ export default {
     let nbInitMatches = parseInt((teams.length + 1) / 2) //leaf matches
     let nbRounds = Math.ceil(Math.sqrt(nbInitMatches)) + 1
 
-    // the match array should be sorted according to idInTournament at this stage
+    // the match array should be sorted according to IdInTournament at this stage
     let matchId = 0
 
     // get every match from every round. To display the brackets correctly,
@@ -85,23 +85,26 @@ export default {
     /*
             Create matches objects with the teams. Fill only the leaf matches.
             They'll be pushed in the DB at tournament creation
-        */
+    */
 
     let nbInitMatches = parseInt((teams.length + 1) / 2) //leaf matches
     let nbRounds = Math.ceil(Math.sqrt(nbInitMatches)) + 1 //always round up
 
     // create first matches with teams
-    let idInTournament = 1 // child have lower id than parents, the rounds start from the bottom (leafs)
+    let idInTournament = 1
+
     let matches = []
-    for (let teamId = 0; teamId < teams.length; teamId += 2) {
+    for (let teamId = teams.length - 1; teamId >= 0; teamId -= 2) {
+      // for (let teamId = 0; teamId < teams.length; teamId += 2) {
       let team1 = teams[teamId] //here, we create the tournament. The order by which we add teams doesn't matter.
       let team2 = {
         id: null,
         name: 'tbd'
       }
 
-      if (teamId + 1 < teams.length) {
-        team2 = teams[teamId + 1]
+      // if (teamId + 1 < teams.length) {
+      if (teamId - 1 >= 0) {
+        team2 = teams[teamId - 1]
       }
 
       matches.push({
@@ -111,6 +114,7 @@ export default {
         score1: null,
         score2: null,
         idInTournament: idInTournament,
+        // IdInTournament: idInTournament,
         idParent: null //still usefull ? Perhaps for the update, check it later
       })
 
@@ -118,12 +122,16 @@ export default {
     }
 
     // create other matches. They're all empty at tournament creation
-    // TODO optimize it
     for (let round = nbRounds - 2; round >= 0; --round) {
+      // for (
+      //   let matchInRound = 0;
+      //   matchInRound < Math.pow(2, round);
+      //   ++matchInRound
+      // ) {
       for (
-        let matchInRound = 0;
-        matchInRound < Math.pow(2, round);
-        ++matchInRound
+        let matchInRound = Math.pow(2, round) - 1;
+        matchInRound >= 0;
+        --matchInRound
       ) {
         matches.push({
           team1: null,
@@ -137,6 +145,28 @@ export default {
         ++idInTournament
       }
     }
+
+    return this.ReverseMatchesIdInTournament(matches)
+    // return matches
+  },
+  ReverseMatchesIdInTournament(matches) {
+    /*
+      Created id's needs to be "reversed" because
+      for the tournament brackets, child have lower id than parents, the rounds start from the bottom (leafs)
+       so their created first
+       but in the binary tree logic, the parentId is computed easily as : tournamentId / 2.
+       The parent nodes then needs to have the greater id's
+    */
+    let n = matches.length
+
+    matches.forEach(match => {
+      let newId = n - match.idInTournament + 1
+      match.idInTournament = newId
+
+      if (newId > 1) {
+        match.idParent = parseInt(newId / 2)
+      }
+    })
 
     return matches
   }

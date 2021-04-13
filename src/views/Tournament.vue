@@ -64,12 +64,11 @@ export default {
         this.teams = response.result
 
         // Create matches in DB. TODO move it on tournament creation.
-        // let matches = TournamentService.createBaseMatches(
-        //   this.teams,
-        //   this.tournamentId
-        // )
-        // MatchService.CreateMatches(matches)
-        // console.log(matches)
+        let matches = TournamentService.CreateBaseMatches(
+          this.teams,
+          this.tournamentId
+        )
+        console.log(matches)
 
         this.GetMatchesbyTournament()
       } else {
