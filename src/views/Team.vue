@@ -52,7 +52,7 @@
             {{ this.selectedTeam.name }}
           </h1>
           <v-spacer></v-spacer>
-          <v-btn color="#01002a" tile dark large @click="Recruit">
+          <v-btn color="#01002a" outlined tile dark large @click="Recruit">
             Recruit a new member
           </v-btn>
         </v-row>

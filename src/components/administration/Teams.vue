@@ -22,7 +22,7 @@
             v-show="!loading"
             :headers="headers"
             :items="teams"
-            sort-by="calories"
+            sort-by="name"
             class="elevation-1"
           >
             <template v-slot:top>

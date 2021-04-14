@@ -33,7 +33,7 @@
                 v-show="!loading"
                 :headers="headers"
                 :items="users"
-                sort-by="name"
+                sort-by="username"
                 class="elevation-1"
               >
                 <template v-slot:top>
