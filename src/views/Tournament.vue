@@ -40,6 +40,19 @@ export default {
       if (response.isSuccess) {
         this.matches = response.result
 
+        if (this.matches.length === 0) {
+          // create matchs, check result and run the function
+          let baseMatches = TournamentService.CreateBaseMatches(
+            this.teams,
+            this.tournamentId
+          )
+          let created = this.CreateBaseMatches(baseMatches)
+
+          if (created) {
+            this.matches = baseMatches
+          }
+        }
+
         this.SortMatchesArray() // sort by id in tournament
 
         // TODO place it elsewhere
@@ -63,21 +76,52 @@ export default {
       if (response.isSuccess) {
         this.teams = response.result
 
-        // Create matches in DB. TODO move it on tournament creation.
-        let matches = TournamentService.CreateBaseMatches(
-          this.teams,
-          this.tournamentId
-        )
-        console.log(matches)
-
-        this.GetMatchesbyTournament()
+        if (this.teams.length > 2) {
+          this.GetMatchesbyTournament()
+        } else {
+          this.$snotify.error(
+            'Only ' +
+              this.teams.length +
+              " team(s) participate in the tournament. That's not enough to init the tournament."
+          )
+        }
       } else {
         this.$snotify.error('Unable to get matches...')
       }
 
       this.loading = false
     },
+    async CreateBaseMatches(baseMatches) {
+      /*
+        Create all base matches to init the tournament bracket
+      */
+      let allCreated = true
+
+      await Promise.all(
+        baseMatches.map(async match => {
+          const response = await WtmApi.Request(
+            'post',
+            this.$store.state.apiUrl + 'matchs/',
+            match,
+            this.$store.getters.getAxiosConfig
+          )
+          allCreated = allCreated && response.isSuccess
+        })
+      )
+
+      if (allCreated) {
+        this.$snotify.success('Tournament matches created successfully !')
+      } else {
+        this.$snotify.error(
+          'Unable to create tournament matches..\nPlease try later...'
+        )
+      }
+
+      return allCreated
+    },
     SortMatchesArray() {
+      // let n = this.matches.length
+
       this.matches.sort((m1, m2) => {
         if (m1.idInTournament > m2.idInTournament) {
           return 1
@@ -87,6 +131,10 @@ export default {
         }
         return 0 //shloudn't happen
       })
+
+      console.log(this.matches[0].idInTournament)
+
+      console.log(this.matches)
     }
   }
 }

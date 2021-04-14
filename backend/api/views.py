@@ -153,9 +153,8 @@ class MatchViewSet(viewsets.ModelViewSet):
                 
                 ## update parent
                 if match.idParent is not None:
-                    print("==")
-                    parent = queryset.get(pk=match.idParent)
-                    print(parent)
+                    #parent = queryset.get(pk=int(match.idParent))
+                    parent = queryset.filter(tournament=match.tournament).filter(idInTournament=int(match.idParent))[0]
 
                     if parent.team1 is None:
                         parent.team1 = match.team1 if match.score1 > match.score2 else match.team2

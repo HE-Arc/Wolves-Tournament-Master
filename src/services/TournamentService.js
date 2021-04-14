@@ -39,7 +39,8 @@ export default {
             (round == nbRounds - 1 && matchId < nbInitMatches))
         ) {
           // go through all matches on each round
-          let currentMatch = matches[matchId]
+          // let currentMatch = matches[matchId]
+          let currentMatch = matches[Math.pow(2, round) - 1 + matchInRound]
           let emptyTeam = {
             id: 0,
             name: 'none'
@@ -70,6 +71,11 @@ export default {
           ) // get teams to put team name here !
 
           ++matchId
+          console.log('matchId = ' + matchId)
+          console.log('matchInRound = ' + matchInRound)
+          console.log(
+            'matchId compute = ' + (Math.pow(2, round) - 1 + matchInRound)
+          )
         }
       }
 
@@ -110,7 +116,7 @@ export default {
       matches.push({
         team1: team1.id,
         team2: team2.id,
-        tournament: tournamentId,
+        tournament: parseInt(tournamentId),
         score1: null,
         score2: null,
         idInTournament: idInTournament,
@@ -136,7 +142,7 @@ export default {
         matches.push({
           team1: null,
           team2: null,
-          tournament: tournamentId,
+          tournament: parseInt(tournamentId),
           score1: null,
           score2: null,
           idInTournament: idInTournament,
