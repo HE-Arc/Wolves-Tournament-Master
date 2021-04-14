@@ -98,7 +98,10 @@ export default {
 
         const response = await WtmApi.Request(
           'put',
-          this.$store.state.apiUrl + 'matchs/' + this.item.match.id + '/',
+          this.$store.state.apiUrl +
+            'matchs/' +
+            this.item.match.id +
+            '/updatematchscores/',
           this.item.match,
           this.$store.getters.getAxiosConfig
         )
