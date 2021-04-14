@@ -12,7 +12,7 @@
       </v-toolbar>
       <v-card-title></v-card-title>
       <v-card-text>
-        <v-form ref="form" style="padding: 10px">
+        <v-form ref="form" style="padding: 10px" :disabled="isDisabled">
           <v-text-field
             v-model="name"
             label="Name"
@@ -44,7 +44,7 @@
             :error-messages="errors.collect('duration')"
           ></v-text-field>
           <v-text-field
-            v-model="pause"
+            v-model="name"
             label="Pause between two round (in minutes)"
             dense
             outlined
@@ -160,6 +160,9 @@ export default {
       to: new Date(Date.now() - 8640000)
     },
 
+    // tournament: {
+    //   name: null
+    // },
     id: null,
     name: null,
     game: null,
@@ -167,8 +170,14 @@ export default {
     pause: null,
     limitDate: null,
     nbrTeams: null,
-    streamUrl: null
+    streamUrl: null,
+
+    // edit or readonly
+    isDisabled: false
   }),
+  mounted() {
+    this.DisplayTournament()
+  },
   methods: {
     show() {
       this.isVisible = true
@@ -216,6 +225,43 @@ export default {
 
         this.loading = false
       }
+    },
+    async DisplayTournament() {
+      this.isDisabled = true
+
+      this.loading = true
+
+      const response = await WtmApi.Request(
+        'get',
+        this.$store.state.apiUrl +
+          'tournaments/' +
+          2 +
+          '/gettournamentproperties/',
+        null,
+        this.$store.getters.getAxiosConfig
+      )
+
+      if (response.isSuccess) {
+        console.log('reponse is success')
+        let tournament = response.result
+
+        console.log(tournament)
+        this.id = tournament.id
+        this.name = tournament.name
+        this.game = tournament.gameName
+        this.duration = tournament.matchDuration
+        this.pause = tournament.breakDuration
+        this.limitDate = tournament.deadLineDate
+        this.nbrTeams = tournament.nbTeam
+        this.streamUrl = tournament.streamURL
+      } else {
+        this.$snotify.error(
+          'Unable to get tournament information...\nPlease try later...'
+        )
+        this.error = true
+      }
+
+      this.loading = false
     }
   }
 }

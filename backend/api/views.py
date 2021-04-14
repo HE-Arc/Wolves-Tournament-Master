@@ -171,12 +171,21 @@ class MatchViewSet(viewsets.ModelViewSet):
                 }
                 return Response(response, status=status.HTTP_400_BAD_REQUEST)
     
-
 class TournamentViewSet(viewsets.ModelViewSet):
     queryset = Tournament.objects.all()
     serializer_class = TournamentSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
+
+    @action(methods=["GET"], detail=True)
+    def gettournamentproperties(self, request, pk=None):
+
+        if pk is not None:
+            print("PK = ", pk)
+            queryset = Tournament.objects.all()
+            tournament = queryset.get(pk=int(pk))
+
+            return Response(self.get_serializer(tournament).data, status=status.HTTP_200_OK)
 
 
 class NotificationViewSet(viewsets.ModelViewSet):
