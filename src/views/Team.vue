@@ -1,5 +1,6 @@
 <template>
   <div style="margin:30px;">
+    <RecruitDialog ref="recruitDialog" />
     <div>
       <v-row>
         <v-slide-group multiple show-arrows xs="12">
@@ -51,7 +52,7 @@
             {{ this.selectedTeam.name }}
           </h1>
           <v-spacer></v-spacer>
-          <v-btn color="#01002a" tile dark large>
+          <v-btn color="#01002a" tile dark large @click="Recruit">
             Recruit a new member
           </v-btn>
         </v-row>
@@ -141,9 +142,12 @@
 
 <script>
 import WtmApi from '@/services/WtmApiService'
+import RecruitDialog from '@/components/dialogs/RecruitDialog'
 
 export default {
-  components: {},
+  components: {
+    RecruitDialog
+  },
   metaInfo: {
     title: 'Team'
   },
@@ -173,6 +177,9 @@ export default {
     this.GetTeamsByMember()
   },
   methods: {
+    async Recruit() {
+      this.$refs.recruitDialog.show()
+    },
     async GetTeamsByMember() {
       this.loading = true
 

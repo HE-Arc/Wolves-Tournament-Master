@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Teams from '../views/Teams.vue'
+import Administration from '../views/Administration.vue'
 import Team from '../views/Team.vue'
 import Register from '../views/Register.vue'
 import Tournament from '../views/Tournament.vue'
@@ -17,9 +17,9 @@ const routes = [
     component: Home
   },
   {
-    path: '/teams',
-    name: 'Teams',
-    component: Teams
+    path: '/administration',
+    name: 'Administration',
+    component: Administration
   },
   {
     path: '/team',

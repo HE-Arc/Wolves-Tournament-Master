@@ -70,9 +70,9 @@ export default {
         path: '/'
       },
       {
-        title: 'Teams',
-        icon: 'mdi-account-multiple',
-        path: '/teams'
+        title: 'Administration',
+        icon: 'mdi-database-search',
+        path: '/administration'
       },
       {
         title: 'Team',
