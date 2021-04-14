@@ -109,6 +109,9 @@ export default {
         if (response.isSuccess) {
           this.$refs.form.reset()
           this.$snotify.success('Scores updated successfuly!')
+
+          this.$store.commit('setUpdateTournamentBracket')
+
           this.isVisible = false
         } else {
           this.$snotify.error(

@@ -16,6 +16,11 @@ export default {
   components: {
     Bracket
   },
+  watch: {
+    '$store.state.updateTournamentBracket': function() {
+      this.GetTeamsByTournament()
+    }
+  },
   mounted() {
     this.GetTeamsByTournament()
   },
@@ -55,7 +60,6 @@ export default {
 
         this.SortMatchesArray() // sort by id in tournament
 
-        // TODO place it elsewhere
         this.rounds = TournamentService.CreateRounds(this.matches, this.teams)
       } else {
         this.$snotify.error('Unable to get matches...')
@@ -120,8 +124,6 @@ export default {
       return allCreated
     },
     SortMatchesArray() {
-      // let n = this.matches.length
-
       this.matches.sort((m1, m2) => {
         if (m1.idInTournament > m2.idInTournament) {
           return 1
@@ -131,10 +133,6 @@ export default {
         }
         return 0 //shloudn't happen
       })
-
-      console.log(this.matches[0].idInTournament)
-
-      console.log(this.matches)
     }
   }
 }
