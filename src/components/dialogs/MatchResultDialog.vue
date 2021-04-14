@@ -98,7 +98,10 @@ export default {
 
         const response = await WtmApi.Request(
           'put',
-          this.$store.state.apiUrl + 'matchs/' + this.item.match.id + '/',
+          this.$store.state.apiUrl +
+            'matchs/' +
+            this.item.match.id +
+            '/updatematchscores/',
           this.item.match,
           this.$store.getters.getAxiosConfig
         )
@@ -106,6 +109,9 @@ export default {
         if (response.isSuccess) {
           this.$refs.form.reset()
           this.$snotify.success('Scores updated successfuly!')
+
+          this.$store.commit('setUpdateTournamentBracket')
+
           this.isVisible = false
         } else {
           this.$snotify.error(
