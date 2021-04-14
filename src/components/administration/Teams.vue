@@ -68,7 +68,7 @@ export default {
     DeleteModal
   },
   metaInfo: {
-    title: 'Teams'
+    title: 'Administation - teams'
   },
   data: () => ({
     teams: [],

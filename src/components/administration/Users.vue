@@ -45,7 +45,7 @@ import WtmApi from '@/services/WtmApiService'
 
 export default {
   metaInfo: {
-    title: 'Administation - Users'
+    title: 'Administation - users'
   },
   data: () => ({
     users: [],

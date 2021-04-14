@@ -13,6 +13,9 @@ import WtmApi from '@/services/WtmApiService'
 
 export default {
   props: ['tournamentId'],
+  metaInfo: {
+    title: 'Tournament'
+  },
   components: {
     Bracket
   },
