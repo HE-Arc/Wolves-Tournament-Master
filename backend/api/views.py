@@ -18,8 +18,6 @@ from rest_framework import status
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (AllowAny,)
-    authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     @action(methods=["GET"], detail=True)
@@ -99,6 +97,7 @@ class TeamViewSet(viewsets.ModelViewSet):
     @action(methods=["GET"], detail=True)
     def getteamsbymember(self, request, pk=None):
         permission_classes = (IsAuthenticated,)
+
         if(pk is not None):
             teams = Team.objects.filter(members__id=pk)
             data = self.get_serializer(teams, many=True).data

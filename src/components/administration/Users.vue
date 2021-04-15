@@ -68,8 +68,6 @@ export default {
     async GetUsers() {
       this.loading = true
 
-      console.log(this.$store.getters.getAxiosHeader)
-
       const response = await WtmApi.Request(
         'get',
         this.$store.state.apiUrl + 'users/',
