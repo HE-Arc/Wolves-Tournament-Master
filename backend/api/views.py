@@ -181,11 +181,50 @@ class TournamentViewSet(viewsets.ModelViewSet):
     def gettournamentproperties(self, request, pk=None):
 
         if pk is not None:
-            print("PK = ", pk)
             queryset = Tournament.objects.all()
             tournament = queryset.get(pk=int(pk))
 
             return Response(self.get_serializer(tournament).data, status=status.HTTP_200_OK)
+
+    @action(methods=["GET"], detail=False)
+    def tournamentsforhome(self, request, pk=None):
+        from datetime import date
+
+        tournaments = Tournament.objects.all()
+
+        teamQueryset = Team.objects.all()
+
+        response = []
+
+        for tournament in tournaments:
+            # TODO : get logged user and check if he participates and if he's
+            # the team leader
+            userId = 1
+            loggedUser = User.objects.all().get(pk=userId)
+            teams = teamQueryset.filter(tournament__id=tournament.id)
+
+            isLeader = False
+            try:
+                isLeader = len(teams.filter(leader=loggedUser)) > 0
+            except django.contrib.auth.models.User.DoesNotExist:
+                pass
+
+            isParticipating = False
+            try:
+                isParticipating = len(teams.filter(members__id=loggedUser.id)) > 0
+            except django.contrib.auth.models.User.DoesNotExist:
+                pass
+
+            isDeadLineOver = tournament.deadLineDate < date.today()
+            
+            data = self.get_serializer(tournament).data
+            data["isLeader"] = isLeader
+            data["isParticipating"] = isParticipating
+            data["isDeadLineOver"] = isDeadLineOver
+
+            response.append(data)
+
+        return Response(response, status=status.HTTP_200_OK)
 
 
 class NotificationViewSet(viewsets.ModelViewSet):

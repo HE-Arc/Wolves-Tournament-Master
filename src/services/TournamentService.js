@@ -64,18 +64,13 @@ export default {
               team2.id,
               team1.name,
               team2.name,
-              true, //TODO put results here !
-              true, //TODO put results here !
+              true,
+              true,
               currentMatch
             )
           ) // get teams to put team name here !
 
           ++matchId
-          console.log('matchId = ' + matchId)
-          console.log('matchInRound = ' + matchInRound)
-          console.log(
-            'matchId compute = ' + (Math.pow(2, round) - 1 + matchInRound)
-          )
         }
       }
 

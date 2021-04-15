@@ -173,14 +173,16 @@ export default {
     streamUrl: null,
 
     // edit or readonly
+    idTournament: -1,
     isDisabled: false
   }),
-  mounted() {
-    this.DisplayTournament()
-  },
   methods: {
     show() {
       this.isVisible = true
+
+      if (this.idTournament !== -1) {
+        this.DisplayTournament()
+      }
     },
     hide() {
       this.error = false
@@ -188,6 +190,7 @@ export default {
       this.isVisible = false
     },
     async CreateTournament() {
+      this.isDisabled = true
       const result = await this.$validator.validate()
 
       if (result) {
@@ -235,17 +238,15 @@ export default {
         'get',
         this.$store.state.apiUrl +
           'tournaments/' +
-          2 +
+          this.idTournament +
           '/gettournamentproperties/',
         null,
         this.$store.getters.getAxiosConfig
       )
 
       if (response.isSuccess) {
-        console.log('reponse is success')
         let tournament = response.result
 
-        console.log(tournament)
         this.id = tournament.id
         this.name = tournament.name
         this.game = tournament.gameName
@@ -262,6 +263,9 @@ export default {
       }
 
       this.loading = false
+
+      // reset idTournament
+      this.idTournament = -1
     }
   }
 }

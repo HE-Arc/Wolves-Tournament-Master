@@ -34,12 +34,35 @@
           </v-card-text>
           <v-card-actions>
             <v-btn
+              v-if="tournament.isParticipating && tournament.isDeadLineOver"
               @click="$router.push('/tournament/' + tournament.id)"
               tile
               block
               outlined
             >
               Voir les résultats du tournoi
+            </v-btn>
+            <v-btn
+              v-else-if="
+                tournament.isParticipating && !tournament.isDeadLineOver
+              "
+              @click="OpenTournamentDialog(tournament.id)"
+              tile
+              block
+              outlined
+            >
+              Le tournois commencera le {{ tournament.deadLineDate }}
+            </v-btn>
+            <v-btn
+              v-else-if="
+                !tournament.isParticipating && !tournament.isDeadLineOver
+              "
+              @click="OpenTournamentDialog"
+              tile
+              block
+              outlined
+            >
+              S'inscire au tournoi
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -71,7 +94,11 @@ export default {
     this.GetTournaments()
   },
   methods: {
-    async OpenTournamentDialog() {
+    async OpenTournamentDialog(idTournament = -1) {
+      if (idTournament !== -1) {
+        this.$refs.tournamentDialog.idTournament = idTournament
+      }
+
       this.$refs.tournamentDialog.show()
     },
     async GetTournaments() {
@@ -79,7 +106,7 @@ export default {
 
       const response = await WtmApi.Request(
         'get',
-        this.$store.state.apiUrl + 'tournaments/'
+        this.$store.state.apiUrl + 'tournaments/tournamentsforhome'
       )
 
       if (response.isSuccess) {
