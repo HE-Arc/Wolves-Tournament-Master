@@ -83,6 +83,11 @@ export default {
         title: 'Notifications',
         icon: 'mdi-bell',
         path: '/notifications'
+      },
+      {
+        title: 'About',
+        icon: 'mdi-help-circle',
+        path: '/about'
       }
     ]
   }),
