@@ -153,6 +153,7 @@ import WtmApi from '@/services/WtmApiService'
 export default {
   data: () => ({
     isVisible: false,
+    parent: undefined,
     loading: false,
     error: false,
     menu: false,
@@ -170,7 +171,8 @@ export default {
     streamUrl: null
   }),
   methods: {
-    show() {
+    show(parent) {
+      this.parent = parent
       this.isVisible = true
     },
     hide() {

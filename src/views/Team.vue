@@ -4,6 +4,11 @@
     <div>
       <v-row>
         <v-slide-group multiple show-arrows xs="12">
+          <v-slide-item>
+            <v-btn class="mx-2" color="#01002a" outlined tile dark large>
+              + Create team
+            </v-btn>
+          </v-slide-item>
           <v-slide-item v-for="team in teams" :key="team.name">
             <v-btn
               class="mx-2"
@@ -14,11 +19,6 @@
               @click="SelectTeam(team)"
             >
               {{ team.name }}
-            </v-btn>
-          </v-slide-item>
-          <v-slide-item v-show="!selectedTeam">
-            <v-btn class="mx-2" color="#01002a" tile dark large>
-              + Create team
             </v-btn>
           </v-slide-item>
         </v-slide-group>

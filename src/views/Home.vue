@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     async OpenTournamentDialog() {
-      this.$refs.tournamentDialog.show()
+      this.$refs.tournamentDialog.show(this)
     },
     async GetTournaments() {
       this.loading = true
