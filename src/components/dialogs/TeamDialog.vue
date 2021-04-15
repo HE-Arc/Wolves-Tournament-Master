@@ -23,16 +23,6 @@
             data-vv-name="Name"
             :error-messages="errors.collect('Name')"
           ></v-text-field>
-          <v-text-field
-            v-model="leader"
-            label="Leader"
-            outlined
-            dense
-            clearable
-            v-validate="'required'"
-            data-vv-name="Leader"
-            :error-messages="errors.collect('Leader')"
-          ></v-text-field>
           <v-alert
             v-show="error"
             v-model="error"
@@ -114,7 +104,7 @@ export default {
 
         let team = {
           name: this.name,
-          leader: this.leader
+          leader: this.$store.state.authUser.name
         }
 
         const response = await WtmApi.Request(
@@ -146,7 +136,7 @@ export default {
         this.loading = true
 
         this.item.name = this.name
-        this.item.leader = this.leader
+        this.item.leader = this.$store.state.authUser.name
 
         const response = await WtmApi.Request(
           'put',
