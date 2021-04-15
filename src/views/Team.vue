@@ -190,7 +190,7 @@ export default {
           this.$store.state.authUser.id +
           '/getteamsbymember/',
         null,
-        this.$store.getters.getAxiosConfig
+        this.$store.getters.getAxiosHeader
       )
 
       if (response.isSuccess) {
@@ -220,7 +220,7 @@ export default {
         'get',
         this.$store.state.apiUrl + 'users/' + team.id + '/getteammembers/',
         null,
-        this.$store.getters.getAxiosConfig
+        this.$store.getters.getAxiosHeader
       )
       if (response.isSuccess) {
         this.members = response.result
@@ -238,7 +238,7 @@ export default {
         'post',
         this.$store.state.apiUrl + 'teams/' + team.id + '/removeuser/',
         data,
-        this.$store.getters.getAxiosConfig
+        this.$store.getters.getAxiosHeader
       )
       if (response.isSuccess) {
         this.GetTeamMembers(team)

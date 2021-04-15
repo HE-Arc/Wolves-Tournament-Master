@@ -103,7 +103,7 @@ export default {
             this.item.match.id +
             '/updatematchscores/',
           this.item.match,
-          this.$store.getters.getAxiosConfig
+          this.$store.getters.getAxiosHeader
         )
 
         if (response.isSuccess) {

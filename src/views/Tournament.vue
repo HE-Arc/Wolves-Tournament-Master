@@ -110,7 +110,7 @@ export default {
             'post',
             this.$store.state.apiUrl + 'matchs/',
             match,
-            this.$store.getters.getAxiosConfig
+            this.$store.getters.getAxiosHeader
           )
           allCreated = allCreated && response.isSuccess
         })

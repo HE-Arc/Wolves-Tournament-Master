@@ -64,8 +64,8 @@ export default new Vuex.Store({
   actions: {},
   modules: {},
   getters: {
-    getAxiosConfig: state => {
-      return { headers: { Authorization: 'Token' + state.token } }
+    getAxiosHeader: state => {
+      return { Authorization: `Token ${state.token}` }
     }
   }
 })

@@ -199,7 +199,7 @@ export default {
           'post',
           this.$store.state.apiUrl + 'tournaments/',
           tournament,
-          this.$store.getters.getAxiosConfig
+          this.$store.getters.getAxiosHeader
         )
 
         if (response.isSuccess) {

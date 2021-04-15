@@ -3,13 +3,13 @@ import axios from 'axios'
 export default {
 
   // Generic axios request
-  Request(method, url, data=null, config=null) {
+  Request(method, url, data=null, header=null) {
     return new Promise(resolve => {
       axios({
         method: method, // 'get', 'post', 'put', 'delete'
         url: url, // this.$store.state.apiUrl + '/teams/',
         data: data, // { firstName: 'Fred', lastName: 'Flintstone'}
-        config: config // this.$store.getters.getAxiosConfig
+        headers: header // this.$store.getters.getAxiosHeader
       })
       .then(response => {
         resolve({ isSuccess: true, result: response.data })
@@ -21,9 +21,9 @@ export default {
   },
 
   // Request to get notifications and compute the number of unseen one
-  GetNotifications(url, config) {
+  GetNotifications(url, headers) {
     return new Promise(resolve => {
-      axios.get(url, config)
+      axios.get(url, headers)
         .then(response => {
           let notifNumber = response.data.filter(
             n => n.seen == false

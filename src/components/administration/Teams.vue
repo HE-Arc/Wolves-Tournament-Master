@@ -96,9 +96,7 @@ export default {
 
       const response = await WtmApi.Request(
         'get',
-        this.$store.state.apiUrl + 'teams/',
-        null,
-        this.$store.getters.getAxiosConfig
+        this.$store.state.apiUrl + 'teams/'
       )
 
       if (response.isSuccess) {
@@ -117,7 +115,7 @@ export default {
         'delete',
         this.$store.state.apiUrl + 'teams/' + team.id + '/',
         null,
-        this.$store.getters.getAxiosConfig
+        this.$store.getters.getAxiosHeader
       )
 
       if (response.isSuccess) {

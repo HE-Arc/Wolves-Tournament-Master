@@ -89,7 +89,7 @@ export default {
         'get',
         this.$store.state.apiUrl + 'users/',
         null,
-        this.$store.getters.getAxiosConfig
+        this.$store.getters.getAxiosHeader
       )
 
       if (response.isSuccess) {

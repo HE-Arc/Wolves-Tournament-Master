@@ -107,7 +107,7 @@ export default {
         this.$store.state.apiUrl +
           'notifications?uid=' +
           this.$store.state.authUser.id,
-        this.$store.getters.getAxiosConfig
+        this.$store.getters.getAxiosHeader
       )
 
       if (response.isSuccess) {
@@ -130,7 +130,7 @@ export default {
           'put',
           this.$store.state.apiUrl + 'notifications/' + notification.id + '/',
           notification,
-          this.$store.getters.getAxiosConfig
+          this.$store.getters.getAxiosHeader
         )
 
         if (response.isSuccess) {
@@ -150,7 +150,7 @@ export default {
         'post',
         this.$store.state.apiUrl + 'teams/' + notification.team + '/adduser/',
         data,
-        this.$store.getters.getAxiosConfig
+        this.$store.getters.getAxiosHeader
       )
       if (response.isSuccess) {
         console.log(response.result)
@@ -169,7 +169,7 @@ export default {
         'put',
         this.$store.state.apiUrl + 'notifications/' + notification.id + '/',
         notification,
-        this.$store.getters.getAxiosConfig
+        this.$store.getters.getAxiosHeader
       )
 
       if (response.isSuccess) {

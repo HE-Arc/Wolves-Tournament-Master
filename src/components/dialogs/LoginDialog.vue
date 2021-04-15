@@ -134,7 +134,7 @@ export default {
         this.$store.state.apiUrl +
           'notifications?uid=' +
           this.$store.state.authUser.id,
-        this.$store.getters.getAxiosConfig
+        this.$store.getters.getAxiosHeader
       )
 
       if (response.isSuccess) {

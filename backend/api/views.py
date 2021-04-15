@@ -19,8 +19,8 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
-    # authentication_classes = (TokenAuthentication,)
-    # permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     @action(methods=["GET"], detail=True)
     def getteammembers(self, request, pk=None):
@@ -30,6 +30,7 @@ class UserViewSet(viewsets.ModelViewSet):
             data = self.get_serializer(members, many=True).data
 
             return Response(data)
+
 
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
@@ -47,17 +48,17 @@ class TeamViewSet(viewsets.ModelViewSet):
             user = User.objects.get(id=userid)
             team = Team.objects.get(id=pk)
 
-            notification = Notification(message = "you have been fired from " + team.name,
-            seen = False,
-            notificationType = "MESSAGE",
-            user = user,
-            team = team)
+            notification = Notification(message="you have been fired from " + team.name,
+                                        seen=False,
+                                        notificationType="MESSAGE",
+                                        user=user,
+                                        team=team)
             notification.save()
 
             team.members.remove(user)
             response = {
-                    "message": "user removed successfuly"
-                }
+                "message": "user removed successfuly"
+            }
             return Response(response, status=status.HTTP_200_OK)
 
         else:
@@ -65,8 +66,6 @@ class TeamViewSet(viewsets.ModelViewSet):
                 "message": "you can't remove this user"
             }
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
-            
-        
 
     @action(methods=["POST"], detail=True)
     def adduser(self, request, pk=None):
@@ -99,6 +98,7 @@ class TeamViewSet(viewsets.ModelViewSet):
 
     @action(methods=["GET"], detail=True)
     def getteamsbymember(self, request, pk=None):
+        permission_classes = (IsAuthenticated,)
         if(pk is not None):
             teams = Team.objects.filter(members__id=pk)
             data = self.get_serializer(teams, many=True).data
@@ -109,7 +109,7 @@ class TeamViewSet(viewsets.ModelViewSet):
         queryset = Team.objects.all()
         # get every team which participates to the tournament with id=tid
         tid = request.query_params.get("tid", None)
-        
+
         if(tid is not None):
             tournament = Tournament.objects.filter(pk=tid)
             teams = queryset.filter(tournament__in=tournament)
@@ -117,6 +117,7 @@ class TeamViewSet(viewsets.ModelViewSet):
             return Response(data)
 
         return Response({"message": "tid is not defined"})
+
 
 class MatchViewSet(viewsets.ModelViewSet):
     queryset = Match.objects.all()
@@ -136,25 +137,28 @@ class MatchViewSet(viewsets.ModelViewSet):
             return Response(data)
 
         return Response({"message": "tid is not defined"})
- 
+
     @action(methods=["PUT"], detail=True)
     def updatematchscores(self, request, pk=None):
         queryset = Match.objects.all()
         data = request.data
 
         if pk is not None:
-            serializer = self.serializer_class(data=data, context={'request': request})
+            serializer = self.serializer_class(
+                data=data, context={'request': request})
             serializer.is_valid(raise_exception=True)
-            
+
             if serializer.is_valid():
                 # match = serializer.validated_data['match']
                 # match, created = queryset.filter(pk=data["id"]).update_or_create(serializer.validated_data)
-                match, created = queryset.filter(pk=pk).update_or_create(serializer.validated_data)
-                
-                ## update parent
+                match, created = queryset.filter(
+                    pk=pk).update_or_create(serializer.validated_data)
+
+                # update parent
                 if match.idParent is not None:
                     #parent = queryset.get(pk=int(match.idParent))
-                    parent = queryset.filter(tournament=match.tournament).filter(idInTournament=int(match.idParent))[0]
+                    parent = queryset.filter(tournament=match.tournament).filter(
+                        idInTournament=int(match.idParent))[0]
 
                     if parent.team1 is None:
                         parent.team1 = match.team1 if match.score1 > match.score2 else match.team2
@@ -163,14 +167,14 @@ class MatchViewSet(viewsets.ModelViewSet):
 
                     # parent, created = queryset.filter(pk=match.idParent).update_or_create(parent)
                     parent.save()
-                                    
+
                 return Response(self.get_serializer(match).data, status=status.HTTP_200_OK)
             else:
                 response = {
                     "message": "unable to update match"
                 }
                 return Response(response, status=status.HTTP_400_BAD_REQUEST)
-    
+
 
 class TournamentViewSet(viewsets.ModelViewSet):
     queryset = Tournament.objects.all()

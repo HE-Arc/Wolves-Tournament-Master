@@ -121,7 +121,7 @@ export default {
           'post',
           this.$store.state.apiUrl + 'teams/',
           team,
-          this.$store.getters.getAxiosConfig
+          this.$store.getters.getAxiosHeader
         )
 
         if (response.isSuccess) {
@@ -152,7 +152,7 @@ export default {
           'put',
           this.$store.state.apiUrl + 'teams/' + this.item.id + '/',
           this.item,
-          this.$store.getters.getAxiosConfig
+          this.$store.getters.getAxiosHeader
         )
 
         if (response.isSuccess) {
