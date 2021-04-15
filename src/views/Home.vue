@@ -42,7 +42,7 @@
               block
               outlined
             >
-              Voir les résultats du tournoi
+              See results
             </v-btn>
             <v-btn
               v-else-if="
@@ -62,7 +62,7 @@
               block
               outlined
             >
-              Plus d'informations
+              More information
               <!-- Le tournois commencera le {{ tournament.deadLineDate }} -->
             </v-btn>
             <v-btn
@@ -82,7 +82,7 @@
               block
               outlined
             >
-              S'inscire au tournoi
+              Register your team
             </v-btn>
           </v-card-actions>
         </v-card>

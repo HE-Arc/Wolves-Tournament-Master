@@ -8,7 +8,7 @@
         <v-toolbar-title v-else-if="!isLeader || isParticipating">
           Tournament information
         </v-toolbar-title>
-        <v-toolbar-title v-else>Participate to the tournament</v-toolbar-title>
+        <v-toolbar-title v-else>Register for this tournament</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
           <v-btn icon dark @click="hide">
@@ -75,6 +75,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-combobox
+                :disabled="isDisabled"
                 chips
                 small-chips
                 prepend-inner-icon="mdi-calendar"
@@ -132,7 +133,7 @@
             :error-messages="errors.collect('stream URL')"
           ></v-text-field>
           <v-select
-            v-if="isDisabled && isLeader"
+            v-if="isDisabled && isLeader && !isParticipating"
             v-model="teamEngaged"
             label="Team to engage"
             dense
@@ -155,9 +156,25 @@
           </v-alert>
         </v-form>
       </v-card-text>
+
+      <!-- Save button -->
       <v-card-actions v-show="!loading">
         <v-spacer></v-spacer>
-        <v-btn tile color="success" @click="CreateTournament">
+        <v-btn
+          tile
+          color="success"
+          @click="CreateTournament"
+          v-if="!isDisabled"
+        >
+          Save
+          <v-icon right> mdi-content-save </v-icon>
+        </v-btn>
+        <v-btn
+          tile
+          color="success"
+          @click="CreateTournament"
+          v-else-if="isDisabled && isLeader && !isParticipating"
+        >
           Save
           <v-icon right> mdi-content-save </v-icon>
         </v-btn>
