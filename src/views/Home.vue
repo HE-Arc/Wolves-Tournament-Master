@@ -32,6 +32,8 @@
           <v-card-text class="text-sm-left">
             {{ tournament.gameName }}
           </v-card-text>
+
+          <!-- Different button content -->
           <v-card-actions>
             <v-btn
               v-if="tournament.isParticipating && tournament.isDeadLineOver"
@@ -44,20 +46,38 @@
             </v-btn>
             <v-btn
               v-else-if="
-                tournament.isParticipating && !tournament.isDeadLineOver
+                (tournament.isParticipating && !tournament.isDeadLineOver) ||
+                  (!tournament.isParticipating &&
+                    !tournament.isDeadLineOver &&
+                    !tournament.isLeader)
               "
-              @click="OpenTournamentDialog(tournament.id)"
+              @click="
+                OpenTournamentDialog(
+                  tournament.id,
+                  tournament.isParticipating,
+                  tournament.isLeader
+                )
+              "
               tile
               block
               outlined
             >
-              Le tournois commencera le {{ tournament.deadLineDate }}
+              Plus d'informations
+              <!-- Le tournois commencera le {{ tournament.deadLineDate }} -->
             </v-btn>
             <v-btn
               v-else-if="
-                !tournament.isParticipating && !tournament.isDeadLineOver
+                !tournament.isParticipating &&
+                  !tournament.isDeadLineOver &&
+                  tournament.isLeader
               "
-              @click="OpenTournamentDialog"
+              @click="
+                OpenTournamentDialog(
+                  tournament.id,
+                  tournament.isParticipating,
+                  tournament.isLeader
+                )
+              "
               tile
               block
               outlined
@@ -94,9 +114,15 @@ export default {
     this.GetTournaments()
   },
   methods: {
-    async OpenTournamentDialog(idTournament = -1) {
+    async OpenTournamentDialog(
+      idTournament = -1,
+      isParticipating = false,
+      isLeader = false
+    ) {
       if (idTournament !== -1 && typeof idTournament == 'number') {
         this.$refs.tournamentDialog.idTournament = idTournament
+        this.$refs.tournamentDialog.isLeader = isLeader
+        this.$refs.tournamentDialog.isParticipating = isParticipating
       }
 
       this.$refs.tournamentDialog.show()

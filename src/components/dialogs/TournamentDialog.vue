@@ -2,7 +2,13 @@
   <v-dialog v-model="isVisible" max-width="500px" @keydown.esc="hide">
     <v-card>
       <v-toolbar dark color="#01002a">
-        <v-toolbar-title>Create a tournament</v-toolbar-title>
+        <v-toolbar-title v-if="!isDisabled">
+          Create a tournament
+        </v-toolbar-title>
+        <v-toolbar-title v-else-if="!isLeader || isParticipating">
+          Tournament information
+        </v-toolbar-title>
+        <v-toolbar-title v-else>Participate to the tournament</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
           <v-btn icon dark @click="hide">
@@ -115,8 +121,8 @@
           ></v-text-field>
 
           <v-text-field
+            v-if="!isDisabled"
             v-model="streamUrl"
-            :disabled="isDisabled"
             label="Stream URL"
             dense
             outlined
@@ -125,6 +131,19 @@
             data-vv-name="stream URL"
             :error-messages="errors.collect('stream URL')"
           ></v-text-field>
+          <v-select
+            v-if="isDisabled && isLeader"
+            v-model="teamEngaged"
+            label="Team to engage"
+            dense
+            outlined
+            clearable
+            v-validate="'required'"
+            data-vv-name="team to engage"
+            :error-messages="errors.collect('team to engage')"
+          ></v-select>
+
+          <!-- Display error  -->
           <v-alert
             v-show="error"
             v-model="error"
@@ -181,7 +200,12 @@ export default {
 
     // edit or readonly
     idTournament: -1,
-    isDisabled: false
+    isDisabled: false,
+
+    // engage a team to a tournament
+    engagedTeam: null,
+    isLeader: false,
+    isParticipating: false
   }),
   methods: {
     show() {
@@ -190,9 +214,11 @@ export default {
         this.DisplayTournament()
       } else {
         if (typeof this.$refs.form != 'undefined') {
+          // TODO improve this code !
           this.error = false
-          this.$refs.form.reset()
           this.isDisabled = false
+          this.streamUrl = null
+          this.$refs.form.reset()
         }
       }
 
