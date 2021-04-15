@@ -195,9 +195,6 @@ export default {
 
       if (response.isSuccess) {
         this.teams = response.result
-        if (this.teams.length > 0) {
-          this.SelectTeam(this.teams[0])
-        }
       } else {
         this.$snotify.error('Unable to get teams...')
       }
@@ -211,7 +208,6 @@ export default {
     SelectTeam(team) {
       this.GetTeamMembers(team)
       this.selectedTeam = team
-      console.log('leader = ' + team.leader)
     },
     async GetTeamMembers(team) {
       this.loading = true
