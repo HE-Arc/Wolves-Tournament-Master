@@ -16,7 +16,7 @@ class Tournament(models.Model):
     streamURL = models.CharField(max_length=1000)
     # TODO update to allow empty tournament creation
     # teams = models.ManyToManyField(Team, related_name='tournament', null=True, blank='True')
-    teams = models.ManyToManyField(Team)
+    teams = models.ManyToManyField(Team, blank='True')
 
     def __str__(self):
         return self.name

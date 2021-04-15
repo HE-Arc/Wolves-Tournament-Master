@@ -95,7 +95,7 @@ export default {
   },
   methods: {
     async OpenTournamentDialog(idTournament = -1) {
-      if (idTournament !== -1) {
+      if (idTournament !== -1 && typeof idTournament == 'number') {
         this.$refs.tournamentDialog.idTournament = idTournament
       }
 

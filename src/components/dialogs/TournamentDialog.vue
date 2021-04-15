@@ -12,9 +12,10 @@
       </v-toolbar>
       <v-card-title></v-card-title>
       <v-card-text>
-        <v-form ref="form" style="padding: 10px" :disabled="isDisabled">
+        <v-form ref="form" style="padding: 10px">
           <v-text-field
             v-model="name"
+            :disabled="isDisabled"
             label="Name"
             dense
             outlined
@@ -25,6 +26,7 @@
           ></v-text-field>
           <v-text-field
             v-model="game"
+            :disabled="isDisabled"
             label="Game"
             dense
             outlined
@@ -35,6 +37,7 @@
           ></v-text-field>
           <v-text-field
             v-model="duration"
+            :disabled="isDisabled"
             label="Round duration (in minutes)"
             dense
             outlined
@@ -45,6 +48,7 @@
           ></v-text-field>
           <v-text-field
             v-model="name"
+            :disabled="isDisabled"
             label="Pause between two round (in minutes)"
             dense
             outlined
@@ -55,6 +59,7 @@
           ></v-text-field>
           <v-menu
             ref="menu"
+            :disabled="isDisabled"
             v-model="menu"
             :close-on-content-click="false"
             :return-value.sync="limitDate"
@@ -98,6 +103,7 @@
 
           <v-text-field
             v-model="nbrTeams"
+            :disabled="isDisabled"
             label="Number of teams"
             dense
             outlined
@@ -110,6 +116,7 @@
 
           <v-text-field
             v-model="streamUrl"
+            :disabled="isDisabled"
             label="Stream URL"
             dense
             outlined
@@ -178,11 +185,18 @@ export default {
   }),
   methods: {
     show() {
-      this.isVisible = true
-
+      // TODO improve this code !
       if (this.idTournament !== -1) {
         this.DisplayTournament()
+      } else {
+        if (typeof this.$refs.form != 'undefined') {
+          this.error = false
+          this.$refs.form.reset()
+          this.isDisabled = false
+        }
       }
+
+      this.isVisible = true
     },
     hide() {
       this.error = false
@@ -190,7 +204,6 @@ export default {
       this.isVisible = false
     },
     async CreateTournament() {
-      this.isDisabled = true
       const result = await this.$validator.validate()
 
       if (result) {
