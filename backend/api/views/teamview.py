@@ -18,6 +18,27 @@ class TeamViewSet(viewsets.ModelViewSet):
     serializer_class = TeamSerializer
     permission_classes = (AllowAny,)
 
+    def create(self, request):
+        data = request.data
+
+        serializer = self.serializer_class(
+            data=data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+
+        if serializer.is_valid():
+            team = Team.objects.create(**serializer.validated_data)
+            user = User.objects.get(username=team.leader)
+            team.members.add(user)
+
+            team.save()
+
+            return Response(self.get_serializer(team).data, status=status.HTTP_200_OK)
+        else:
+            response = {
+                "message": "unable to create team"
+            }
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
     @action(methods=["POST"], detail=True)
     def removeuser(self, request, pk=None):
         if "userid" in request.data:

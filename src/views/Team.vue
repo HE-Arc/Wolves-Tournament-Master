@@ -1,11 +1,21 @@
 <template>
   <div style="margin:30px;">
+    <TeamDialog ref="teamDialog" />
     <RecruitDialog ref="recruitDialog" />
+
     <div>
       <v-row>
         <v-slide-group multiple show-arrows xs="12">
           <v-slide-item>
-            <v-btn class="mx-2" color="#01002a" outlined tile dark large>
+            <v-btn
+              class="mx-2"
+              color="#01002a"
+              outlined
+              tile
+              dark
+              large
+              @click="CreateTeam"
+            >
               + Create team
             </v-btn>
           </v-slide-item>
@@ -129,10 +139,12 @@
 <script>
 import WtmApi from '@/services/WtmApiService'
 import RecruitDialog from '@/components/dialogs/RecruitDialog'
+import TeamDialog from '@/components/dialogs/TeamDialog'
 
 export default {
   components: {
-    RecruitDialog
+    RecruitDialog,
+    TeamDialog
   },
   metaInfo: {
     title: 'Team'
@@ -159,13 +171,16 @@ export default {
     ]
   }),
   mounted: function() {
-    this.GetTeamsByMember()
+    this.GetTeams()
   },
   methods: {
+    async CreateTeam() {
+      this.$refs.teamDialog.show(this, 'Add a new team', null, false)
+    },
     async Recruit() {
       this.$refs.recruitDialog.show()
     },
-    async GetTeamsByMember() {
+    async GetTeams() {
       this.loading = true
 
       const response = await WtmApi.Request(
