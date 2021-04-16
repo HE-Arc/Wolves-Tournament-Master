@@ -69,6 +69,7 @@ export default {
     isVisible: false,
     loading: false,
     error: false,
+    team: 0,
 
     users: [],
     headers: [
@@ -106,7 +107,26 @@ export default {
       this.loading = false
     },
     async Recruit(user) {
-      console.log(user)
+      let notification = {
+        message: 'You were invited to join ' + this.team.name + ' team!',
+        seen: false,
+        notificationType: 'INVITATION',
+        user: user.id,
+        team: this.team.id
+      }
+
+      const response = await WtmApi.Request(
+        'post',
+        this.$store.state.apiUrl + 'notifications/',
+        notification,
+        this.$store.getters.getAxiosHeader
+      )
+
+      if (response.isSuccess) {
+        this.$snotify.success('Request sent')
+      } else {
+        this.$snotify.error('Unable to add user...')
+      }
     }
   }
 }
