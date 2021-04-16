@@ -59,7 +59,7 @@ export default {
         'get',
         this.$store.state.apiUrl + 'tournaments/' + this.tournamentId + '/'
       )
-      console.log(response.result)
+
       if (response.isSuccess) {
         this.tournament = response.result
       } else {
@@ -102,22 +102,20 @@ export default {
             this.teams,
             this.tournamentId
           )
-          let created = this.CreateBaseMatches(baseMatches)
+          let created = await this.CreateBaseMatches(baseMatches)
 
           if (created) {
             tournamentInit = true
             this.matches = baseMatches
           } else {
-            this.$snotify.error('Unable to init tournament...')
+            this.$snotify.error('Unable to this init tournament...')
+            this.$router.push('/')
           }
         }
 
         // the matches needs to be loaded from the DB to allow their score update
         // (otherwise the match id is not avaible)
         if (!tournamentInit) {
-          console.log('YO')
-          this.SortMatchesArray() // sort by id in tournament
-
           this.rounds = TournamentService.CreateRounds(
             this.matches,
             this.teams,
@@ -163,43 +161,56 @@ export default {
 
       this.loading = false
     },
+    async IsDeadLineReached() {
+      const response = await WtmApi.Request(
+        'get',
+        this.$store.state.apiUrl + 'tournaments/' + this.tournamentId
+      )
+
+      if (response.isSuccess) {
+        let tournament = response.result
+        let deadLine = new Date(tournament.deadLineDate)
+        let currentDate = new Date()
+
+        return deadLine.getTime() >= currentDate.getTime()
+      } else {
+        this.$snotify.error('Unable to get tournament information ...')
+        return false
+      }
+    },
     async CreateBaseMatches(baseMatches) {
       /*
         Create all base matches to init the tournament bracket
       */
-      let allCreated = true
+      let isDeadLineReached = await this.IsDeadLineReached()
 
-      await Promise.all(
-        baseMatches.map(async match => {
-          const response = await WtmApi.Request(
-            'post',
-            this.$store.state.apiUrl + 'matchs/',
-            match,
-            this.$store.getters.getAxiosHeader
-          )
-          allCreated = allCreated && response.isSuccess
-        })
-      )
+      if (isDeadLineReached) {
+        let allCreated = true
 
-      if (allCreated) {
-        this.$snotify.success('Tournament matches created successfully !')
-      } else {
-        this.$snotify.error(
-          'Unable to create tournament matches..\nPlease try later...'
+        await Promise.all(
+          baseMatches.map(async match => {
+            const response = await WtmApi.Request(
+              'post',
+              this.$store.state.apiUrl + 'matchs/',
+              match,
+              this.$store.getters.getAxiosHeader
+            )
+            allCreated = allCreated && response.isSuccess
+          })
         )
+
+        if (allCreated) {
+          this.$snotify.success('Tournament matches created successfully !')
+        } else {
+          this.$snotify.error(
+            'Unable to create tournament matches..\nPlease try later...'
+          )
+        }
+
+        return allCreated
       }
 
-      return allCreated
-    },
-    SortMatchesArray() {
-      this.matches.sort((m1, m2) => {
-        if (m1.idInTournament > m2.idInTournament) {
-          return 1
-        } else if (m1.idInTournament < m2.idInTournament) {
-          return -1
-        }
-        return 0 //shloudn't happen
-      })
+      return false
     }
   }
 }
