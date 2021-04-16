@@ -25,16 +25,35 @@ export default {
     }
   },
   mounted() {
-    this.GetTeamsByTournament()
+    this.GetTournamentReferees()
   },
   data() {
     return {
+      referees: undefined,
       teams: [],
       matches: [],
       rounds: []
     }
   },
   methods: {
+    async GetTournamentReferees() {
+      const response = await WtmApi.Request(
+        'get',
+        this.$store.state.apiUrl +
+          'users/' +
+          this.tournamentId +
+          '/gettournamentreferees',
+        null,
+        this.$store.getters.getAxiosHeader
+      )
+
+      if (response.isSuccess) {
+        this.referees = response.result
+        this.GetTeamsByTournament()
+      } else {
+        this.$snotify.error('Unable to get tournament informations ...')
+      }
+    },
     async GetMatchesbyTournament() {
       this.loading = true
 
@@ -63,7 +82,13 @@ export default {
 
         this.SortMatchesArray() // sort by id in tournament
 
-        this.rounds = TournamentService.CreateRounds(this.matches, this.teams)
+        console.log(this.referees)
+
+        this.rounds = TournamentService.CreateRounds(
+          this.matches,
+          this.teams,
+          this.referees
+        )
       } else {
         this.$snotify.error('Unable to get matches...')
       }

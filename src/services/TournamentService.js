@@ -12,7 +12,7 @@ export default {
   GetTeam(teams, tid) {
     return teams.find(team => team.id == tid)
   },
-  CreateRounds(matches, teams) {
+  CreateRounds(matches, teams, referees) {
     /*
             Generate brackets from matches.
         */
@@ -45,6 +45,8 @@ export default {
             id: 0,
             name: 'none'
           }
+
+          currentMatch.referees = referees
 
           // prepare teams
           let team1 =
