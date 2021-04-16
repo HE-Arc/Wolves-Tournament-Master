@@ -12,7 +12,7 @@ from ..serializers import UserSerializer
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     @action(methods=["GET"], detail=True)
     def getteammembers(self, request, pk=None):

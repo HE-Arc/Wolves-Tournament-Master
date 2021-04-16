@@ -87,10 +87,10 @@ export default {
           this.GetMatchesbyTournament()
         } else {
           this.$snotify.error(
-            'Only ' +
-              this.teams.length +
-              " team(s) participate in the tournament. That's not enough to init the tournament."
+            this.teams.length +
+              " team(s) participate in this tournament. That's not enough to init the tournament."
           )
+          this.$router.push('/')
         }
       } else {
         this.$snotify.error('Unable to get matches...')

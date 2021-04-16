@@ -15,7 +15,7 @@ class Tournament(models.Model):
     nbTeam = models.IntegerField()
     streamURL = models.CharField(max_length=1000)
     # teams = models.ManyToManyField(Team, related_name='tournament', null=True, blank='True')
-    teams = models.ManyToManyField(Team)
+    teams = models.ManyToManyField(Team, blank='True')
 
     def __str__(self):
         return self.name
