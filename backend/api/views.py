@@ -104,6 +104,13 @@ class TeamViewSet(viewsets.ModelViewSet):
             data = self.get_serializer(teams, many=True).data
             return Response(data)
 
+    @action(methods=["GET"], detail=True)
+    def getteamsbyleader(self, request, pk=None):
+        if(pk is not None):
+            teams = Team.objects.filter(leader__id=pk)
+            data = self.get_serializer(teams, many=True).data
+            return Response(data)
+
     @action(methods=["GET"], detail=False)
     def getteamsbytournament(self, request, pk=None):
         queryset = Team.objects.all()
@@ -198,7 +205,7 @@ class TournamentViewSet(viewsets.ModelViewSet):
         for tournament in tournaments:
             loggedUser = None
             if userId is not None and userId.isnumeric():
-                User.objects.all().get(pk=userId)
+                loggedUser = User.objects.all().get(pk=userId)
             teams = teamQueryset.filter(tournament__id=tournament.id)
 
             isLeader = False
