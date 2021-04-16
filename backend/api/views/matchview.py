@@ -27,6 +27,8 @@ class MatchViewSet(viewsets.ModelViewSet):
 
     @action(methods=["PUT"], detail=True)
     def updatematchscores(self, request, pk=None):
+        permission_classes = (IsAuthenticated,)
+
         queryset = Match.objects.all()
         data = request.data
 
