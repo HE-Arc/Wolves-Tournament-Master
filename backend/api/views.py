@@ -206,13 +206,13 @@ class TournamentViewSet(viewsets.ModelViewSet):
             isLeader = False
             try:
                 isLeader = len(teams.filter(leader=loggedUser)) > 0
-            except django.contrib.auth.models.User.DoesNotExist:
+            except User.DoesNotExist:
                 pass
 
             isParticipating = False
             try:
                 isParticipating = len(teams.filter(members__id=loggedUser.id)) > 0
-            except django.contrib.auth.models.User.DoesNotExist:
+            except User.DoesNotExist:
                 pass
 
             isDeadLineOver = tournament.deadLineDate < date.today()

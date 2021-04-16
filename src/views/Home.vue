@@ -36,7 +36,7 @@
           <!-- Different button content -->
           <v-card-actions>
             <v-btn
-              v-if="tournament.isParticipating && tournament.isDeadLineOver"
+              v-if="tournament.isDeadLineOver"
               @click="$router.push('/tournament/' + tournament.id)"
               tile
               block

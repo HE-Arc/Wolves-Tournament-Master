@@ -53,7 +53,7 @@
             :error-messages="errors.collect('duration')"
           ></v-text-field>
           <v-text-field
-            v-model="name"
+            v-model="pause"
             :disabled="isDisabled"
             label="Pause between two round (in minutes)"
             dense
@@ -134,14 +134,15 @@
           ></v-text-field>
           <v-select
             v-if="isDisabled && isLeader && !isParticipating"
-            v-model="teamEngaged"
-            label="Team to engage"
+            v-model="registeredTeam"
+            :items="teams"
+            label="Team to register"
             dense
             outlined
             clearable
             v-validate="'required'"
-            data-vv-name="team to engage"
-            :error-messages="errors.collect('team to engage')"
+            data-vv-name="team to register"
+            :error-messages="errors.collect('team to register')"
           ></v-select>
 
           <!-- Display error  -->
@@ -175,7 +176,7 @@
           @click="CreateTournament"
           v-else-if="isDisabled && isLeader && !isParticipating"
         >
-          Save
+          Participate
           <v-icon right> mdi-content-save </v-icon>
         </v-btn>
       </v-card-actions>
@@ -219,10 +220,11 @@ export default {
     idTournament: -1,
     isDisabled: false,
 
-    // engage a team to a tournament
-    engagedTeam: null,
+    // register a team to a tournament
+    registeredTeam: null,
     isLeader: false,
-    isParticipating: false
+    isParticipating: false,
+    teams: ['team1', 'team2']
   }),
   methods: {
     show() {
