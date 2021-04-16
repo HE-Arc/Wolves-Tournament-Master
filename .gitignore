@@ -15,3 +15,5 @@ media
 .vscode/settings.json
 
 backend/api/migrations/
+
+package-lock.json

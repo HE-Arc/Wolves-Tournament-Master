@@ -19,76 +19,126 @@ export default {
         */
     let rounds = []
     // let nbRounds = parseInt(Math.sqrt(matches.length)) + 1
-    let nbInitMatches = parseInt((teams.length + 1) / 2) //leaf matches
-    let nbRounds = Math.ceil(Math.sqrt(nbInitMatches)) + 1
+    let nbInitMatches = Math.ceil(teams.length / 2) //leaf matches
+    let nbRounds = Math.ceil(Math.log2(nbInitMatches) + 1) //always round up
 
     // the match array should be sorted according to IdInTournament at this stage
-    let matchId = 0
+    // let matchId = 0
 
     // get every match from every round. To display the brackets correctly,
     // the matches of the same round should be in the same subarray
-    for (let round = nbRounds - 1; round >= 0; --round) {
+    for (let round = nbRounds; round > 0; --round) {
       let games = []
-      for (
-        let matchInRound = 0;
-        matchInRound < Math.pow(2, round);
-        ++matchInRound
-      ) {
-        if (
-          matchId < matches.length &&
-          (round != nbRounds - 1 ||
-            (round == nbRounds - 1 && matchId < nbInitMatches))
-        ) {
-          // go through all matches on each round
-          // let currentMatch = matches[matchId]
-          let currentMatch = matches[Math.pow(2, round) - 1 + matchInRound]
 
-          if (
-            currentMatch != 'undefined' &&
-            currentMatch.roundNb - 1 == round
-          ) {
-            let emptyTeam = {
-              id: 0,
-              name: 'none'
-            }
-            currentMatch.referees = referees
-
-            // prepare teams
-            let team1 =
-              currentMatch.team1 != null
-                ? this.GetTeam(teams, currentMatch.team1) // here, we can't just pick teams based on their position in the teams array. we have to get them by their id
-                : emptyTeam
-
-            let team2 =
-              currentMatch.team2 != null
-                ? this.GetTeam(teams, currentMatch.team2)
-                : emptyTeam
-
-            // add teams into the game
-            games.push(
-              this.CreateGame(
-                team1.id,
-                team2.id,
-                team1.name,
-                team2.name,
-                true, //TODO put results here !
-                true, //TODO put results here !
-                currentMatch
-              )
-            ) // get teams to put team name here !
-
-            ++matchId
-          }
+      this.GetRoundMatches(matches, round).forEach(currentMatch => {
+        let emptyTeam = {
+          id: 0,
+          name: 'none'
         }
-      }
+        currentMatch.referees = referees
+
+        // prepare teams
+        let team1 =
+          currentMatch.team1 != null
+            ? this.GetTeam(teams, currentMatch.team1) // here, we can't just pick teams based on their position in the teams array. we have to get them by their id
+            : emptyTeam
+
+        let team2 =
+          currentMatch.team2 != null
+            ? this.GetTeam(teams, currentMatch.team2)
+            : emptyTeam
+
+        // add teams into the game
+        games.push(
+          this.CreateGame(
+            team1.id,
+            team2.id,
+            team1.name,
+            team2.name,
+            true, //TODO put results here !
+            true, //TODO put results here !
+            currentMatch
+          )
+        )
+      })
 
       // add matches of this round in the brackets
       rounds.push({
         games: games
       })
+
+      // for (
+      //   let matchInRound = 0;
+      //   matchInRound < Math.pow(2, round);
+      //   ++matchInRound
+      // ) {
+      //   if (
+      //     matchId < matches.length &&
+      //     (round != nbRounds - 1 ||
+      //       (round == nbRounds - 1 && matchId < nbInitMatches))
+      //   ) {
+      //     // go through all matches on each round
+      //     // let currentMatch = matches[matchId]
+      //     let currentMatch = matches[Math.pow(2, round) - 1 + matchInRound]
+
+      //     if (currentMatch != undefined && currentMatch.roundNb - 1 == round) {
+      //       let emptyTeam = {
+      //         id: 0,
+      //         name: 'none'
+      //       }
+      //       currentMatch.referees = referees
+
+      //       // prepare teams
+      //       let team1 =
+      //         currentMatch.team1 != null
+      //           ? this.GetTeam(teams, currentMatch.team1) // here, we can't just pick teams based on their position in the teams array. we have to get them by their id
+      //           : emptyTeam
+
+      //       let team2 =
+      //         currentMatch.team2 != null
+      //           ? this.GetTeam(teams, currentMatch.team2)
+      //           : emptyTeam
+
+      //       // add teams into the game
+      //       games.push(
+      //         this.CreateGame(
+      //           team1.id,
+      //           team2.id,
+      //           team1.name,
+      //           team2.name,
+      //           true, //TODO put results here !
+      //           true, //TODO put results here !
+      //           currentMatch
+      //         )
+      //       ) // get teams to put team name here !
+
+      //       ++matchId
+      //     }
+      //   }
+      // }
+
+      // add matches of this round in the brackets
+      // rounds.push({
+      //   games: games
+      // })
     }
 
     return rounds
+  },
+  GetRoundMatches(matches, round) {
+    let roundMatches = matches.filter(match => match.roundNb == round)
+
+    // reverse the order
+    // roundMatches.sort((m1, m2) => {
+    //   if (m1.idInTournament < m2.idInTournament) {
+    //     return 1
+    //   } else if (m1.idInTournament > m2.idInTournament) {
+    //     return -1
+    //   }
+    //   return 0 //shloudn't happen
+    // })
+
+    return roundMatches
   },
   CreateBaseMatches(teams, tournamentId) {
     /*
@@ -96,8 +146,8 @@ export default {
             They'll be pushed in the DB at tournament creation
     */
 
-    let nbInitMatches = parseInt((teams.length + 1) / 2) //leaf matches
-    let nbRounds = Math.ceil(Math.sqrt(nbInitMatches)) + 1 //always round up
+    let nbInitMatches = Math.ceil(teams.length / 2) //leaf matches
+    let nbRounds = Math.ceil(Math.log2(nbInitMatches) + 1) //always round up
 
     // create first matches with teams
     let idInTournament = 1
