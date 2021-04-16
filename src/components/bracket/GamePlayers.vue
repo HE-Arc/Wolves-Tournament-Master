@@ -35,7 +35,15 @@
                 Score : {{ bracketNode.match.score1 }} -
                 {{ bracketNode.match.score2 }}
               </p>
-              <v-btn tile outlined @click="OpenMatchResultDialog(bracketNode)"
+              <v-btn
+                v-show="
+                  bracketNode.match.referees.find(
+                    referee => referee.id == this.$store.state.authUser.id
+                  ) != null
+                "
+                tile
+                outlined
+                @click="OpenMatchResultDialog(bracketNode)"
                 >Ajouter un résultat</v-btn
               >
             </v-expansion-panel-content>

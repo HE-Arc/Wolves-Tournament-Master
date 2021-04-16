@@ -1,5 +1,10 @@
 <template>
-  <v-dialog v-model="isVisible" max-width="500px" @keydown.esc="hide">
+  <v-dialog
+    v-model="isVisible"
+    max-width="500px"
+    @keydown.esc="hide"
+    @click:outside="hide"
+  >
     <v-card>
       <v-toolbar dark color="#01002a">
         <v-toolbar-title>Create a tournament</v-toolbar-title>
@@ -108,6 +113,17 @@
             :error-messages="errors.collect('number of teams')"
           ></v-text-field>
 
+          <v-select
+            v-model="referees"
+            :items="users"
+            item-text="username"
+            item-value="id"
+            chips
+            label="Referees"
+            multiple
+            outlined
+          ></v-select>
+
           <v-text-field
             v-model="streamUrl"
             label="Stream URL"
@@ -168,17 +184,33 @@ export default {
     pause: null,
     limitDate: null,
     nbrTeams: null,
+    referees: null,
     streamUrl: null
   }),
   methods: {
     show(parent) {
       this.parent = parent
       this.isVisible = true
+      this.GetUsers()
     },
     hide() {
       this.error = false
       this.$refs.form.reset()
       this.isVisible = false
+    },
+    async GetUsers() {
+      const response = await WtmApi.Request(
+        'get',
+        this.$store.state.apiUrl + 'users/',
+        null,
+        this.$store.getters.getAxiosHeader
+      )
+
+      if (response.isSuccess) {
+        this.users = response.result
+      } else {
+        this.$snotify.error('Unable to get users...')
+      }
     },
     async CreateTournament() {
       const result = await this.$validator.validate()
@@ -194,7 +226,8 @@ export default {
           deadLineDate: this.limitDate,
           nbTeam: this.nbrTeams,
           streamURL: this.streamUrl,
-          organizer: this.$store.state.authUser.name
+          organizer: this.$store.state.authUser.name,
+          referees: this.referees
         }
 
         const response = await WtmApi.Request(
