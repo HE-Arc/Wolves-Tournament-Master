@@ -28,8 +28,10 @@
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
           ></iframe>
-          <v-card-title>{{ tournament.name }}</v-card-title>
-          <v-card-text class="text-sm-left">
+          <v-card-title style="color:#01002a;">
+            {{ tournament.name }}
+          </v-card-title>
+          <v-card-text style="color:#01002a;" class="text-sm-left">
             {{ tournament.gameName }}
           </v-card-text>
           <v-card-actions>
@@ -38,6 +40,7 @@
               tile
               block
               outlined
+              color="#01002a"
             >
               Voir les résultats du tournoi
             </v-btn>

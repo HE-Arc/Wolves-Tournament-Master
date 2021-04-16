@@ -34,7 +34,6 @@
                   @click.stop="CreateTeam"
                   outlined
                   color="#01002a"
-                  dark
                   tile
                   class="mb-2"
                 >

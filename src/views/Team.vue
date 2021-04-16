@@ -5,14 +5,13 @@
 
     <div>
       <v-row>
-        <v-slide-group multiple show-arrows xs="12">
+        <v-slide-group style="margin-left:10px;" multiple show-arrows xs="12">
           <v-slide-item>
             <v-btn
-              class="mx-2"
               color="#01002a"
               outlined
+              class="mx-2"
               tile
-              dark
               large
               @click="CreateTeam"
             >
@@ -20,14 +19,7 @@
             </v-btn>
           </v-slide-item>
           <v-slide-item v-for="team in teams" :key="team.name">
-            <v-btn
-              class="mx-2"
-              color="#01002a"
-              tile
-              dark
-              large
-              @click="SelectTeam(team)"
-            >
+            <v-btn class="mx-2" tile dark large @click="SelectTeam(team)">
               {{ team.name }}
             </v-btn>
           </v-slide-item>
@@ -36,30 +28,40 @@
       <v-row>
         <v-divider> </v-divider>
       </v-row>
+
       <div v-show="!selectedTeam" style="margin-top:30px;">
         <v-alert outlined type="info">
           For now, you are not part of any team
         </v-alert>
       </div>
       <div v-show="selectedTeam" style="margin-top:30px;">
-        <v-row v-show="selectedTeam" align="center">
-          <img width="80px" height="auto" src="@/assets/logo.png" alt="logo" />
-          <h1 style="margin-left:10px;" class="text-xs-left">
-            {{ this.selectedTeam.name }}
-          </h1>
-          <v-spacer></v-spacer>
-          <v-btn
-            v-if="selectedTeam.leader == $store.state.authUser.name"
-            color="#01002a"
-            outlined
-            tile
-            dark
-            large
-            @click="Recruit"
+        <v-card v-show="selectedTeam" style="margin-bottom:30px;" tile>
+          <v-row
+            style="margin:0;padding-left:16px;padding-right:16px"
+            v-show="selectedTeam"
+            align="center"
           >
-            Recruit a new member
-          </v-btn>
-        </v-row>
+            <img
+              width="80px"
+              height="auto"
+              src="@/assets/logo.png"
+              alt="logo"
+            />
+            <h1 style="color:#01002a;margin-left:10px;" class="text-xs-left">
+              {{ this.selectedTeam.name }}
+            </h1>
+            <v-spacer></v-spacer>
+            <v-btn
+              v-if="selectedTeam.leader == $store.state.authUser.name"
+              tile
+              dark
+              large
+              @click="Recruit"
+            >
+              Recruit a new member
+            </v-btn>
+          </v-row>
+        </v-card>
         <v-row>
           <v-col xs="12" md="4">
             <v-card tile>
@@ -128,8 +130,8 @@
                           selectedTeam.leader != member.username
                       "
                       tile
-                      outlined
                       color="#01002a"
+                      outlined
                       @click="DeleteTeamMember(selectedTeam, member)"
                       >Exclude</v-btn
                     >

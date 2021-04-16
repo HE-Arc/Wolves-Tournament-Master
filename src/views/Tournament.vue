@@ -1,9 +1,24 @@
 <template>
-  <bracket style="margin:20px;" :rounds="rounds">
-    <template slot="player" slot-scope="{ player }">
-      {{ player.name }}
-    </template>
-  </bracket>
+  <v-container style="margin-top:30px;">
+    <v-card tile>
+      <v-row
+        style="color:#01002a;margin-left:16px;margin-right:16px;"
+        align="center"
+      >
+        <h1>{{ tournament.name }}</h1>
+        <h3 class="ml-10">{{ tournament.gameName }}</h3>
+      </v-row>
+    </v-card>
+    <v-card tile style="margin-top:30px;">
+      <v-flex xs12 style="overflow:auto;padding:30px;margin:15px;">
+        <bracket :rounds="rounds">
+          <template slot="player" slot-scope="{ player }">
+            {{ player.name }}
+          </template>
+        </bracket>
+      </v-flex>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -25,17 +40,32 @@ export default {
     }
   },
   mounted() {
+    this.GetTournament()
     this.GetTournamentReferees()
   },
-  data() {
-    return {
-      referees: undefined,
-      teams: [],
-      matches: [],
-      rounds: []
+  data: () => ({
+    referees: undefined,
+    teams: [],
+    matches: [],
+    rounds: [],
+    tournament: {
+      name: '',
+      gameName: ''
     }
-  },
+  }),
   methods: {
+    async GetTournament() {
+      const response = await WtmApi.Request(
+        'get',
+        this.$store.state.apiUrl + 'tournaments/' + this.tournamentId + '/'
+      )
+      console.log(response.result)
+      if (response.isSuccess) {
+        this.tournament = response.result
+      } else {
+        this.$snotify.error('Unable to get tournament informations ...')
+      }
+    },
     async GetTournamentReferees() {
       const response = await WtmApi.Request(
         'get',
@@ -49,7 +79,7 @@ export default {
         this.referees = response.result
         this.GetTeamsByTournament()
       } else {
-        this.$snotify.error('Unable to get tournament informations ...')
+        this.$snotify.error('Unable to get referees for this tournament ...')
       }
     },
     async GetMatchesbyTournament() {
@@ -121,7 +151,9 @@ export default {
         } else {
           this.$snotify.error(
             this.teams.length +
-              " team(s) participate in this tournament. That's not enough to init the tournament."
+              ' team(s) participate in ' +
+              this.tournament.name +
+              " tournament. That's not enough to init the tournament."
           )
           this.$router.push('/')
         }

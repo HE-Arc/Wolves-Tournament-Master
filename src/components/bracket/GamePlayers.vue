@@ -43,6 +43,7 @@
                 "
                 tile
                 outlined
+                color="#01002a"
                 @click="OpenMatchResultDialog(bracketNode)"
                 >Ajouter un résultat</v-btn
               >

@@ -1,6 +1,6 @@
 <template>
   <v-col xs="12" offset-sm="3" sm="6" offset-md="4" md="4">
-    <v-card class="text-left">
+    <v-card tile class="text-left">
       <v-card-title>About</v-card-title>
       <v-card-text>
         <img
