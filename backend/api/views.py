@@ -199,13 +199,13 @@ class TournamentViewSet(viewsets.ModelViewSet):
         for tournament in tournaments:
             # TODO : get logged user and check if he participates and if he's
             # the team leader
-            userId = 1
+            userId = 2
             loggedUser = User.objects.all().get(pk=userId)
             teams = teamQueryset.filter(tournament__id=tournament.id)
 
             isLeader = False
             try:
-                isLeader = len(teams.filter(leader=loggedUser)) > 0
+                isLeader = len(teamQueryset.filter(leader=loggedUser)) > 0
             except User.DoesNotExist:
                 pass
 
