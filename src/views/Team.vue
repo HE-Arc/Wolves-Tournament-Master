@@ -188,6 +188,7 @@ export default {
     async Recruit() {
       this.$refs.recruitDialog.show()
       this.$refs.recruitDialog.team = this.selectedTeam
+      this.$refs.recruitDialog.teamMembers = this.members
     },
     async GetTeams() {
       this.loading = true
