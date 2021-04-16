@@ -175,7 +175,7 @@
         <v-btn
           tile
           color="success"
-          @click="CreateTournament"
+          @click="AddTeam"
           v-else-if="isDisabled && isLeader && !isParticipating"
         >
           Participate
@@ -253,7 +253,7 @@ export default {
     },
     async CreateTournament() {
       const result = await this.$validator.validate()
-
+      console.log('yoyoyo création du tournoi, on est bien')
       if (result) {
         this.loading = true
 
@@ -326,7 +326,7 @@ export default {
       this.loading = false
 
       // reset idTournament
-      this.idTournament = -1
+      //this.idTournament = -1
     },
     async GetLeaderTeam() {
       this.loading = true
@@ -337,6 +337,31 @@ export default {
           'teams/' +
           this.$store.state.authUser.id +
           '/getteamsbyleader'
+      )
+
+      if (response.isSuccess) {
+        this.teams = response.result
+      } else {
+        this.$snotify.error('Unable to get teams...')
+      }
+
+      this.loading = false
+    },
+    async AddTeam() {
+      this.loading = true
+      console.log('yoyoyo ajout de la team, on est bien')
+      let data = {
+        teamid: this.registeredTeam
+      }
+
+      const response = await WtmApi.Request(
+        'post',
+        this.$store.state.apiUrl +
+          'tournaments/' +
+          this.idTournament +
+          '/addTeam/',
+        data,
+        this.$store.getters.getAxiosConfig
       )
 
       if (response.isSuccess) {

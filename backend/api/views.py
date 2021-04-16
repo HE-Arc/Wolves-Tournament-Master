@@ -184,6 +184,24 @@ class TournamentViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
 
+    @action(methods=["POST"], detail=True)
+    def addTeam(self, request, pk=None):
+        if "teamid" in request.data:
+
+            team = Team.objects.get(id=request.data["teamid"])
+            tournament = Tournament.objects.get(id=pk)
+            tournament.teams.add(team)
+
+            response = {
+                "message": "team added successfuly"
+            }
+            return Response(response, status=status.HTTP_200_OK)
+        else:
+            response = {
+                "message": "can't add team"
+            }
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
     @action(methods=["GET"], detail=True)
     def gettournamentproperties(self, request, pk=None):
         if pk is not None:
