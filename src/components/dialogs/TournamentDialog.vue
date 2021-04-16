@@ -136,6 +136,8 @@
             v-if="isDisabled && isLeader && !isParticipating"
             v-model="registeredTeam"
             :items="teams"
+            item-text="name"
+            item-value="id"
             label="Team to register"
             dense
             outlined
@@ -224,13 +226,14 @@ export default {
     registeredTeam: null,
     isLeader: false,
     isParticipating: false,
-    teams: ['team1', 'team2']
+    teams: []
   }),
   methods: {
     show() {
       // TODO improve this code !
       if (this.idTournament !== -1) {
         this.DisplayTournament()
+        this.GetLeaderTeam()
       } else {
         if (typeof this.$refs.form != 'undefined') {
           // TODO improve this code !
@@ -324,6 +327,25 @@ export default {
 
       // reset idTournament
       this.idTournament = -1
+    },
+    async GetLeaderTeam() {
+      this.loading = true
+
+      const response = await WtmApi.Request(
+        'get',
+        this.$store.state.apiUrl +
+          'teams/' +
+          this.$store.state.authUser.id +
+          '/getteamsbyleader'
+      )
+
+      if (response.isSuccess) {
+        this.teams = response.result
+      } else {
+        this.$snotify.error('Unable to get teams...')
+      }
+
+      this.loading = false
     }
   }
 }

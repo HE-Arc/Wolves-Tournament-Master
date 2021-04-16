@@ -186,7 +186,6 @@ class TournamentViewSet(viewsets.ModelViewSet):
 
     @action(methods=["GET"], detail=True)
     def gettournamentproperties(self, request, pk=None):
-
         if pk is not None:
             queryset = Tournament.objects.all()
             tournament = queryset.get(pk=int(pk))
