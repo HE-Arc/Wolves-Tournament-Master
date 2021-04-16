@@ -4,6 +4,7 @@
     max-width="500px"
     @keydown.esc="hide"
     @click:outside="hide"
+    @keydown.enter="SaveTeam"
   >
     <v-card>
       <v-toolbar dark color="#01002a">
@@ -41,11 +42,7 @@
       </v-card-text>
       <v-card-actions v-show="!loading">
         <v-spacer></v-spacer>
-        <v-btn v-show="!isUpdate" tile color="success" @click="CreateTeam">
-          Save
-          <v-icon right> mdi-content-save </v-icon>
-        </v-btn>
-        <v-btn v-show="isUpdate" tile color="success" @click="UpdateTeam">
+        <v-btn tile color="success" @click="SaveTeam">
           Save
           <v-icon right> mdi-content-save </v-icon>
         </v-btn>
@@ -100,6 +97,10 @@ export default {
       this.error = false
       this.$refs.form.reset()
       this.isVisible = false
+    },
+    SaveTeam() {
+      if (this.isUpdate) this.UpdateTeam()
+      else this.CreateTeam()
     },
     async CreateTeam() {
       const result = await this.$validator.validate()

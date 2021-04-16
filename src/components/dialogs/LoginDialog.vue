@@ -4,6 +4,7 @@
     max-width="500px"
     @keydown.esc="hide"
     @click:outside="hide"
+    @keydown.enter="Login"
   >
     <v-card>
       <v-toolbar dark color="#01002a">

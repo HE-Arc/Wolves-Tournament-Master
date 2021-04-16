@@ -4,6 +4,7 @@
     max-width="500px"
     @keydown.esc="hide"
     @click:outside="hide"
+    @keydown.enter="CreateTournament"
   >
     <v-card>
       <v-toolbar dark color="#01002a">
@@ -122,6 +123,9 @@
             label="Referees"
             multiple
             outlined
+            v-validate="'required'"
+            data-vv-name="referees"
+            :error-messages="errors.collect('referees')"
           ></v-select>
 
           <v-text-field

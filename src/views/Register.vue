@@ -2,7 +2,7 @@
   <v-col xs="12" offset-sm="3" sm="6" offset-md="4" md="4">
     <v-card>
       <v-card-title>Sign up</v-card-title>
-      <v-card-text>
+      <v-card-text @keydown.enter="Register">
         <v-form ref="registerForm" style="padding:10px;">
           <v-text-field
             v-model="username"

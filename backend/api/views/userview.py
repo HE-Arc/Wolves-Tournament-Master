@@ -17,6 +17,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @action(methods=["GET"], detail=True)
     def getteammembers(self, request, pk=None):
+        permission_classes = (IsAuthenticated,)
         if(pk is not None):
             team = Team.objects.get(id=pk)
             members = team.members.all()
@@ -26,6 +27,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @action(methods=["GET"], detail=True)
     def gettournamentreferees(self, request, pk=None):
+        permission_classes = (IsAuthenticated,)
         if(pk is not None):
             tournament = Tournament.objects.get(id=pk)
             referees = tournament.referees.all()
