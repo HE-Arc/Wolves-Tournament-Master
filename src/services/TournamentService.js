@@ -13,6 +13,7 @@ export default {
     return teams.find(team => team.id == tid)
   },
   CreateRounds(matches, teams, referees) {
+    console.log(matches)
     /*
             Generate brackets from matches.
         */
@@ -41,41 +42,43 @@ export default {
           // go through all matches on each round
           // let currentMatch = matches[matchId]
           let currentMatch = matches[Math.pow(2, round) - 1 + matchInRound]
-          let emptyTeam = {
-            id: 0,
-            name: 'none'
+
+          if (
+            currentMatch != 'undefined' &&
+            currentMatch.roundNb - 1 == round
+          ) {
+            let emptyTeam = {
+              id: 0,
+              name: 'none'
+            }
+            currentMatch.referees = referees
+
+            // prepare teams
+            let team1 =
+              currentMatch.team1 != null
+                ? this.GetTeam(teams, currentMatch.team1) // here, we can't just pick teams based on their position in the teams array. we have to get them by their id
+                : emptyTeam
+
+            let team2 =
+              currentMatch.team2 != null
+                ? this.GetTeam(teams, currentMatch.team2)
+                : emptyTeam
+
+            // add teams into the game
+            games.push(
+              this.CreateGame(
+                team1.id,
+                team2.id,
+                team1.name,
+                team2.name,
+                true, //TODO put results here !
+                true, //TODO put results here !
+                currentMatch
+              )
+            ) // get teams to put team name here !
+
+            ++matchId
           }
-
-          currentMatch.referees = referees
-
-          // prepare teams
-          let team1 =
-            currentMatch.team1 != null
-              ? this.GetTeam(teams, currentMatch.team1) // here, we can't just pick teams based on their position in the teams array. we have to get them by their id
-              : emptyTeam
-
-          let team2 =
-            currentMatch.team2 != null
-              ? this.GetTeam(teams, currentMatch.team2)
-              : emptyTeam
-
-          // add teams into the game
-          games.push(
-            this.CreateGame(
-              team1.id,
-              team2.id,
-              team1.name,
-              team2.name,
-              true, //TODO put results here !
-              true, //TODO put results here !
-              currentMatch
-            )
-          ) // get teams to put team name here !
-
-          ++matchId
-          // console.log('matchId = ' + matchId)
-          // console.log('matchInRound = ' + matchInRound)
-          // console.log('matchId compute = ' + (Math.pow(2, round) - 1 + matchInRound))
         }
       }
 
@@ -100,6 +103,7 @@ export default {
     let idInTournament = 1
 
     let matches = []
+    let nbMatchesOnPreviousRound = 0
     for (let teamId = teams.length - 1; teamId >= 0; teamId -= 2) {
       // for (let teamId = 0; teamId < teams.length; teamId += 2) {
       let team1 = teams[teamId] //here, we create the tournament. The order by which we add teams doesn't matter.
@@ -120,22 +124,20 @@ export default {
         score1: null,
         score2: null,
         idInTournament: idInTournament,
-        // IdInTournament: idInTournament,
+        roundNb: nbRounds,
         idParent: null //still usefull ? Perhaps for the update, check it later
       })
-
+      ++nbMatchesOnPreviousRound
       ++idInTournament
     }
 
     // create other matches. They're all empty at tournament creation
     for (let round = nbRounds - 2; round >= 0; --round) {
-      // for (
-      //   let matchInRound = 0;
-      //   matchInRound < Math.pow(2, round);
-      //   ++matchInRound
-      // ) {
+      let n = nbMatchesOnPreviousRound
+      nbMatchesOnPreviousRound = 0
       for (
-        let matchInRound = Math.pow(2, round) - 1;
+        // let matchInRound = Math.pow(2, round) - 1;
+        let matchInRound = Math.ceil(n / 2) - 1;
         matchInRound >= 0;
         --matchInRound
       ) {
@@ -146,14 +148,15 @@ export default {
           score1: null,
           score2: null,
           idInTournament: idInTournament,
+          roundNb: round + 1,
           idParent: null //still usefull ? Perhaps for the update, check it later
         })
         ++idInTournament
+        ++nbMatchesOnPreviousRound
       }
     }
 
     return this.ReverseMatchesIdInTournament(matches)
-    // return matches
   },
   ReverseMatchesIdInTournament(matches) {
     /*

@@ -62,6 +62,7 @@ export default {
           this.tournamentId
       )
 
+      let tournamentInit = false
       if (response.isSuccess) {
         this.matches = response.result
 
@@ -74,17 +75,28 @@ export default {
           let created = this.CreateBaseMatches(baseMatches)
 
           if (created) {
+            tournamentInit = true
             this.matches = baseMatches
+          } else {
+            this.$snotify.error('Unable to init tournament...')
           }
         }
 
-        this.SortMatchesArray() // sort by id in tournament
+        // the matches needs to be loaded from the DB to allow their score update
+        // (otherwise the match id is not avaible)
+        if (!tournamentInit) {
+          console.log('YO')
+          this.SortMatchesArray() // sort by id in tournament
 
-        this.rounds = TournamentService.CreateRounds(
-          this.matches,
-          this.teams,
-          this.referees
-        )
+          this.rounds = TournamentService.CreateRounds(
+            this.matches,
+            this.teams,
+            this.referees
+          )
+        } else {
+          // get matches form DB
+          this.GetTeamsByTournament()
+        }
       } else {
         this.$snotify.error('Unable to get matches...')
       }
