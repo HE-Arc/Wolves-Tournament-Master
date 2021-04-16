@@ -132,7 +132,9 @@ export default {
 
       const response = await WtmApi.Request(
         'get',
-        this.$store.state.apiUrl + 'tournaments/tournamentsforhome'
+        this.$store.state.apiUrl +
+          'tournaments/tournamentsforhome?uid=' +
+          this.$store.state.authUser.id
       )
 
       if (response.isSuccess) {

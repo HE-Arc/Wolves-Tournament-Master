@@ -188,31 +188,29 @@ class TournamentViewSet(viewsets.ModelViewSet):
 
     @action(methods=["GET"], detail=False)
     def tournamentsforhome(self, request, pk=None):
+
         from datetime import date
-
         tournaments = Tournament.objects.all()
-
         teamQueryset = Team.objects.all()
-
         response = []
+        userId = self.request.query_params.get("uid", None)
 
         for tournament in tournaments:
-            # TODO : get logged user and check if he participates and if he's
-            # the team leader
-            userId = 2
-            loggedUser = User.objects.all().get(pk=userId)
+            loggedUser = None
+            if userId is not None and userId.isnumeric():
+                User.objects.all().get(pk=userId)
             teams = teamQueryset.filter(tournament__id=tournament.id)
 
             isLeader = False
             try:
                 isLeader = len(teamQueryset.filter(leader=loggedUser)) > 0
-            except User.DoesNotExist:
+            except:
                 pass
 
             isParticipating = False
             try:
                 isParticipating = len(teams.filter(members__id=loggedUser.id)) > 0
-            except User.DoesNotExist:
+            except:
                 pass
 
             isDeadLineOver = tournament.deadLineDate < date.today()
