@@ -69,6 +69,8 @@ export default {
     isVisible: false,
     loading: false,
     error: false,
+    team: 0,
+    teamMembers: [],
 
     users: [],
     headers: [
@@ -86,6 +88,8 @@ export default {
     hide() {
       this.error = false
       this.isVisible = false
+      this.teamMembers = []
+      this.users = []
     },
     async GetUsers() {
       this.loading = true
@@ -98,7 +102,11 @@ export default {
       )
 
       if (response.isSuccess) {
-        this.users = response.result
+        response.result.forEach(user => {
+          if (!this.teamMembers.some(m => m.username === user.username)) {
+            this.users.push(user)
+          }
+        })
       } else {
         this.$snotify.error('Unable to get users...')
       }
@@ -106,7 +114,26 @@ export default {
       this.loading = false
     },
     async Recruit(user) {
-      console.log(user)
+      let notification = {
+        message: 'You were invited to join ' + this.team.name + ' team!',
+        seen: false,
+        notificationType: 'INVITATION',
+        user: user.id,
+        team: this.team.id
+      }
+
+      const response = await WtmApi.Request(
+        'post',
+        this.$store.state.apiUrl + 'notifications/',
+        notification,
+        this.$store.getters.getAxiosHeader
+      )
+
+      if (response.isSuccess) {
+        this.$snotify.success('Request sent')
+      } else {
+        this.$snotify.error('Unable to add user...')
+      }
     }
   }
 }

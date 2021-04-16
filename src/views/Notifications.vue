@@ -46,7 +46,7 @@
                 @click="AcceptTeamInvitation(notification)"
                 color="success"
               >
-                Accepter
+                Accept
                 <template v-slot:loader>
                   <span>Loading...</span>
                 </template>
@@ -61,7 +61,7 @@
                 color="red darken-4"
                 @click="RejectTeamInvitation(notification)"
               >
-                Refuser
+                Decline
                 <template v-slot:loader>
                   <span>Loading...</span>
                 </template>
@@ -112,10 +112,6 @@ export default {
 
       if (response.isSuccess) {
         this.notifications = response.result
-        this.notifications.sort(function(n1, n2) {
-          return n1 === n2 ? 0 : n1 ? -1 : 1
-        })
-
         this.$store.commit('updateNotif', response.counter)
       } else {
         this.$snotify.error('Unable to get notifications ...')
