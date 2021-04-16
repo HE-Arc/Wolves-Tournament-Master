@@ -20,10 +20,13 @@ export default {
   },
 
   // Request to get notifications and compute the number of unseen one
-  GetNotifications(url, headers) {
+  GetNotifications(url, header) {
     return new Promise(resolve => {
-      axios
-        .get(url, headers)
+      axios({
+        method: 'get',
+        url: url,
+        headers: header
+      })
         .then(response => {
           let notifNumber = response.data.filter(n => n.seen == false).length
 
