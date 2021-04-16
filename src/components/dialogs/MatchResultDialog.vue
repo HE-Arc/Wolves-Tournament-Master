@@ -81,8 +81,9 @@ export default {
     error: false,
 
     item: {
-      team1: '',
-      team2: ''
+      player1: { name: '' },
+      player2: { name: '' },
+      match: { score1: 0, score2: 0 }
     }
   }),
   methods: {

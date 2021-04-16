@@ -42,9 +42,7 @@ export default {
         this.$store.state.apiUrl +
           'users/' +
           this.tournamentId +
-          '/gettournamentreferees',
-        null,
-        this.$store.getters.getAxiosHeader
+          '/gettournamentreferees'
       )
 
       if (response.isSuccess) {
@@ -81,8 +79,6 @@ export default {
         }
 
         this.SortMatchesArray() // sort by id in tournament
-
-        console.log(this.referees)
 
         this.rounds = TournamentService.CreateRounds(
           this.matches,
@@ -155,8 +151,7 @@ export default {
       this.matches.sort((m1, m2) => {
         if (m1.idInTournament > m2.idInTournament) {
           return 1
-        }
-        if (m1.idInTournament < m2.idInTournament) {
+        } else if (m1.idInTournament < m2.idInTournament) {
           return -1
         }
         return 0 //shloudn't happen

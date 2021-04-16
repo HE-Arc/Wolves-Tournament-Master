@@ -73,11 +73,9 @@ export default {
           ) // get teams to put team name here !
 
           ++matchId
-          console.log('matchId = ' + matchId)
-          console.log('matchInRound = ' + matchInRound)
-          console.log(
-            'matchId compute = ' + (Math.pow(2, round) - 1 + matchInRound)
-          )
+          // console.log('matchId = ' + matchId)
+          // console.log('matchInRound = ' + matchInRound)
+          // console.log('matchId compute = ' + (Math.pow(2, round) - 1 + matchInRound))
         }
       }
 

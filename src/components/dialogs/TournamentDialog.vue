@@ -180,6 +180,7 @@ export default {
     disabledDates: {
       to: new Date(Date.now() - 8640000)
     },
+    users: [],
 
     id: null,
     name: null,
