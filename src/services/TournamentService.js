@@ -53,9 +53,9 @@ export default {
             team1.name,
             team2.name,
             currentMatch.score1 == null ||
-              currentMatch.score1 >= currentMatch.score2, //TODO put results here !
+              currentMatch.score1 >= currentMatch.score2,
             currentMatch.score2 == null ||
-              currentMatch.score2 >= currentMatch.score1, //TODO put results here !
+              currentMatch.score2 >= currentMatch.score1,
             currentMatch
           )
         )
