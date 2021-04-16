@@ -41,6 +41,8 @@ class TeamViewSet(viewsets.ModelViewSet):
 
     @action(methods=["POST"], detail=True)
     def removeuser(self, request, pk=None):
+        permission_classes = (IsAuthenticated,)
+
         if "userid" in request.data:
             userid = request.data["userid"]
             user = User.objects.get(id=userid)
@@ -67,6 +69,8 @@ class TeamViewSet(viewsets.ModelViewSet):
 
     @action(methods=["POST"], detail=True)
     def adduser(self, request, pk=None):
+        permission_classes = (IsAuthenticated,)
+
         if "userid" and "notificationid" in request.data:
             notification = Notification.objects.get(
                 id=request.data["notificationid"])
@@ -105,6 +109,8 @@ class TeamViewSet(viewsets.ModelViewSet):
 
     @action(methods=["GET"], detail=False)
     def getteamsbytournament(self, request, pk=None):
+        permission_classes = (AllowAny,)
+
         queryset = Team.objects.all()
         # get every team which participates to the tournament with id=tid
         tid = request.query_params.get("tid", None)
