@@ -13,12 +13,12 @@ export default {
     return teams.find(team => team.id == tid)
   },
   CreateRounds(matches, teams, referees) {
-    console.log(matches)
     /*
             Generate brackets from matches.
         */
+    matches = this.SortMatchesArray(matches)
+
     let rounds = []
-    // let nbRounds = parseInt(Math.sqrt(matches.length)) + 1
     let nbInitMatches = Math.ceil(teams.length / 2) //leaf matches
     let nbRounds = Math.ceil(Math.log2(nbInitMatches) + 1) //always round up
 
@@ -30,7 +30,7 @@ export default {
       this.GetRoundMatches(matches, round).forEach(currentMatch => {
         let emptyTeam = {
           id: 0,
-          name: 'none'
+          name: 'tbd'
         }
         currentMatch.referees = referees
 
@@ -159,6 +159,18 @@ export default {
       if (newId > 1) {
         match.idParent = parseInt(newId / 2)
       }
+    })
+
+    return matches
+  },
+  SortMatchesArray(matches) {
+    matches.sort((m1, m2) => {
+      if (m1.idInTournament > m2.idInTournament) {
+        return 1
+      } else if (m1.idInTournament < m2.idInTournament) {
+        return -1
+      }
+      return 0 //shloudn't happen
     })
 
     return matches
