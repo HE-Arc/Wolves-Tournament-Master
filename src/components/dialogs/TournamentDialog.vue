@@ -344,7 +344,6 @@ export default {
       } else {
         this.$snotify.error('Unable to get teams...')
       }
-
       this.loading = false
     },
     async AddTeam() {
@@ -369,7 +368,7 @@ export default {
       } else {
         this.$snotify.error('Unable to get teams...')
       }
-
+      this.isVisible = false
       this.loading = false
     }
   }
