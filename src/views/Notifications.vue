@@ -1,77 +1,87 @@
 <template>
-  <div class="notifications">
-    <v-layout style="margin:20px;">
-      <v-flex xs12>
-        <v-alert
-          class="text-xs-center"
-          v-show="loading"
-          outlined
-          v-model="loading"
-          type="info"
+  <v-container style="margin-top:30px;">
+    <v-card tile style="padding-left:30px;margin-bottom:30px;">
+      <h1 style="color:#01002a;">
+        Notifications
+      </h1>
+    </v-card>
+    <v-card tile style="padding:30px;">
+      <v-alert
+        class="text-xs-center"
+        v-show="loading"
+        outlined
+        v-model="loading"
+        type="info"
+      >
+        <v-progress-circular
+          indeterminate
+          color="#01002a"
+        ></v-progress-circular>
+      </v-alert>
+      <v-alert v-show="notifications.length <= 0" outlined type="info">
+        You have no notification yet...
+      </v-alert>
+      <template>
+        <v-list-item
+          v-for="notification in notifications"
+          :key="notification.id"
         >
-          <v-progress-circular
-            indeterminate
-            color="#01002a"
-          ></v-progress-circular>
-        </v-alert>
-        <template>
-          <v-list-item
-            v-for="notification in notifications"
-            :key="notification.id"
+          <v-list-item-avatar @click="UpdateNotification(notification)">
+            <v-icon v-if="!notification.seen" class="grey lighten-1" dark>
+              mdi-bell
+            </v-icon>
+          </v-list-item-avatar>
+
+          <v-list-item-content>
+            <v-list-item-title
+              class="text-sm-left"
+              v-text="notifiType[notification.notificationType]"
+            ></v-list-item-title>
+
+            <v-list-item-subtitle
+              class="text-sm-left"
+              v-text="notification.message"
+              >" ></v-list-item-subtitle
+            >
+          </v-list-item-content>
+
+          <v-list-item-action
+            v-if="notification.notificationType == 'INVITATION'"
           >
-            <v-list-item-avatar @click="UpdateNotification(notification)">
-              <v-icon v-if="!notification.seen" class="grey lighten-1" dark>
-                mdi-bell
-              </v-icon>
-            </v-list-item-avatar>
-
-            <v-list-item-content>
-              <v-list-item-title
-                class="text-sm-left"
-                v-text="notifiType[notification.notificationType]"
-              ></v-list-item-title>
-
-              <v-list-item-subtitle
-                class="text-sm-left"
-                v-text="notification.message"
-                >" ></v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-action
-              v-if="notification.notificationType == 'INVITATION'"
+            <v-btn
+              class="ma-2"
+              @click="AcceptTeamInvitation(notification)"
+              color="success"
+              tile
+              outlined
             >
-              <v-btn
-                class="ma-2"
-                @click="AcceptTeamInvitation(notification)"
-                color="success"
-              >
-                Accept
-                <template v-slot:loader>
-                  <span>Loading...</span>
-                </template>
-              </v-btn>
-            </v-list-item-action>
+              Accept
+              <template v-slot:loader>
+                <span>Loading...</span>
+              </template>
+            </v-btn>
+          </v-list-item-action>
 
-            <v-list-item-action
-              v-if="notification.notificationType == 'INVITATION'"
+          <v-list-item-action
+            v-if="notification.notificationType == 'INVITATION'"
+          >
+            <v-btn
+              class="ma-2"
+              color="error"
+              @click="RejectTeamInvitation(notification)"
+              tile
+              outlined
             >
-              <v-btn
-                class="ma-2"
-                color="red darken-4"
-                @click="RejectTeamInvitation(notification)"
-              >
-                Decline
-                <template v-slot:loader>
-                  <span>Loading...</span>
-                </template>
-              </v-btn>
-            </v-list-item-action>
-          </v-list-item>
-        </template>
-      </v-flex>
-    </v-layout>
-  </div>
+              Decline
+              <template v-slot:loader>
+                <span>Loading...</span>
+              </template>
+            </v-btn>
+          </v-list-item-action>
+        </v-list-item>
+      </template>
+    </v-card>
+  </v-container>
 </template>
 
 <script>

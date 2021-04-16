@@ -1,5 +1,5 @@
 <template>
-  <div style="padding:30px;" class="home">
+  <v-container style="margin-top:30px;">
     <TournamentDialog ref="tournamentDialog" />
     <v-row>
       <v-col
@@ -9,7 +9,11 @@
         md="4"
       >
         <v-card tile @click="OpenTournamentDialog" style="padding:10px;">
-          <v-icon large>mdi-plus</v-icon>
+          <v-card-title></v-card-title>
+          <v-card-text class="text-center">
+            <v-icon large>mdi-plus</v-icon>
+          </v-card-text>
+          <v-card-actions></v-card-actions>
         </v-card>
       </v-col>
       <v-col
@@ -48,7 +52,7 @@
         </v-card>
       </v-col>
     </v-row>
-  </div>
+  </v-container>
 </template>
 
 <script>

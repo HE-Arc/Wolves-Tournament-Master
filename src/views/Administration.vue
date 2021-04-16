@@ -1,35 +1,39 @@
 <template>
-  <div class="management">
-    <div>
-      <!-- Check if user is admin -->
-      <v-card height="55px" flat>
-        <v-bottom-navigation
-          v-model="bottomNav"
-          :value="true"
-          color="#01002a"
-          absolute
-        >
-          <v-btn value="Users">
-            <span>Users</span>
-            <v-icon>mdi-account</v-icon>
-          </v-btn>
+  <v-container style="margin-top:30px;">
+    <!-- Check if user is admin -->
+    <v-card tile style="padding-left:30px;margin-bottom:10px;">
+      <h1 style="color:#01002a;">
+        Administration
+      </h1>
+    </v-card>
 
-          <v-btn value="Teams">
-            <span>Teams</span>
-            <v-icon>mdi-account-multiple</v-icon>
-          </v-btn>
-        </v-bottom-navigation>
-      </v-card>
+    <v-card tile height="55px" flat>
+      <v-bottom-navigation
+        v-model="bottomNav"
+        :value="true"
+        color="#01002a"
+        absolute
+      >
+        <v-btn value="Users">
+          <span>Users</span>
+          <v-icon>mdi-account</v-icon>
+        </v-btn>
 
-      <component v-bind:is="bottomNav"></component>
-    </div>
+        <v-btn value="Teams">
+          <span>Teams</span>
+          <v-icon>mdi-account-multiple</v-icon>
+        </v-btn>
+      </v-bottom-navigation>
+    </v-card>
+
+    <component v-bind:is="bottomNav"></component>
 
     <!-- <div v-if="$userService.user.role != 'ADMIN'">
       <v-alert :value="true" type="warning">
         You need to be an administrator to access this page !
       </v-alert>
     </div> -->
-  </div>
+  </v-container>
 </template>
 
 <script>
