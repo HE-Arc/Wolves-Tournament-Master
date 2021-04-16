@@ -8,7 +8,7 @@
         sm="6"
         md="4"
       >
-        <v-card @click="OpenTournamentDialog" style="padding:10px;">
+        <v-card tile @click="OpenTournamentDialog" style="padding:10px;">
           <v-icon large>mdi-plus</v-icon>
         </v-card>
       </v-col>
@@ -19,7 +19,7 @@
         sm="6"
         md="4"
       >
-        <v-card style="padding:10px;">
+        <v-card tile style="padding:10px;">
           <iframe
             width="100%"
             height="auto"
