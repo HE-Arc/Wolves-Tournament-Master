@@ -6,6 +6,7 @@ from rest_framework.decorators import action
 
 from django.contrib.auth.models import User
 from ..models.teammodel import Team
+from ..models.tournamentmodel import Tournament
 from ..serializers import UserSerializer
 
 
@@ -20,5 +21,14 @@ class UserViewSet(viewsets.ModelViewSet):
             team = Team.objects.get(id=pk)
             members = team.members.all()
             data = self.get_serializer(members, many=True).data
+
+            return Response(data)
+
+    @action(methods=["GET"], detail=True)
+    def gettournamentreferees(self, request, pk=None):
+        if(pk is not None):
+            tournament = Tournament.objects.get(id=pk)
+            referees = tournament.referees.all()
+            data = self.get_serializer(referees, many=True).data
 
             return Response(data)
