@@ -6,7 +6,7 @@ from django.db.models.signals import post_save, post_delete
 
 class Tournament(models.Model):
     organizer = models.ForeignKey(
-        User, to_field="username", on_delete=models.CASCADE)
+        User, to_field="username", on_delete=models.CASCADE, related_name="organizer")
     name = models.CharField(max_length=250)
     gameName = models.CharField(max_length=250)
     matchDuration = models.IntegerField()
@@ -14,8 +14,8 @@ class Tournament(models.Model):
     deadLineDate = models.DateField()
     nbTeam = models.IntegerField()
     streamURL = models.CharField(max_length=1000)
-    # teams = models.ManyToManyField(Team, related_name='tournament', null=True, blank='True')
     teams = models.ManyToManyField(Team)
+    referees = models.ManyToManyField(User, related_name="referees")
 
     def __str__(self):
         return self.name

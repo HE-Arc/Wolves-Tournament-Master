@@ -1,5 +1,10 @@
 <template>
-  <v-dialog v-model="isVisible" max-width="800px" @keydown.esc="hide">
+  <v-dialog
+    v-model="isVisible"
+    max-width="800px"
+    @keydown.esc="hide"
+    @click:outside="hide"
+  >
     <v-card>
       <v-toolbar dark color="#01002a">
         <v-toolbar-title>
