@@ -41,4 +41,4 @@ class TournamentSerializer(serializers.ModelSerializer):
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
-        fields = ['url', 'id', 'user', 'team', 'seen', 'notificationType', 'message']
+        fields = ['url', 'id', 'user', 'team', 'seen', 'notificationType', 'message', 'creationDate']

@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import action
 
+from django.utils import timezone
 from django.contrib.auth.models import User
 from ..models.tournamentmodel import Tournament
 from ..models.teammodel import Team
@@ -34,14 +35,15 @@ class TournamentViewSet(viewsets.ModelViewSet):
                 user = User.objects.get(id=referee)
                 tournament.referees.add(user)
 
-                # send a notification to the referees
+                # send a notification to the user
                 notification = Notification(
                     message=f"""[Referee] You've been assigned as referee for the tournament {tournament.name} 
                                 of {tournament.gameName} the {tournament.deadLineDate}""",
                     seen=False,
                     notificationType="MESSAGE",
                     user=user,
-                    team=None)
+                    team=None,
+                    creationDate=timezone.now())
 
                 notification.save()
 
@@ -78,7 +80,8 @@ class TournamentViewSet(viewsets.ModelViewSet):
                         seen=False,
                         notificationType="MESSAGE",
                         user=member,
-                        team=team)
+                        team=team,
+                        creationDate=timezone.now())
 
                 notification.save()
 
