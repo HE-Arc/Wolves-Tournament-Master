@@ -253,7 +253,7 @@ export default {
     },
     async CreateTournament() {
       const result = await this.$validator.validate()
-      console.log('yoyoyo création du tournoi, on est bien')
+
       if (result) {
         this.loading = true
 
@@ -326,7 +326,7 @@ export default {
       this.loading = false
 
       // reset idTournament
-      //this.idTournament = -1
+      this.idTournament = -1
     },
     async GetLeaderTeam() {
       this.loading = true
