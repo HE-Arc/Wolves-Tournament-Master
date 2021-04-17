@@ -8,7 +8,13 @@
   >
     <v-card>
       <v-toolbar dark color="#01002a">
-        <v-toolbar-title>Create a tournament</v-toolbar-title>
+        <v-toolbar-title v-if="!isDisabled">
+          Create a tournament
+        </v-toolbar-title>
+        <v-toolbar-title v-else-if="!isLeader || isParticipating">
+          Tournament information
+        </v-toolbar-title>
+        <v-toolbar-title v-else>Register for this tournament</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
           <v-btn icon dark @click="hide">
@@ -21,6 +27,7 @@
         <v-form ref="form" style="padding: 10px">
           <v-text-field
             v-model="name"
+            :disabled="isDisabled"
             label="Name"
             dense
             outlined
@@ -31,6 +38,7 @@
           ></v-text-field>
           <v-text-field
             v-model="game"
+            :disabled="isDisabled"
             label="Game"
             dense
             outlined
@@ -41,6 +49,7 @@
           ></v-text-field>
           <v-text-field
             v-model="duration"
+            :disabled="isDisabled"
             label="Round duration (in minutes)"
             dense
             outlined
@@ -51,6 +60,7 @@
           ></v-text-field>
           <v-text-field
             v-model="pause"
+            :disabled="isDisabled"
             label="Pause between two round (in minutes)"
             dense
             outlined
@@ -61,6 +71,7 @@
           ></v-text-field>
           <v-menu
             ref="menu"
+            :disabled="isDisabled"
             v-model="menu"
             :close-on-content-click="false"
             :return-value.sync="limitDate"
@@ -70,6 +81,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-combobox
+                :disabled="isDisabled"
                 chips
                 small-chips
                 prepend-inner-icon="mdi-calendar"
@@ -104,6 +116,7 @@
 
           <v-text-field
             v-model="nbrTeams"
+            :disabled="isDisabled"
             label="Number of teams"
             dense
             outlined
@@ -115,6 +128,7 @@
           ></v-text-field>
 
           <v-select
+            v-if="!isDisabled"
             v-model="referees"
             :items="users"
             item-text="username"
@@ -129,6 +143,7 @@
           ></v-select>
 
           <v-text-field
+            v-if="!isDisabled"
             v-model="streamUrl"
             label="Stream URL"
             dense
@@ -138,6 +153,22 @@
             data-vv-name="stream URL"
             :error-messages="errors.collect('stream URL')"
           ></v-text-field>
+          <v-select
+            v-if="isDisabled && isLeader && !isParticipating"
+            v-model="registeredTeam"
+            :items="teams"
+            item-text="name"
+            item-value="id"
+            label="Team to register"
+            dense
+            outlined
+            clearable
+            v-validate="'required'"
+            data-vv-name="team to register"
+            :error-messages="errors.collect('team to register')"
+          ></v-select>
+
+          <!-- Display error  -->
           <v-alert
             v-show="error"
             v-model="error"
@@ -149,10 +180,26 @@
           </v-alert>
         </v-form>
       </v-card-text>
+
+      <!-- Save button -->
       <v-card-actions v-show="!loading">
         <v-spacer></v-spacer>
-        <v-btn tile color="success" @click="CreateTournament">
+        <v-btn
+          tile
+          color="success"
+          @click="CreateTournament"
+          v-if="!isDisabled"
+        >
           Save
+          <v-icon right> mdi-content-save </v-icon>
+        </v-btn>
+        <v-btn
+          tile
+          color="success"
+          @click="AddTeam"
+          v-else-if="isDisabled && isLeader && !isParticipating"
+        >
+          Participate
           <v-icon right> mdi-content-save </v-icon>
         </v-btn>
       </v-card-actions>
@@ -182,6 +229,9 @@ export default {
     },
     users: [],
 
+    // tournament: {
+    //   name: null
+    // },
     id: null,
     name: null,
     game: null,
@@ -190,11 +240,27 @@ export default {
     limitDate: null,
     nbrTeams: null,
     referees: null,
-    streamUrl: null
+    streamUrl: null,
+
+    // edit or readonly
+    idTournament: -1,
+    isDisabled: false,
+
+    // register a team to a tournament
+    registeredTeam: null,
+    isLeader: false,
+    isParticipating: false,
+    teams: []
   }),
   methods: {
     show(parent) {
       this.parent = parent
+      if (this.idTournament !== -1) {
+        this.DisplayTournament()
+        this.GetTeamsByLeader()
+      } else {
+        this.isDisabled = false
+      }
       this.isVisible = true
       this.GetUsers()
     },
@@ -202,6 +268,7 @@ export default {
       this.error = false
       this.$refs.form.reset()
       this.isVisible = false
+      this.idTournament = -1
     },
     async GetUsers() {
       const response = await WtmApi.Request(
@@ -256,6 +323,88 @@ export default {
 
         this.loading = false
       }
+    },
+    async DisplayTournament() {
+      this.isDisabled = true
+
+      this.loading = true
+
+      const response = await WtmApi.Request(
+        'get',
+        this.$store.state.apiUrl +
+          'tournaments/' +
+          this.idTournament +
+          '/gettournamentproperties/',
+        null,
+        this.$store.getters.getAxiosConfig
+      )
+
+      if (response.isSuccess) {
+        let tournament = response.result
+
+        this.id = tournament.id
+        this.name = tournament.name
+        this.game = tournament.gameName
+        this.duration = tournament.matchDuration
+        this.pause = tournament.breakDuration
+        this.limitDate = tournament.deadLineDate
+        this.nbrTeams = tournament.nbTeam
+        this.streamUrl = tournament.streamURL
+      } else {
+        this.$snotify.error(
+          'Unable to get tournament information...\nPlease try later...'
+        )
+        this.error = true
+      }
+
+      this.loading = false
+    },
+    async GetTeamsByLeader() {
+      this.loading = true
+
+      const response = await WtmApi.Request(
+        'get',
+        this.$store.state.apiUrl +
+          'teams/' +
+          this.$store.state.authUser.id +
+          '/getteamsbyleader'
+      )
+
+      if (response.isSuccess) {
+        this.teams = response.result
+      } else {
+        this.$snotify.error('Unable to get teams...')
+      }
+      this.loading = false
+    },
+    async AddTeam() {
+      this.loading = true
+
+      let data = {
+        teamid: this.registeredTeam
+      }
+
+      const response = await WtmApi.Request(
+        'post',
+        this.$store.state.apiUrl +
+          'tournaments/' +
+          this.idTournament +
+          '/addTeam/',
+        data,
+        this.$store.getters.getAxiosConfig
+      )
+
+      if (response.isSuccess) {
+        let team = response.result
+        this.parent.GetTournaments()
+        this.$snotify.success(
+          'Team ' + team.name + ' registered successfully to this tournament !'
+        )
+      } else {
+        this.$snotify.error('Unable to register the team to this tournament...')
+      }
+      this.isVisible = false
+      this.loading = false
     }
   }
 }

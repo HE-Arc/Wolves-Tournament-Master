@@ -38,15 +38,58 @@
           <v-card-text style="color:#01002a;" class="text-sm-left">
             {{ tournament.gameName }}
           </v-card-text>
+
+          <!-- Different button content -->
           <v-card-actions>
             <v-btn
+              v-if="tournament.isDeadLineOver"
               @click="$router.push('/tournament/' + tournament.id)"
               tile
               block
               outlined
               color="#01002a"
             >
-              Voir les résultats du tournoi
+              See results
+            </v-btn>
+            <v-btn
+              v-else-if="
+                (tournament.isParticipating && !tournament.isDeadLineOver) ||
+                  (!tournament.isParticipating &&
+                    !tournament.isDeadLineOver &&
+                    !tournament.isLeader)
+              "
+              @click="
+                OpenTournamentDialog(
+                  tournament.id,
+                  tournament.isParticipating,
+                  tournament.isLeader
+                )
+              "
+              tile
+              block
+              outlined
+            >
+              More information
+              <!-- Le tournois commencera le {{ tournament.deadLineDate }} -->
+            </v-btn>
+            <v-btn
+              v-else-if="
+                !tournament.isParticipating &&
+                  !tournament.isDeadLineOver &&
+                  tournament.isLeader
+              "
+              @click="
+                OpenTournamentDialog(
+                  tournament.id,
+                  tournament.isParticipating,
+                  tournament.isLeader
+                )
+              "
+              tile
+              block
+              outlined
+            >
+              Register your team
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -78,7 +121,17 @@ export default {
     this.GetTournaments()
   },
   methods: {
-    async OpenTournamentDialog() {
+    async OpenTournamentDialog(
+      idTournament = -1,
+      isParticipating = false,
+      isLeader = false
+    ) {
+      if (idTournament !== -1 && typeof idTournament == 'number') {
+        this.$refs.tournamentDialog.idTournament = idTournament
+        this.$refs.tournamentDialog.isLeader = isLeader
+        this.$refs.tournamentDialog.isParticipating = isParticipating
+      }
+
       this.$refs.tournamentDialog.show(this)
     },
     async GetTournaments() {
@@ -86,7 +139,9 @@ export default {
 
       const response = await WtmApi.Request(
         'get',
-        this.$store.state.apiUrl + 'tournaments/'
+        this.$store.state.apiUrl +
+          'tournaments/tournamentsforhome?uid=' +
+          this.$store.state.authUser.id
       )
 
       if (response.isSuccess) {

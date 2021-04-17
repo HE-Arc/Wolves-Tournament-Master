@@ -12,9 +12,6 @@ from ..serializers import TeamSerializer
 
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
-    # userset = User.objects.select_related().get
-    # queryset = teamset|userset
-    # user = User.objects.select_related("leader").get(id = )
     serializer_class = TeamSerializer
     permission_classes = (AllowAny,)
 
@@ -122,3 +119,11 @@ class TeamViewSet(viewsets.ModelViewSet):
             return Response(data)
 
         return Response({"message": "tid is not defined"})
+
+    @action(methods=["GET"], detail=True)
+    def getteamsbyleader(self, request, pk=None):
+        permission_classes = (IsAuthenticated,)
+        if(pk is not None):
+            teams = Team.objects.filter(leader__id=pk)
+            data = self.get_serializer(teams, many=True).data
+            return Response(data)
