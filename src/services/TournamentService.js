@@ -140,9 +140,9 @@ export default {
       }
     }
 
-    return this.ReverseMatchesIdInTournament(matches)
+    return this.SetMatchesCorrectIdAndParentId(matches, nbRounds)
   },
-  ReverseMatchesIdInTournament(matches) {
+  SetMatchesCorrectIdAndParentId(matches, nbRounds) {
     /*
       Created id's needs to be "reversed" because
       for the tournament brackets, child have lower id than parents, the rounds start from the bottom (leafs)
@@ -152,14 +152,41 @@ export default {
     */
     let n = matches.length
 
-    matches.forEach(match => {
-      let newId = n - match.idInTournament + 1
-      match.idInTournament = newId
+    for (let round = 1; round <= nbRounds; ++round) {
+      let roundMatches = this.GetRoundMatches(matches, round).reverse()
+      let prevRoundMatches = this.GetRoundMatches(matches, round - 1).reverse()
 
-      if (newId > 1) {
-        match.idParent = parseInt(newId / 2)
+      console.log('roundMatches')
+      console.log(roundMatches)
+
+      for (let idInRound = 0; idInRound < roundMatches.length; ++idInRound) {
+        let currentMatch = roundMatches[idInRound]
+        currentMatch.idInTournament = n - currentMatch.idInTournament + 1
+
+        if (round > 1) {
+          currentMatch.idParent =
+            prevRoundMatches[parseInt(idInRound / 2)].idInTournament
+
+          if (round == nbRounds) {
+            console.log(
+              'idParent : ' +
+                parseInt(idInRound / 2) +
+                ' id in round = ' +
+                idInRound
+            )
+          }
+        }
       }
-    })
+    }
+
+    // matches.forEach(match => {
+    //   let newId =
+    //   match.idInTournament = newId
+
+    //   if (newId > 1) {
+    //     match.idParent = parseInt(newId / 2)
+    //   }
+    // })
 
     return matches
   },
