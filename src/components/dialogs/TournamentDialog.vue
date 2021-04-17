@@ -121,8 +121,8 @@
             dense
             outlined
             clearable
-            hint="Must be between 2 and 16"
-            v-validate="'required|numeric|min_value:2|max_value:16'"
+            hint="Must be between 4 and 16"
+            v-validate="'required|numeric|min_value:4|max_value:16'"
             data-vv-name="number of teams"
             :error-messages="errors.collect('number of teams')"
           ></v-text-field>
