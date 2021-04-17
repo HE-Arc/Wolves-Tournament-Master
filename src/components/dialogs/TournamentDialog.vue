@@ -269,6 +269,7 @@ export default {
       this.$refs.form.reset()
       this.isVisible = false
       this.idTournament = -1
+      this.streamUrl = null
     },
     async GetUsers() {
       const response = await WtmApi.Request(

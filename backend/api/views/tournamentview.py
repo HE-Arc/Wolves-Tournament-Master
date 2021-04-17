@@ -6,6 +6,7 @@ from rest_framework.decorators import action
 from django.contrib.auth.models import User
 from ..models.tournamentmodel import Tournament
 from ..models.teammodel import Team
+from ..models.notificationmodel import Notification
 from ..serializers import TournamentSerializer
 from ..serializers import TeamSerializer
 
@@ -58,6 +59,19 @@ class TournamentViewSet(viewsets.ModelViewSet):
             tournament = Tournament.objects.get(pk=int(pk))
             tournament.teams.add(team)
 
+            # send a notification to every memeber of the team
+            for member in team.members.all():
+                notification = Notification(
+                        message= f"""Your team {team.name} participates to the tournament {tournament.name} 
+                                    of {tournament.gameName} the {tournament.deadLineDate}.""",
+                        seen=False,
+                        notificationType="MESSAGE",
+                        user=member,
+                        team=team)
+
+                notification.save()
+
+
             return Response(TeamSerializer(team, context={'request': request}).data, status=status.HTTP_200_OK)
         else:
             response = {
@@ -67,6 +81,7 @@ class TournamentViewSet(viewsets.ModelViewSet):
 
     @action(methods=["GET"], detail=False)
     def tournamentsforhome(self, request, pk=None):
+
         """
             Return every tournament with specific attributes added : 
               * isLeader : true if the logged user is the leader of at least one 
