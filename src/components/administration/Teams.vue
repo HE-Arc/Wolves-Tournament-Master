@@ -5,6 +5,7 @@
 
     <v-layout style="margin:20px;">
       <v-flex xs12>
+        <!-- Loading alert -->
         <v-alert
           class="text-xs-center"
           v-show="loading"
@@ -17,6 +18,8 @@
             color="#01002a"
           ></v-progress-circular>
         </v-alert>
+
+        <!-- Teams table -->
         <template>
           <v-data-table
             v-show="!loading"
@@ -77,19 +80,27 @@ export default {
       { text: 'Name', value: 'name' },
       { text: 'Leader ID', value: 'leader' },
       { text: 'Actions', value: 'actions', sortable: false }
-    ],
-    showteamDialog: false
+    ]
   }),
   mounted: function() {
     this.GetTeams()
   },
   methods: {
+    // Open team dialog to create a new team
     async CreateTeam() {
       this.$refs.teamDialog.show(this, 'Add a new team', null, false)
     },
+
+    /**
+     * Open team dialog to update a existing team
+     *
+     * @param {Object}  team team to update
+     */
     async UpdateTeam(team) {
       this.$refs.teamDialog.show(this, 'Update team', team, true)
     },
+
+    // Get all teams
     async GetTeams() {
       this.loading = true
 
@@ -106,9 +117,21 @@ export default {
 
       this.loading = false
     },
+
+    /**
+     * Open delete modal to delete a team
+     *
+     * @param {Object}  team team to delete
+     */
     async OpenDeleteModal(team) {
       this.$refs.deleteTeam.show(team)
     },
+
+    /**
+     * Action for the delete modal to delete a team
+     *
+     * @param {Object}  team team to delete
+     */
     async DeleteTeam(team) {
       const response = await WtmApi.Request(
         'delete',

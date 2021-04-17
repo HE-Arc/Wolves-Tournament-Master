@@ -87,16 +87,24 @@ export default {
     }
   }),
   methods: {
-    // To show the dialog
+    /**
+     * To show the dialog
+     *
+     * @param {Object} item match to update
+     */
     show(item) {
       this.isVisible = true
       this.item = item
     },
+
+    // To hide the dialog
     hide() {
       this.error = false
       this.$refs.form.reset()
       this.isVisible = false
     },
+
+    // Update the existing match
     async UpdateMatch() {
       const result = await this.$validator.validate()
 
@@ -117,6 +125,7 @@ export default {
           this.$refs.form.reset()
           this.$snotify.success('Scores updated successfuly!')
 
+          // Indicate to the tournament that the match has been updated
           this.$store.commit('setUpdateTournamentBracket')
 
           this.isVisible = false

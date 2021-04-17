@@ -95,6 +95,7 @@ export default {
   }),
 
   methods: {
+    // To logout the logged in user
     Logout() {
       this.$store.commit('logout')
       this.$router.push('/')

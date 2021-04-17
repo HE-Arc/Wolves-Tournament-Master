@@ -54,15 +54,24 @@ export default {
     action: { type: Function, required: true }
   },
   methods: {
+    /**
+     * To show the modal
+     *
+     * @param {Object} item item to delete
+     */
     show(item) {
       this.isVisible = true
       this.item = item
     },
+
+    // To hide the modal
     hide() {
       this.loading = false
       this.error = false
       this.isVisible = false
     },
+
+    // Action to do when the logged user want to delete an item
     yes() {
       this.loading = true
       this.action(this.item)

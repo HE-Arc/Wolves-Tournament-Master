@@ -1,4 +1,11 @@
 module.exports = {
+  /**
+   * All the code in this file is integrated from
+   * the package vue-tournament-bracket (link below)
+   * and adapted to our needs.
+   * https://www.npmjs.com/package/vue-tournament-bracket
+   */
+
   transform(rounds) {
     if (!rounds) {
       return null

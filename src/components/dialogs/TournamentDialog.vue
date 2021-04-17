@@ -229,9 +229,6 @@ export default {
     },
     users: [],
 
-    // tournament: {
-    //   name: null
-    // },
     id: null,
     name: null,
     game: null,
@@ -253,23 +250,34 @@ export default {
     teams: []
   }),
   methods: {
+    /**
+     * To show the dialog
+     *
+     * @param {Object} parent parent who call the dialog
+     */
     show(parent) {
       this.parent = parent
+
       if (this.idTournament !== -1) {
         this.DisplayTournament()
         this.GetTeamsByLeader()
       } else {
         this.isDisabled = false
       }
+
       this.isVisible = true
       this.GetUsers()
     },
+
+    // To hide the dialog
     hide() {
       this.error = false
       this.$refs.form.reset()
       this.isVisible = false
       this.idTournament = -1
     },
+
+    // Get all users
     async GetUsers() {
       const response = await WtmApi.Request(
         'get',
@@ -284,6 +292,8 @@ export default {
         this.$snotify.error('Unable to get users...')
       }
     },
+
+    // Create a new tournament
     async CreateTournament() {
       const result = await this.$validator.validate()
 
@@ -324,6 +334,8 @@ export default {
         this.loading = false
       }
     },
+
+    // Get current tournament to display
     async DisplayTournament() {
       this.isDisabled = true
 
@@ -356,6 +368,8 @@ export default {
 
       this.loading = false
     },
+
+    // Get teams that the leader can register to the tournament
     async GetTeamsByLeader() {
       this.loading = true
 
@@ -374,6 +388,8 @@ export default {
       }
       this.loading = false
     },
+
+    // Register a team to the tournament
     async AddTeam() {
       this.loading = true
 

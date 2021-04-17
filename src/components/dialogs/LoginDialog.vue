@@ -87,14 +87,19 @@ export default {
   }),
 
   methods: {
+    // To show the dialog
     show() {
       this.isVisible = true
     },
+
+    // To hide the dialog
     hide() {
       this.error = false
       this.$refs.form.reset()
       this.isVisible = false
     },
+
+    // Login the user
     async Login() {
       const result = await this.$validator.validate()
 
@@ -113,6 +118,7 @@ export default {
         )
 
         if (response.isSuccess) {
+          // Set user information and token in Vuex store
           this.$store.commit('setToken', response.result.token)
           this.$store.commit('setAuthUser', {
             authUserId: response.result.user_id,
@@ -133,6 +139,8 @@ export default {
         this.loading = false
       }
     },
+
+    // Get logged in user's notifications
     async GetNotifications() {
       this.loading = true
 
@@ -144,6 +152,7 @@ export default {
       )
 
       if (response.isSuccess) {
+        // Set the number of notifications in Vuex store
         this.$store.commit('updateNotif', response.counter)
       } else {
         this.$snotify.error('Unable to get notifications ...')

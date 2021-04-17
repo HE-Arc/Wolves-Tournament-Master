@@ -85,12 +85,16 @@ export default {
       this.isVisible = true
       this.GetUsers()
     },
+
+    // To hide the dialog
     hide() {
       this.error = false
       this.isVisible = false
       this.teamMembers = []
       this.users = []
     },
+
+    // Get all users
     async GetUsers() {
       this.loading = true
 
@@ -113,6 +117,13 @@ export default {
 
       this.loading = false
     },
+
+    /**
+     * Send a notification to a user that
+     * we want to recruit in our team
+     *
+     * @param {Object}  user user to add as team member
+     */
     async Recruit(user) {
       let notification = {
         message: 'You were invited to join ' + this.team.name + ' team!',

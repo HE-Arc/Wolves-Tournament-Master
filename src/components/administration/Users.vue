@@ -2,6 +2,7 @@
   <div class="teams">
     <v-layout style="margin:20px;">
       <v-flex xs12>
+        <!-- Loading alert -->
         <v-alert
           class="text-xs-center"
           v-show="loading"
@@ -14,6 +15,8 @@
             color="#01002a"
           ></v-progress-circular>
         </v-alert>
+
+        <!-- Users table -->
         <template>
           <v-data-table
             v-show="!loading"
@@ -61,6 +64,7 @@ export default {
     this.GetUsers()
   },
   methods: {
+    // Get all users
     async GetUsers() {
       this.loading = true
 

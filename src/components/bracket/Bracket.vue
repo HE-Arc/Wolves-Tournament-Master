@@ -17,6 +17,12 @@
 </template>
 
 <script>
+/**
+ * All the code in this file is integrated from
+ * the package vue-tournament-bracket (link below)
+ * and adapted to our needs.
+ * https://www.npmjs.com/package/vue-tournament-bracket
+ */
 import BracketNode from '@/components/bracket/BracketNode'
 import recursiveBracket from '@/components/bracket/recursiveBracket'
 

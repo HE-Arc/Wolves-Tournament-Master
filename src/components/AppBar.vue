@@ -35,6 +35,7 @@ export default {
   },
 
   methods: {
+    // To show the login dialog
     async Login() {
       this.$refs.loginDialog.show()
     }

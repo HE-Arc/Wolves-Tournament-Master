@@ -121,6 +121,13 @@ export default {
     this.GetTournaments()
   },
   methods: {
+    /**
+     * Open the tournament dialog
+     *
+     * @param {Integer} idTournament id of the current tournament
+     * @param {Boolean} isParticipating
+     * @param {Boolean} isLeader
+     */
     async OpenTournamentDialog(
       idTournament = -1,
       isParticipating = false,
@@ -134,6 +141,8 @@ export default {
 
       this.$refs.tournamentDialog.show(this)
     },
+
+    // Get all tournaments
     async GetTournaments() {
       this.loading = true
 

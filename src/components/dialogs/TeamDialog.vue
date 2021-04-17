@@ -79,7 +79,15 @@ export default {
   mounted() {},
 
   methods: {
-    // To show the dialog
+    /**
+     * To show the dialog
+     *
+     * @param {Object} parent parent who call the dialog
+     * @param {String} titel title of the dialog
+     * @param {Object} item team to update (if not null)
+     * @param {Boolean} isUpdate to know if we want to update a team or not
+     */
+
     show(parent, title, item, isUpdate) {
       this.parent = parent
       this.title = title
@@ -93,15 +101,21 @@ export default {
 
       this.isVisible = true
     },
+
+    // To hide the dialog
     hide() {
       this.error = false
       this.$refs.form.reset()
       this.isVisible = false
     },
+
+    // Determine the method to call on team save
     SaveTeam() {
       if (this.isUpdate) this.UpdateTeam()
       else this.CreateTeam()
     },
+
+    // Create a new team
     async CreateTeam() {
       const result = await this.$validator.validate()
 
@@ -135,6 +149,8 @@ export default {
         this.loading = false
       }
     },
+
+    // Update the current team
     async UpdateTeam() {
       const result = await this.$validator.validate()
 

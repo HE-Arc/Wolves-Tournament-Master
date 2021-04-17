@@ -1,8 +1,8 @@
 export default {
   CreateGame(p1Id, p2Id, p1Name, p2Name, isP1Win, isP2Win, match) {
     /*
-            just create a game (node) for the bracket    
-        */
+     * just create a game (node) for the bracket
+     */
     return {
       match: match,
       player1: { id: p1Id, name: p1Name, winner: isP1Win },
@@ -14,8 +14,8 @@ export default {
   },
   CreateRounds(matches, teams, referees) {
     /*
-            Generate brackets from matches.
-        */
+     * Generate brackets from matches.
+     */
     matches = this.SortMatchesArray(matches)
 
     let rounds = []
@@ -76,9 +76,9 @@ export default {
   },
   CreateBaseMatches(teams, tournamentId) {
     /*
-            Create matches objects with the teams. Fill only the leaf matches.
-            They'll be pushed in the DB at tournament creation
-    */
+     * Create matches objects with the teams. Fill only the leaf matches.
+     * They'll be pushed in the DB at tournament creation
+     */
 
     let nbInitMatches = Math.ceil(teams.length / 2) //leaf matches
     let nbRounds = Math.ceil(Math.log2(nbInitMatches) + 1) //always round up
@@ -144,12 +144,12 @@ export default {
   },
   SetMatchesCorrectIdAndParentId(matches, nbRounds) {
     /*
-      Created id's needs to be "reversed" because
-      for the tournament brackets, child have lower id than parents, the rounds start from the bottom (leafs)
-       so their created first
-       but in the binary tree logic, the parentId is computed easily as : tournamentId / 2.
-       The parent nodes then needs to have the greater id's
-    */
+     * Created id's needs to be "reversed" because
+     * for the tournament brackets, child have lower id than parents, the rounds start from the bottom (leafs)
+     * so their created first
+     * but in the binary tree logic, the parentId is computed easily as : tournamentId / 2.
+     * The parent nodes then needs to have the greater id's
+     */
     let n = matches.length
 
     for (let round = 1; round <= nbRounds; ++round) {

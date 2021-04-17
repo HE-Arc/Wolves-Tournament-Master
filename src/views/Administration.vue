@@ -1,6 +1,5 @@
 <template>
   <v-container style="margin-top:30px;">
-    <!-- Check if user is admin -->
     <v-card tile style="padding-left:30px;margin-bottom:10px;">
       <h1 style="color:#01002a;">
         Administration
@@ -27,12 +26,6 @@
     </v-card>
 
     <component v-bind:is="bottomNav"></component>
-
-    <!-- <div v-if="$userService.user.role != 'ADMIN'">
-      <v-alert :value="true" type="warning">
-        You need to be an administrator to access this page !
-      </v-alert>
-    </div> -->
   </v-container>
 </template>
 

@@ -28,13 +28,6 @@
 export default {
   metaInfo: {
     title: 'About'
-  },
-  data: () => ({
-    users: []
-  }),
-
-  mounted() {},
-
-  methods: {}
+  }
 }
 </script>
