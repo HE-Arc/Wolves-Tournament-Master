@@ -190,9 +190,9 @@ export default {
     },
 
     /**
-     * ??
+     * Create tournament matches on tournament creation
      *
-     * @param {Object} baseMatches ??
+     * @param {Object} baseMatches The matches to create
      */
     async CreateBaseMatches(baseMatches) {
       /*
