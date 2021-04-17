@@ -33,6 +33,7 @@ class MatchViewSet(viewsets.ModelViewSet):
         data = request.data
 
         if pk is not None:
+
             serializer = self.serializer_class(
                 data=data, context={'request': request})
             serializer.is_valid(raise_exception=True)
@@ -42,14 +43,15 @@ class MatchViewSet(viewsets.ModelViewSet):
                 # match, created = queryset.filter(pk=data["id"]).update_or_create(serializer.validated_data)
                 match, created = queryset.filter(
                     pk=pk).update_or_create(serializer.validated_data)
+                
+                print("idInTournament = ", match.idInTournament)
 
                 # update parent
                 if match.idParent is not None:
-                    #parent = queryset.get(pk=int(match.idParent))
                     parent = queryset.filter(tournament=match.tournament).filter(
                         idInTournament=int(match.idParent))[0]
-
-                    if parent.team1 is None:
+                    
+                    if parent.idInTournament * 2 == match.idInTournament:
                         parent.team1 = match.team1 if match.score1 > match.score2 else match.team2
                     else:
                         parent.team2 = match.team1 if match.score1 > match.score2 else match.team2
