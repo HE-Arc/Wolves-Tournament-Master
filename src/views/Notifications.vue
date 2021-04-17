@@ -26,58 +26,63 @@
           v-for="notification in notifications"
           :key="notification.id"
         >
-          <v-list-item-avatar @click="UpdateNotification(notification)">
-            <v-icon v-if="!notification.seen" class="grey lighten-1" dark>
-              mdi-bell
-            </v-icon>
-          </v-list-item-avatar>
+          <v-row align="center" wrap>
+            <v-col xs="12">
+              <v-row>
+                <v-list-item-avatar @click="UpdateNotification(notification)">
+                  <v-icon v-if="!notification.seen" class="grey lighten-1" dark>
+                    mdi-bell
+                  </v-icon>
+                </v-list-item-avatar>
 
-          <v-list-item-content>
-            <v-list-item-title
-              class="text-sm-left"
-              v-text="notifiType[notification.notificationType]"
-            ></v-list-item-title>
+                <v-list-item-content>
+                  <v-list-item-title
+                    class="text-sm-left"
+                    v-text="notifiType[notification.notificationType]"
+                  ></v-list-item-title>
 
-            <v-list-item-subtitle
-              class="text-sm-left"
-              v-text="notification.message"
-              >" ></v-list-item-subtitle
-            >
-          </v-list-item-content>
-
-          <v-list-item-action
-            v-if="notification.notificationType == 'INVITATION'"
-          >
-            <v-btn
-              class="ma-2"
-              @click="AcceptTeamInvitation(notification)"
-              color="success"
-              tile
-              outlined
-            >
-              Accept
-              <template v-slot:loader>
-                <span>Loading...</span>
-              </template>
-            </v-btn>
-          </v-list-item-action>
-
-          <v-list-item-action
-            v-if="notification.notificationType == 'INVITATION'"
-          >
-            <v-btn
-              class="ma-2"
-              color="error"
-              @click="RejectTeamInvitation(notification)"
-              tile
-              outlined
-            >
-              Decline
-              <template v-slot:loader>
-                <span>Loading...</span>
-              </template>
-            </v-btn>
-          </v-list-item-action>
+                  <v-list-item-subtitle
+                    class="text-sm-left"
+                    v-text="notification.message"
+                    >" ></v-list-item-subtitle
+                  >
+                </v-list-item-content>
+              </v-row>
+            </v-col>
+            <v-col xs="12">
+              <v-list-item-action
+                v-if="notification.notificationType == 'INVITATION'"
+              >
+                <v-row>
+                  <v-btn
+                    class="ma-2"
+                    @click="AcceptTeamInvitation(notification)"
+                    color="success"
+                    tile
+                    outlined
+                  >
+                    Accept
+                    <template v-slot:loader>
+                      <span>Loading...</span>
+                    </template>
+                  </v-btn>
+                  <v-btn
+                    class="ma-2"
+                    color="error"
+                    @click="RejectTeamInvitation(notification)"
+                    tile
+                    outlined
+                  >
+                    Decline
+                    <template v-slot:loader>
+                      <span>Loading...</span>
+                    </template>
+                  </v-btn>
+                </v-row>
+              </v-list-item-action>
+            </v-col>
+          </v-row>
+          <v-divide></v-divide>
         </v-list-item>
       </template>
     </v-card>
