@@ -275,6 +275,7 @@ export default {
       this.$refs.form.reset()
       this.isVisible = false
       this.idTournament = -1
+      this.streamUrl = null
     },
 
     // Get all users
