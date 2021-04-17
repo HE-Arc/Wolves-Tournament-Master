@@ -110,6 +110,7 @@ export default {
     this.GetNotifications()
   },
   methods: {
+    // Get current authenticated user's notifications
     async GetNotifications() {
       this.loading = true
 
@@ -128,6 +129,12 @@ export default {
       }
       this.loading = false
     },
+
+    /**
+     * Update notitification
+     *
+     * @param {Object} notification notification to update
+     */
     async UpdateNotification(notification) {
       if (notification.notificationType != 'INVITATION') {
         notification.seen = true
@@ -146,6 +153,12 @@ export default {
         }
       }
     },
+
+    /**
+     * Accept a notification (invitation in a team)
+     *
+     * @param {Object} notification notification to accept
+     */
     async AcceptTeamInvitation(notification) {
       let data = {
         userid: this.$store.state.authUser.id,
@@ -165,6 +178,12 @@ export default {
         this.$snotify.error('Unable to get teams...')
       }
     },
+
+    /**
+     * Reject a notification (invitation in a team)
+     *
+     * @param {Object} notification notification to reject
+     */
     async RejectTeamInvitation(notification) {
       notification.notificationType = 'MESSAGE'
       notification.seen = true

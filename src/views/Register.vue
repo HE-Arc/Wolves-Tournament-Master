@@ -101,6 +101,7 @@ export default {
   }),
 
   methods: {
+    // Register a new user
     async Register() {
       const result = await this.$validator.validate()
 

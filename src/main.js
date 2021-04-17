@@ -10,6 +10,7 @@ import snotify from 'vue-snotify'
 import 'vue-snotify/styles/material.css'
 
 Vue.config.productionTip = false
+
 Vue.use(snotify)
 Vue.use(veevalidate)
 Vue.use(VueMeta, {

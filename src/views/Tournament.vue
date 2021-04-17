@@ -35,6 +35,7 @@ export default {
     Bracket
   },
   watch: {
+    // Watch if the tournament bracket need to be updated
     '$store.state.updateTournamentBracket': function() {
       this.GetTeamsByTournament()
     }
@@ -54,6 +55,7 @@ export default {
     }
   }),
   methods: {
+    // Get tournament
     async GetTournament() {
       const response = await WtmApi.Request(
         'get',
@@ -66,6 +68,8 @@ export default {
         this.$snotify.error('Unable to get tournament informations ...')
       }
     },
+
+    // Get tournament's referees
     async GetTournamentReferees() {
       const response = await WtmApi.Request(
         'get',
@@ -82,6 +86,8 @@ export default {
         this.$snotify.error('Unable to get referees for this tournament ...')
       }
     },
+
+    // Get tournament's matches
     async GetMatchesbyTournament() {
       this.loading = true
 
@@ -131,6 +137,8 @@ export default {
 
       this.loading = false
     },
+
+    // Get all teams participating to the tournament
     async GetTeamsByTournament() {
       this.loading = true
 
@@ -161,6 +169,8 @@ export default {
 
       this.loading = false
     },
+
+    // Determine if the register deadline is reached or not
     async IsDeadLineReached() {
       const response = await WtmApi.Request(
         'get',
@@ -178,6 +188,12 @@ export default {
         return false
       }
     },
+
+    /**
+     * ??
+     *
+     * @param {Object} baseMatches ??
+     */
     async CreateBaseMatches(baseMatches) {
       /*
         Create all base matches to init the tournament bracket

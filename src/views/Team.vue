@@ -177,14 +177,19 @@ export default {
     this.GetTeams()
   },
   methods: {
+    // Open the team dialog
     async CreateTeam() {
       this.$refs.teamDialog.show(this, 'Add a new team', null, false)
     },
+
+    // Open the recruit dialog
     async Recruit() {
       this.$refs.recruitDialog.show()
       this.$refs.recruitDialog.team = this.selectedTeam
       this.$refs.recruitDialog.teamMembers = this.members
     },
+
+    // Get current authenticated user's teams
     async GetTeams() {
       this.loading = true
 
@@ -210,10 +215,22 @@ export default {
 
       this.loading = false
     },
+
+    /**
+     * Select the team to show
+     *
+     * @param {Object} team team to show
+     */
     SelectTeam(team) {
       this.GetTeamMembers(team)
       this.selectedTeam = team
     },
+
+    /**
+     * Get current team's members
+     *
+     * @param {Object} team current team
+     */
     async GetTeamMembers(team) {
       this.loading = true
 
@@ -231,6 +248,13 @@ export default {
 
       this.loading = false
     },
+
+    /**
+     * Dellete user of team's members list
+     *
+     * @param {Object} team current team
+     * @param {Object} member user to delete
+     */
     async DeleteTeamMember(team, member) {
       let data = {
         userid: member.id
