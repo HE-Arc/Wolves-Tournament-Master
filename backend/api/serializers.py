@@ -6,8 +6,9 @@ from .models.tournamentmodel import Tournament
 from .models.notificationmodel import Notification
 from rest_framework.authtoken.models import Token
 
-# Serializers define the API representation.
-
+"""
+    This file contains serializers for all the api app models.
+"""
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

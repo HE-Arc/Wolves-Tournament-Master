@@ -12,12 +12,15 @@ class NotificationViewSet(viewsets.ModelViewSet):
     serializer_class = NotificationSerializer
     permission_classes = (IsAuthenticated,)
 
-    # Get all notification by user id
     def get_queryset(self):
+        """
+            Get all notifications for a user.
+            The user id is passed as GET parameter.
+        """
         queryset = Notification.objects.all()
         uid = self.request.query_params.get("uid", None)
         if(uid is not None):
             queryset = queryset.filter(user=uid)
             queryset = queryset.order_by("seen")
-            #queryset = queryset.filter(seen=False)
+            
         return queryset

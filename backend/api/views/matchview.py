@@ -14,6 +14,10 @@ class MatchViewSet(viewsets.ModelViewSet):
 
     @action(methods=["GET"], detail=False)
     def getmatchsbytournament(self, request, pk=None):
+        """
+            Get all matches of a tournament.
+            The tournament id is passed as GET parameter
+        """
         queryset = Match.objects.all()
         tid = self.request.query_params.get("tid", None)
 
@@ -27,6 +31,11 @@ class MatchViewSet(viewsets.ModelViewSet):
 
     @action(methods=["PUT"], detail=True)
     def updatematchscores(self, request, pk=None):
+        """
+            Update a match score1 and score2 fields. 
+            If the matchs has a parent node in the tournament brackets,
+            it's parent team1 or team2 is udpated automatically.
+        """
         permission_classes = (IsAuthenticated,)
 
         queryset = Match.objects.all()
@@ -39,10 +48,7 @@ class MatchViewSet(viewsets.ModelViewSet):
             serializer.is_valid(raise_exception=True)
 
             if serializer.is_valid():
-                # match = serializer.validated_data['match']
-                # match, created = queryset.filter(pk=data["id"]).update_or_create(serializer.validated_data)
-                match, created = queryset.filter(
-                    pk=pk).update_or_create(serializer.validated_data)
+                match, created = queryset.filter(pk=pk).update_or_create(serializer.validated_data)
                 
                 print("idInTournament = ", match.idInTournament)
 
@@ -56,7 +62,6 @@ class MatchViewSet(viewsets.ModelViewSet):
                     else:
                         parent.team2 = match.team1 if match.score1 > match.score2 else match.team2
 
-                    # parent, created = queryset.filter(pk=match.idParent).update_or_create(parent)
                     parent.save()
 
                 return Response(self.get_serializer(match).data, status=status.HTTP_200_OK)

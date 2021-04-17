@@ -15,6 +15,9 @@ class TournamentViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
 
     def create(self, request):
+        """
+            Create a new tournament.
+        """
         permission_classes = (IsAuthenticated,)
 
         data = request.data
@@ -42,6 +45,11 @@ class TournamentViewSet(viewsets.ModelViewSet):
 
     @action(methods=["POST"], detail=True)
     def addTeam(self, request, pk=None):
+        """
+            Add a team to a tournament.
+            The tournament id is the pk parameter.
+            The team id is passed in the request with the field "teamid"
+        """
         permission_classes = (IsAuthenticated,)
         
         if "teamid" in request.data and pk is not None:
@@ -57,18 +65,19 @@ class TournamentViewSet(viewsets.ModelViewSet):
             }
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(methods=["GET"], detail=True)
-    def gettournamentproperties(self, request, pk=None):
-        if pk is not None:
-            queryset = Tournament.objects.all()
-            tournament = queryset.get(pk=int(pk))
-
-            return Response(self.get_serializer(tournament).data, status=status.HTTP_200_OK)
-
     @action(methods=["GET"], detail=False)
     def tournamentsforhome(self, request, pk=None):
+        """
+            Return every tournament with specific attributes added : 
+              * isLeader : true if the logged user is the leader of at least one 
+                           team which participate to the tournament
+              * isParticipating : true if at least one of the logged user team
+                           is participating to the tournament
+              * isDeadLineOver : true if the tournament registration deadline has been reached
 
+        """
         from datetime import date
+        
         tournaments = Tournament.objects.all()
         teamQueryset = Team.objects.all()
         response = []

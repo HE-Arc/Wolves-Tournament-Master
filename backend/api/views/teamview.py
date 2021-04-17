@@ -16,10 +16,12 @@ class TeamViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
 
     def create(self, request):
+        """
+            Create a new team.
+        """
         data = request.data
 
-        serializer = self.serializer_class(
-            data=data, context={'request': request})
+        serializer = self.serializer_class(data=data, context={'request': request})
         serializer.is_valid(raise_exception=True)
 
         if serializer.is_valid():
@@ -38,6 +40,13 @@ class TeamViewSet(viewsets.ModelViewSet):
 
     @action(methods=["POST"], detail=True)
     def removeuser(self, request, pk=None):
+        """
+            Fire a team member.
+            The member (user) id is passed in the request with the field "userid".
+
+            A notification is automatically sended to the member to inform
+            him that he's been fired.
+        """
         permission_classes = (IsAuthenticated,)
 
         if "userid" in request.data:
@@ -66,6 +75,13 @@ class TeamViewSet(viewsets.ModelViewSet):
 
     @action(methods=["POST"], detail=True)
     def adduser(self, request, pk=None):
+        """
+            Add a team member.
+            The member (user) id is passed in the request with the field "userid".
+
+            A notification is automatically sended to the member to inform
+            him that he's been added to the team.
+        """
         permission_classes = (IsAuthenticated,)
 
         if "userid" and "notificationid" in request.data:
@@ -97,6 +113,9 @@ class TeamViewSet(viewsets.ModelViewSet):
 
     @action(methods=["GET"], detail=True)
     def getteamsbymember(self, request, pk=None):
+        """
+            Get all teams which the member belongs to .
+        """
         permission_classes = (IsAuthenticated,)
 
         if(pk is not None):
@@ -106,6 +125,10 @@ class TeamViewSet(viewsets.ModelViewSet):
 
     @action(methods=["GET"], detail=False)
     def getteamsbytournament(self, request, pk=None):
+        """
+            Get all teams which participate to a tournament.
+            The tournament id is passed as GET parameter.
+        """
         permission_classes = (AllowAny,)
 
         queryset = Team.objects.all()
@@ -122,6 +145,10 @@ class TeamViewSet(viewsets.ModelViewSet):
 
     @action(methods=["GET"], detail=True)
     def getteamsbyleader(self, request, pk=None):
+        """
+            Get all teams where the leader is the specified user.
+            The user (leader) id is passed to the pk parameter
+        """
         permission_classes = (IsAuthenticated,)
         if(pk is not None):
             teams = Team.objects.filter(leader__id=pk)

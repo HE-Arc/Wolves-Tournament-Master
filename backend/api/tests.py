@@ -1,3 +1,3 @@
 from django.test import TestCase
 
-# Create your tests here.
+# Add tests here if necessary. For the first tag, there's no test.

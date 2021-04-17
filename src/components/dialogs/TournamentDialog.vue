@@ -331,10 +331,7 @@ export default {
 
       const response = await WtmApi.Request(
         'get',
-        this.$store.state.apiUrl +
-          'tournaments/' +
-          this.idTournament +
-          '/gettournamentproperties/',
+        this.$store.state.apiUrl + 'tournaments/' + this.idTournament,
         null,
         this.$store.getters.getAxiosConfig
       )

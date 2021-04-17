@@ -17,6 +17,10 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @action(methods=["GET"], detail=True)
     def getteammembers(self, request, pk=None):
+        """
+            Get all member of a team. 
+            The team id is the pk parameter.
+        """
         permission_classes = (IsAuthenticated,)
         if(pk is not None):
             team = Team.objects.get(id=pk)
@@ -27,7 +31,11 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @action(methods=["GET"], detail=True)
     def gettournamentreferees(self, request, pk=None):
-        if(pk is not None):
+        """
+            Get all referees of a tournament.
+            The tournament id the pk parameter.
+        """
+        if pk is not None:
             tournament = Tournament.objects.get(id=pk)
             referees = tournament.referees.all()
             data = self.get_serializer(referees, many=True).data
