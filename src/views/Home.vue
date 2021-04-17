@@ -125,8 +125,8 @@ export default {
      * Open the tournament dialog
      *
      * @param {Integer} idTournament id of the current tournament
-     * @param {Boolean} isParticipating
-     * @param {Boolean} isLeader
+     * @param {Boolean} isParticipating true if at least one of the logged user team is participating to the tournament
+     * @param {Boolean} isLeader true if the logged user is the leader of at least one team which participate to the tournament
      */
     async OpenTournamentDialog(
       idTournament = -1,
