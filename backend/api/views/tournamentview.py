@@ -34,6 +34,17 @@ class TournamentViewSet(viewsets.ModelViewSet):
                 user = User.objects.get(id=referee)
                 tournament.referees.add(user)
 
+                # send a notification to the referees
+                notification = Notification(
+                    message=f"""[Referee] You've been assigned as referee for the tournament {tournament.name} 
+                                of {tournament.gameName} the {tournament.deadLineDate}""",
+                    seen=False,
+                    notificationType="MESSAGE",
+                    user=user,
+                    team=None)
+
+                notification.save()
+
             tournament.save()
 
             return Response(self.get_serializer(tournament).data, status=status.HTTP_200_OK)
@@ -62,7 +73,7 @@ class TournamentViewSet(viewsets.ModelViewSet):
             # send a notification to every memeber of the team
             for member in team.members.all():
                 notification = Notification(
-                        message= f"""Your team {team.name} participates to the tournament {tournament.name} 
+                        message= f"""[Tournament] Your team {team.name} participates to the tournament {tournament.name} 
                                     of {tournament.gameName} the {tournament.deadLineDate}.""",
                         seen=False,
                         notificationType="MESSAGE",

@@ -54,7 +54,7 @@ class TeamViewSet(viewsets.ModelViewSet):
             user = User.objects.get(id=userid)
             team = Team.objects.get(id=pk)
 
-            notification = Notification(message="you have been fired from " + team.name,
+            notification = Notification(message="[Team] You have been fired from " + team.name,
                                         seen=False,
                                         notificationType="MESSAGE",
                                         user=user,
