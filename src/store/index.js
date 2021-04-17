@@ -21,9 +21,9 @@ export default new Vuex.Store({
   mutations: {
     /**
      * Set the current authenticated user
-     * 
+     *
      * @param {State} state state that contain the informations
-     * @param {Object} authUser authenticated user's informations to save 
+     * @param {Object} authUser authenticated user's informations to save
      */
     setAuthUser(
       state,
@@ -42,7 +42,7 @@ export default new Vuex.Store({
 
     /**
      * Set current authenticated user's token
-     * 
+     *
      * @param {State} state state that contain the informations
      * @param {String} newToken token to save
      */
@@ -54,7 +54,7 @@ export default new Vuex.Store({
 
     /**
      * Logout the current authenticated user
-     * 
+     *
      * @param {State} state state that contain the informations
      */
     logout(state) {
@@ -73,9 +73,9 @@ export default new Vuex.Store({
 
     /**
      * Update current authenticated user's notifications
-     * 
+     *
      * @param {State} state state that contain the informations
-     * @param {Integer} newNumber 
+     * @param {Integer} newNumber
      */
     updateNotif(state, newNumber) {
       state.nbrNotif = newNumber
@@ -83,7 +83,7 @@ export default new Vuex.Store({
 
     /**
      * Set the navigation drawer (on or off)
-     * 
+     *
      * @param {State} state state that contain the informations
      */
     setNavigationDrawer(state) {
@@ -104,7 +104,7 @@ export default new Vuex.Store({
   getters: {
     /**
      * Return the authorization header for the API
-     * 
+     *
      * @param {State} state state that contain the informations
      * @returns {Object} Authorization header
      */
