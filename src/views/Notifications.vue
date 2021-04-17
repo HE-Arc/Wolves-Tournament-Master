@@ -159,7 +159,6 @@ export default {
         this.$store.getters.getAxiosHeader
       )
       if (response.isSuccess) {
-        console.log(response.result)
         this.GetNotifications()
         this.$snotify.success('User added!')
       } else {

@@ -156,9 +156,6 @@ export default {
       let roundMatches = this.GetRoundMatches(matches, round).reverse()
       let prevRoundMatches = this.GetRoundMatches(matches, round - 1).reverse()
 
-      console.log('roundMatches')
-      console.log(roundMatches)
-
       for (let idInRound = 0; idInRound < roundMatches.length; ++idInRound) {
         let currentMatch = roundMatches[idInRound]
         currentMatch.idInTournament = n - currentMatch.idInTournament + 1
@@ -166,15 +163,6 @@ export default {
         if (round > 1) {
           currentMatch.idParent =
             prevRoundMatches[parseInt(idInRound / 2)].idInTournament
-
-          if (round == nbRounds) {
-            console.log(
-              'idParent : ' +
-                parseInt(idInRound / 2) +
-                ' id in round = ' +
-                idInRound
-            )
-          }
         }
       }
     }

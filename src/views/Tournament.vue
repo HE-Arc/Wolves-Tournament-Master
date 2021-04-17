@@ -172,7 +172,7 @@ export default {
         let deadLine = new Date(tournament.deadLineDate)
         let currentDate = new Date()
 
-        return deadLine.getTime() >= currentDate.getTime()
+        return deadLine.getTime() <= currentDate.getTime()
       } else {
         this.$snotify.error('Unable to get tournament information ...')
         return false

@@ -61,10 +61,6 @@ export default {
     this.GetUsers()
   },
   methods: {
-    async UpdateTeam(team) {
-      console.log(team)
-      //this.$refs.teamDialog.show(this, 'Update team', team, true)
-    },
     async GetUsers() {
       this.loading = true
 
