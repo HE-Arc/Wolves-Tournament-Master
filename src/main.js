@@ -11,11 +11,11 @@ import 'vue-snotify/styles/material.css'
 
 Vue.config.productionTip = false
 
-Vue.use(snotify)
-Vue.use(veevalidate)
+Vue.use(snotify) // Notification package
+Vue.use(veevalidate) // Forms validator
 Vue.use(VueMeta, {
   refreshOnceOnNavigation: true
-})
+}) // Meta info updater (page title, etc...)
 
 new Vue({
   router,
