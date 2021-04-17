@@ -47,6 +47,7 @@ class TeamViewSet(viewsets.ModelViewSet):
             A notification is automatically sended to the member to inform
             him that he's been fired.
         """
+        from django.utils import timezone # for the notification
         permission_classes = (IsAuthenticated,)
 
         if "userid" in request.data:
@@ -58,7 +59,8 @@ class TeamViewSet(viewsets.ModelViewSet):
                                         seen=False,
                                         notificationType="MESSAGE",
                                         user=user,
-                                        team=team)
+                                        team=team,
+                                        creationDate=timezone.now())
             notification.save()
 
             team.members.remove(user)

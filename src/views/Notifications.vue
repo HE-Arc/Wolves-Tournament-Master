@@ -123,6 +123,7 @@ export default {
 
       if (response.isSuccess) {
         this.notifications = response.result
+        this.SortNotificationsByCreationDate()
         this.$store.commit('updateNotif', response.counter)
       } else {
         this.$snotify.error('Unable to get notifications ...')
@@ -202,6 +203,24 @@ export default {
       } else {
         this.$snotify.error('Cannot decline team invitation...')
       }
+    },
+    async SortNotificationsByCreationDate() {
+      this.notifications.sort((n1, n2) => {
+        let date1 = new Date(n1.creationDate).getTime()
+        let date2 = new Date(n2.creationDate).getTime()
+
+        // console.log("d1")
+        // console.log(n1.creationDate)
+        console.log(date1 < date2)
+
+        if (date1 < date2) {
+          return 1
+        } else if (date1 > date2) {
+          return -1
+        }
+
+        return 0
+      })
     }
   }
 }
