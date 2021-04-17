@@ -144,7 +144,7 @@ export default {
       if (response.isSuccess) {
         this.teams = response.result
 
-        if (this.teams.length > 2) {
+        if (this.teams.length >= 4) {
           this.GetMatchesbyTournament()
         } else {
           this.$snotify.error(
