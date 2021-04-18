@@ -9,11 +9,12 @@ on:
 jobs:
   build-frontend:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@master
-      - name: Move to frontend directory
-        run: cd ./frontend
       - name: clean build directory
         run: rm -rf dist/*
       - name: Installing project dependencies
