@@ -10,6 +10,7 @@ from ..models.teammodel import Team
 from ..models.notificationmodel import Notification
 from ..serializers import TournamentSerializer
 from ..serializers import TeamSerializer
+from datetime import date
 
 class TournamentViewSet(viewsets.ModelViewSet):
     queryset = Tournament.objects.all()
@@ -72,6 +73,14 @@ class TournamentViewSet(viewsets.ModelViewSet):
             tournament = Tournament.objects.get(pk=int(pk))
             tournament.teams.add(team)
 
+            teams = Team.objects.all().filter(tournament__id=tournament.id)
+
+            if len(teams) >= tournament.nbTeam and tournament.deadLineDate < date.today():
+                response = {
+                    "message": "Unable to connect to this team. This tournament is full."
+                }
+                return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
             # send a notification to every memeber of the team
             for member in team.members.all():
                 notification = Notification(
@@ -104,9 +113,7 @@ class TournamentViewSet(viewsets.ModelViewSet):
                            is participating to the tournament
               * isDeadLineOver : true if the tournament registration deadline has been reached
 
-        """
-        from datetime import date
-        
+        """        
         tournaments = Tournament.objects.all()
         teamQueryset = Team.objects.all()
         response = []
@@ -116,6 +123,7 @@ class TournamentViewSet(viewsets.ModelViewSet):
             loggedUser = None
             if userId is not None and userId.isnumeric():
                 loggedUser = User.objects.all().get(pk=userId)
+
             teams = teamQueryset.filter(tournament__id=tournament.id)
 
             isLeader = False
@@ -125,10 +133,13 @@ class TournamentViewSet(viewsets.ModelViewSet):
                 pass
 
             isParticipating = False
-            try:
-                isParticipating = len(teams.filter(members__id=loggedUser.id)) > 0
-            except:
-                pass
+            if len(teams) >= tournament.nbTeam:
+                isParticipating = True
+            else:
+                try:
+                    isParticipating = len(teams.filter(members__id=loggedUser.id)) > 0
+                except:
+                    pass
 
             isDeadLineOver = tournament.deadLineDate < date.today()
             

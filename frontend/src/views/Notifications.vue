@@ -214,10 +214,6 @@ export default {
         let date1 = new Date(n1.creationDate).getTime()
         let date2 = new Date(n2.creationDate).getTime()
 
-        // console.log("d1")
-        // console.log(n1.creationDate)
-        console.log(date1 < date2)
-
         if (date1 < date2) {
           return 1
         } else if (date1 > date2) {

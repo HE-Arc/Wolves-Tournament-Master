@@ -260,7 +260,10 @@ export default {
 
       if (this.idTournament !== -1) {
         this.DisplayTournament()
-        this.GetTeamsByLeader()
+        if(this.isLeader)
+        {
+          this.GetTeamsByLeader()
+        }
       } else {
         this.isDisabled = false
       }
@@ -276,6 +279,8 @@ export default {
       this.isVisible = false
       this.idTournament = -1
       this.streamUrl = null
+      this.isLeader = false
+      this.isParticipating = false
     },
 
     // Get all users
