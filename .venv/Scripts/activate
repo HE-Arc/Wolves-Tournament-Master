@@ -18,7 +18,11 @@ deactivate () {
     # be called to get it to forget past commands.  Without forgetting
     # past commands the $PATH changes we made may not be respected
     if [ -n "${BASH:-}" -o -n "${ZSH_VERSION:-}" ] ; then
+<<<<<<< Updated upstream
         hash -r 2> /dev/null
+=======
+        hash -r
+>>>>>>> Stashed changes
     fi
 
     if [ -n "${_OLD_VIRTUAL_PS1:-}" ] ; then
@@ -37,7 +41,11 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
+<<<<<<< Updated upstream
 VIRTUAL_ENV="C:\laragon\www\DJango\Wolves-Tournament-Master\.venv"
+=======
+VIRTUAL_ENV="D:\HES\3e_annee\Developement web\Django_project\Wolwes-Tournament-Master\.venv"
+>>>>>>> Stashed changes
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
@@ -54,7 +62,21 @@ fi
 
 if [ -z "${VIRTUAL_ENV_DISABLE_PROMPT:-}" ] ; then
     _OLD_VIRTUAL_PS1="${PS1:-}"
+<<<<<<< Updated upstream
     PS1="(.venv) ${PS1:-}"
+=======
+    if [ "x(.venv) " != x ] ; then
+	PS1="(.venv) ${PS1:-}"
+    else
+    if [ "`basename \"$VIRTUAL_ENV\"`" = "__" ] ; then
+        # special case for Aspen magic directories
+        # see http://www.zetadev.com/software/aspen/
+        PS1="[`basename \`dirname \"$VIRTUAL_ENV\"\``] $PS1"
+    else
+        PS1="(`basename \"$VIRTUAL_ENV\"`)$PS1"
+    fi
+    fi
+>>>>>>> Stashed changes
     export PS1
 fi
 
@@ -62,5 +84,9 @@ fi
 # be called to get it to forget past commands.  Without forgetting
 # past commands the $PATH changes we made may not be respected
 if [ -n "${BASH:-}" -o -n "${ZSH_VERSION:-}" ] ; then
+<<<<<<< Updated upstream
     hash -r 2> /dev/null
+=======
+    hash -r
+>>>>>>> Stashed changes
 fi

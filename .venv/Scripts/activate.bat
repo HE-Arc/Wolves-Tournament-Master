@@ -8,7 +8,11 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
+<<<<<<< Updated upstream
 set VIRTUAL_ENV=C:\laragon\www\DJango\Wolves-Tournament-Master\.venv
+=======
+set VIRTUAL_ENV=D:\HES\3e_annee\Developement web\Django_project\Wolwes-Tournament-Master\.venv
+>>>>>>> Stashed changes
 
 if not defined PROMPT set PROMPT=$P$G
 

@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 #!c:\laragon\www\django\wolves-tournament-master\.venv\scripts\python.exe
+=======
+#!d:\hes\3e_annee\developement web\django_project\wolwes-tournament-master\.venv\scripts\python.exe
+>>>>>>> Stashed changes
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 
