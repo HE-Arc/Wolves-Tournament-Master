@@ -3,7 +3,7 @@ Wolves Tournament Master is a web app to manage e-sport tournaments. It allows e
 With WTM you can create a tournament, create your own team and register it to a tournament or even be a referee to add games results. The web app automatically created the tournament tree for you !  
 
 Link to the deployed web app : [WTM](https://wolves.srvz-webapp.he-arc.ch/#/)  
-Link to the project presentation : (not available yet) [Presentation]()
+Link to the project presentation : [Presentation](./Documentation/Presentation.pdf)
 
 
 ## How to run it locally
